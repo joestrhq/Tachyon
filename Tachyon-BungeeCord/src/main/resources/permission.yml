@@ -1,0 +1,6 @@
+# permissions for Tachoyn-BungeeCord version ${project.version}
+tbungee.commands.list: ['/list']
+tbungee.commands.staffchat: ['/staffchat', '/sc']
+#tbungee.commands.tpa: ['/tpa']
+tbungee.chatfilter.bypass: 'Bypass all chatfilters'
+tbungee.chatfilter.bypass.<filter>: 'Bypass <filter>'
