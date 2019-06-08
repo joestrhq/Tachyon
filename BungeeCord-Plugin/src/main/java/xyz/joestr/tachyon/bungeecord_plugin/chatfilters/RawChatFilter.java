@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.chatfilters;
+package xyz.joestr.tachyon.bungeecord_plugin.chatfilters;
 
 import net.md_5.bungee.api.chat.BaseComponent;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.ChatFilter;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.ChatFilter;
 
 /**
  * This is a raw chat filter, which does not modify the array of

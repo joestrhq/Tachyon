@@ -3,7 +3,7 @@
  *
  * No license
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.commands;
+package xyz.joestr.tachyon.bungeecord_plugin.commands;
 
 import com.google.common.collect.ImmutableList;
 import net.md_5.bungee.api.CommandSender;
@@ -11,7 +11,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
 /**
  * Represents the '/list' command.

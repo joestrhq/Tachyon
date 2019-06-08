@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.commands;
+package xyz.joestr.tachyon.bungeecord_plugin.commands;
 
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
 /**
  * Represents the '/staffchat' and '/sc' command.

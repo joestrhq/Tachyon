@@ -1,4 +1,4 @@
-package xyz.joestr.joecloud.command;
+package xyz.joestr.tachyon.console.command;
 
 public interface ICommand {
 

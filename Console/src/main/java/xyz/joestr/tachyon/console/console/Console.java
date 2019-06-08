@@ -1,4 +1,4 @@
-package xyz.joestr.joecloud.console;
+package xyz.joestr.tachyon.console.console;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,10 +10,10 @@ import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.UserInterruptException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import xyz.joestr.joecloud.command.ICommand;
-import xyz.joestr.joecloud.command.ICommandSender;
-import xyz.joestr.joecloud.command.CommandManager;
-import xyz.joestr.joecloud.util.Utilities;
+import xyz.joestr.tachyon.console.command.ICommand;
+import xyz.joestr.tachyon.console.command.ICommandSender;
+import xyz.joestr.tachyon.console.command.CommandManager;
+import xyz.joestr.tachyon.console.util.Utilities;
 
 public class Console implements ICommandSender {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.listeners;
+package xyz.joestr.tachyon.bungeecord_plugin.listeners;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -15,9 +15,9 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import xyz.joestr.tachyon.tachyon_bungeecord.TachyonPlugin;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.ChatFilter;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.ChatFilter;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
 /**
  *
@@ -52,7 +52,7 @@ public class ChatFilterListener implements Listener {
         BaseComponent[] baseComponents = componentBuilder.create();
         
         // Run through the chat filters
-        for(ChatFilter chatFilter : TachyonPlugin.chatFilters) {
+        for(ChatFilter chatFilter : TachyonBungeeCordPlugin.chatFilters) {
             
             if(!proxiedPlayer.hasPermission(Configuration.LoosePermission.bypassChatFilter())) {
                 break; // Player can bypass all filters -> break here

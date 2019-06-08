@@ -1,10 +1,10 @@
-package xyz.joestr.joecloud.provided.commands;
+package xyz.joestr.tachyon.console.provided.commands;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import xyz.joestr.joecloud.command.ICommand;
-import xyz.joestr.joecloud.command.ICommandSender;
+import xyz.joestr.tachyon.console.command.ICommand;
+import xyz.joestr.tachyon.console.command.ICommandSender;
 
 public class PrintCommand implements ICommand {
 

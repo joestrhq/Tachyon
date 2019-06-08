@@ -1,10 +1,10 @@
-package xyz.joestr.joecloud.command;
+package xyz.joestr.tachyon.console.command;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import xyz.joestr.joecloud.command.ICommand;
-import xyz.joestr.joecloud.logger.JCLogger;
+import xyz.joestr.tachyon.console.command.ICommand;
+import xyz.joestr.tachyon.console.logger.JCLogger;
 
 public class CommandManager {
 

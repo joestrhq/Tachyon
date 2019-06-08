@@ -1,9 +1,9 @@
-package xyz.joestr.joecloud;
+package xyz.joestr.tachyon.console;
 
-import xyz.joestr.joecloud.command.CommandManager;
-import xyz.joestr.joecloud.console.Console;
-import xyz.joestr.joecloud.provided.commands.HelpCommand;
-import xyz.joestr.joecloud.provided.commands.PrintCommand;
+import xyz.joestr.tachyon.console.command.CommandManager;
+import xyz.joestr.tachyon.console.console.Console;
+import xyz.joestr.tachyon.console.provided.commands.HelpCommand;
+import xyz.joestr.tachyon.console.provided.commands.PrintCommand;
 
 public class App {
 

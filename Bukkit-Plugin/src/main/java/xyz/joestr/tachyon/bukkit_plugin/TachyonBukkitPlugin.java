@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bukkit;
+package xyz.joestr.tachyon.bukkit_plugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Joel
  */
-public class TachyonPlugin extends JavaPlugin {
+public class TachyonBukkitPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {

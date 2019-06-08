@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.listeners;
+package xyz.joestr.tachyon.bungeecord_plugin.listeners;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import xyz.joestr.tachyon.tachyon_bungeecord.commands.StaffChatCommand;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
 /**
  *

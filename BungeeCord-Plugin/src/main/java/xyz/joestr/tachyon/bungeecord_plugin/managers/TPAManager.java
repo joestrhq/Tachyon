@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.managers;
+package xyz.joestr.tachyon.bungeecord_plugin.managers;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.TPARequest;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.TPAType;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.TPARequest;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.TPAType;
 
 /**
  * Handles TPA requests of players.

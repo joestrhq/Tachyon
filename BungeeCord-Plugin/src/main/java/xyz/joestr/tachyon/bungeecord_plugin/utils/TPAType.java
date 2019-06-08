@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord.utils;
+package xyz.joestr.tachyon.bungeecord_plugin.utils;
 
 /**
  * Represents the type of a teleport request.

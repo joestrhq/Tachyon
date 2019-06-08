@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.tachyon_bungeecord;
+package xyz.joestr.tachyon.bungeecord_plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,22 +22,22 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import xyz.joestr.tachyon.tachyon_bungeecord.chatfilters.AnnotatedPlayerChatFilter;
-import xyz.joestr.tachyon.tachyon_bungeecord.chatfilters.ColorCodeFilter;
-import xyz.joestr.tachyon.tachyon_bungeecord.chatfilters.RawChatFilter;
-import xyz.joestr.tachyon.tachyon_bungeecord.commands.ListCommand;
-import xyz.joestr.tachyon.tachyon_bungeecord.commands.StaffChatCommand;
-import xyz.joestr.tachyon.tachyon_bungeecord.commands.TPACommand;
-import xyz.joestr.tachyon.tachyon_bungeecord.listeners.ChatFilterListener;
-import xyz.joestr.tachyon.tachyon_bungeecord.listeners.StaffChatMessageListener;
-import xyz.joestr.tachyon.tachyon_bungeecord.utils.ChatFilter;
+import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
+import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
+import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.RawChatFilter;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.ListCommand;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.TPACommand;
+import xyz.joestr.tachyon.bungeecord_plugin.listeners.ChatFilterListener;
+import xyz.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.ChatFilter;
 
 /**
  * The Tachyon-BungeeCord-Plugin itself.
  * 
  * @author Joel
  */
-public class TachyonPlugin extends Plugin {
+public class TachyonBungeeCordPlugin extends Plugin {
 
     /**
      * A {@link Set} of {@link ChatFilter}s
@@ -88,7 +88,7 @@ public class TachyonPlugin extends Plugin {
                 successfullyLoaded = true;
             } catch (IOException ex) {
                 Logger
-                    .getLogger(TachyonPlugin.class.getName())
+                    .getLogger(TachyonBungeeCordPlugin.class.getName())
                     .log(Level.SEVERE, null, ex);
             }
         } else {
@@ -107,7 +107,7 @@ public class TachyonPlugin extends Plugin {
                 try (InputStream in = getResourceAsStream("config.yml")) {
                     Files.copy(in, file.toPath());
                 } catch (IOException ex) {
-                    Logger.getLogger(TachyonPlugin.class.getName())
+                    Logger.getLogger(TachyonBungeeCordPlugin.class.getName())
                         .log(Level.SEVERE, null, ex);
                 }
             }
@@ -121,7 +121,7 @@ public class TachyonPlugin extends Plugin {
                 successfullyLoaded = true;
             } catch (IOException ex) {
                 Logger
-                    .getLogger(TachyonPlugin.class.getName())
+                    .getLogger(TachyonBungeeCordPlugin.class.getName())
                     .log(Level.SEVERE, null, ex);
             }
         }

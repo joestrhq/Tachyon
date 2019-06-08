@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.joecloud.logger;
+package xyz.joestr.tachyon.console.logger;
 
 import java.util.logging.Level;
-import xyz.joestr.joecloud.console.Console;
+import xyz.joestr.tachyon.console.console.Console;
 
 /**
  *
