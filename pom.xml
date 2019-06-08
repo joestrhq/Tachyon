@@ -4,17 +4,17 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>xyz.joestr.tachyon</groupId>
+    <groupId>xyz.joestr</groupId>
     <artifactId>tachyon</artifactId>
     <packaging>pom</packaging>
     <version>0.1.0</version>
     <name>Tachyon</name>
 
     <modules>
-        <module>Tachyon-Console</module>
-        <module>Tachyon-API</module>
-        <module>Tachyon-Bukkit</module>
-        <module>Tachyon-BungeeCord</module>
+        <module>Console</module>
+        <module>API</module>
+        <module>Bukkit-Plugin</module>
+        <module>BungeeCord-Plugin</module>
     </modules>
 
     <build>

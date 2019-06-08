@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>xyz.joestr.tachyon</groupId>
-    <artifactId>tachyon_console</artifactId>
+    <artifactId>console</artifactId>
     <version>0.1.0</version>
 
     <name>Tachyon-Console</name>
