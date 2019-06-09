@@ -15,11 +15,39 @@ import java.lang.reflect.Type;
  */
 public abstract class TachyonAPI {
     
+    private static TachyonAPI instance = null;
+    
+    /**
+     * Sets the instance of the API. This method may only be called once per an
+     * application.
+     *
+     * @param instance A class which extends the {@link xyz.joestr.tachyon.api.TachyonAPI}
+     */
+    public static void setInstance(TachyonAPI instance) {
+        
+        // If the argument is null
+        if(instance == null) {
+            throw new IllegalArgumentException("Argument cannot be null!");
+        }
+        
+        // If the instance is not null anymore
+        if(TachyonAPI.instance != null) {
+            throw new IllegalStateException("API instance already set!");
+        }
+        
+        // Set the instance
+        TachyonAPI.instance = instance;
+    }
+    
     /**
      * Singleton access for the API to prevent multiple instances of it.
      * @return The {@link xyz.joestr.tachyon.api.TachyonAPI API} itself.
      */
-    public abstract TachyonAPI getInstance();
+    public TachyonAPI getInstance() {
+        
+        // Return the instance
+        return TachyonAPI.instance;
+    }
     
     /**
      * Get the amount of players on a server.
