@@ -6,6 +6,7 @@
 package xyz.joestr.tachyon.api;
 
 import java.lang.reflect.Type;
+import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 
 
 /**
@@ -56,6 +57,22 @@ public abstract class TachyonAPI {
      * @return The amount of players on a server.
      */
     public abstract int getOnlineCountForServer(String serverName);
+    
+    /**
+     * Register a new chat filter. (Is only available in BungeeCord
+     * implementations of this API.)
+     * 
+     * @param chatFilter The chat filter to register
+     */
+    public abstract void registerChatFilter(ChatFilter chatFilter);
+    
+    /**
+     * Unregister a chat filter. (Is only available in BungeeCord
+     * implementations of this API.)
+     * 
+     * @param chatFilter Unregisters the specified chat filter.
+     */
+    public abstract void unregisterChatFilter(ChatFilter chatFilter);
     
     /**
      * Generic demo method.

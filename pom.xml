@@ -4,19 +4,259 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Properties -->
+    <properties>
+        <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
+        <oracle-jdbc.version>18.3.0.0</oracle-jdbc.version>
+        <postgresql-jdbc.version>42.2.5</postgresql-jdbc.version>
+        <sqlite-jdbc.version>3.27.2.1</sqlite-jdbc.version>
+        <bukkit-api.version>1.14-R0.1-SNAPSHOT</bukkit-api.version>
+        <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
+        <luckperms-api.version>4.3</luckperms-api.version>
+        <junit.version>4.8.2</junit.version>
+        <powermock.version>1.4.9</powermock.version>
+    </properties>
+    
+    <!-- Project -->
     <groupId>xyz.joestr</groupId>
     <artifactId>tachyon</artifactId>
     <packaging>pom</packaging>
     <version>0.1.0</version>
+    
+    <!-- Project metadata -->
     <name>Tachyon</name>
+    <url>https://git.joestr.xyz/joestr/Tachyon</url>
+    <description>The Tachyon project.</description>
+    <inceptionYear>2019</inceptionYear>
 
+    <!-- Modules -->
     <modules>
-        <module>Console</module>
         <module>API</module>
         <module>Bukkit-Plugin</module>
         <module>BungeeCord-Plugin</module>
+        <!--<module>Console</module>-->
+        <!--
+            The Tachyon-Console project differs too much from the other
+            projects!
+        -->
     </modules>
 
+    <!-- Organization information -->
+    <organization>
+        <name>joestr</name>
+        <url>https://joestr.xyz</url>
+    </organization>
+
+    <!-- Licensing -->
+    <licenses>
+        <license>
+            <name>Private license</name>
+            <distribution>repo</distribution>
+            <url>https://git.joestr.xyz/joestr/Tachyon/LICENSE</url>
+            <!--<comments></comments>-->
+        </license>
+    </licenses>
+    
+    <!-- Developer information -->
+    <developers>
+        <developer>
+            <id>joestr</id>
+            <name>Joel Strasser</name>
+            <email>strasser999@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <url>https://joestr.xyz</url>
+            <organization>joestr</organization>
+            <organizationUrl>https://joestr.xyz</organizationUrl>
+        </developer>
+    </developers>
+    
+    <!-- Contributor information -->
+    <contributors>
+        <contributor>
+            <name>Joel Strasser</name>
+            <email>strasser999@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <url>https://joestr.xyz</url>
+            <organization>joestr</organization>
+            <organizationUrl>https://joestr.xyz</organizationUrl>
+        </contributor>
+    </contributors>
+    
+    <!-- Source Code Management -->
+    <scm>
+        <connection>scm:git:https://git.joestr.xyz/joestr/Tachyon</connection>
+        <developerConnection>scm:git:https://git.joestr.xyz/joestr/Tachyon</developerConnection>
+        <tag>HEAD</tag>
+        <url>https//git.joestr.xyz/joestr/Tachyon</url>
+    </scm>
+    
+    <!-- Continous Integration Management -->
+    <ciManagement>
+        <system>jenkins</system>
+        <url>https://ci.joestr.xyz</url>
+        <notifiers>
+            <notifier>
+                <type>email</type>
+                <address>strasser999@gmail.com</address>
+                <sendOnError>true</sendOnError>
+                <sendOnFailure>true</sendOnFailure>
+                <sendOnWarning>true</sendOnWarning>
+                <sendOnSuccess>false</sendOnSuccess>
+            </notifier>
+        </notifiers>
+    </ciManagement>
+    
+    <!-- Distribution Management -->
+    <distributionManagement>
+        <repository>
+            <id>joestr-repo</id>
+            <name>joestr Repository</name>
+            <url>https://repo.joestr.xyz/maven/repository/repository/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </repository>
+        <snapshotRepository>
+            <id>joestr-repo</id>
+            <name>joestr Repository</name>
+            <url>https://repo.joestr.xyz/maven/repository/repository/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+    
+    <!-- Issue Management -->
+    <issueManagement>
+        <system>gitea</system>
+        <url>https://git.joestr.xyz/joestr/Tachyon/issues</url>
+    </issueManagement>
+    
+    <!-- Dependency Management -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-jdbc.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.jdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${oracle-jdbc.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql-jdbc.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.xerial</groupId>
+                <artifactId>sqlite-jdbc</artifactId>
+                <version>${sqlite-jdbc.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>paho-releases.org.eclipse.paho</groupId>
+                <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+                <version>1.2.0</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.bukkit</groupId>
+                <artifactId>bukkit</artifactId>
+                <version>${bukkit-api.version}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.md-5</groupId>
+                <artifactId>bungeecord-api</artifactId>
+                <version>${bungeecord.version}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.md-5</groupId>
+                <artifactId>bungeecord-chat</artifactId>
+                <version>${bungeecord.version}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>me.lucko.luckperms</groupId>
+                <artifactId>luckperms-api</artifactId>
+                <version>${luckperms-api.version}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <type>jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+                <type>jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock.version}</version>
+                <type>jar</type>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <!-- Repository Management -->
+    <repositories>
+        <repository>
+            <id>joestr-repo</id>
+            <name>joestr Repository</name>
+            <url>https://repo.joestr.xyz/maven/repository/repository/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+    <!-- Dependencies -->
+    <dependencies>
+    </dependencies>
+    
+    <!-- Repository Management for plugins -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>joestr-repo</id>
+            <name>joestr Repository</name>
+            <url>https://repo.joestr.xyz/maven/repository/repository/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    
+    <!-- Build process -->
     <build>
         <pluginManagement>
             <plugins>
@@ -31,13 +271,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

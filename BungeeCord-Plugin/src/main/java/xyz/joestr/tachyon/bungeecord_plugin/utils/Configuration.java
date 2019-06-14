@@ -134,13 +134,19 @@ public class Configuration {
             ComponentBuilder result = new ComponentBuilder("")
                 .append(
                     TextComponent.fromLegacyText(
-                        prefixes.values().stream().collect(Collectors.joining(""))
+                        ChatColor.translateAlternateColorCodes(
+                            '&',
+                            prefixes.values().stream().collect(Collectors.joining(""))
+                        )
                     )
                 )
                 .append(source)
                 .append(
                     TextComponent.fromLegacyText(
-                        suffixes.values().stream().collect(Collectors.joining(""))
+                        ChatColor.translateAlternateColorCodes(
+                            '&',
+                            suffixes.values().stream().collect(Collectors.joining(""))
+                        )
                     )
                 )
                 .append(": ")
