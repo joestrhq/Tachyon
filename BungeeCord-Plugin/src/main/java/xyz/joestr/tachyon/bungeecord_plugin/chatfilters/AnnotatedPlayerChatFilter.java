@@ -9,7 +9,7 @@ import java.util.Arrays;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.ChatFilter;
+import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 
 /**
  * Is the chat filter for player name annotations. (For example: @joestr) The

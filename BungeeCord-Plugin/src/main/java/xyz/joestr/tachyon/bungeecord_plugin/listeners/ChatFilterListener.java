@@ -15,12 +15,13 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
+import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.ChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
 /**
- *
+ * Applie filters to sent chat messages
+ * 
  * @author Joel
  */
 public class ChatFilterListener implements Listener {

@@ -9,14 +9,14 @@
     <parent>
         <groupId>xyz.joestr</groupId>
         <artifactId>tachyon</artifactId>
-        <version>0.1.0</version>
+        <version>${tachyon.version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
     <!-- Project -->
     <groupId>xyz.joestr.tachyon</groupId>
     <artifactId>api</artifactId>
-    <version>0.1.0</version>
+    <version>${tachyon.version}</version>
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
@@ -34,8 +34,6 @@
         <dependency>
             <groupId>paho-releases.org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-            <version>1.2.0</version>
-            <type>jar</type>
         </dependency>
     </dependencies>
     

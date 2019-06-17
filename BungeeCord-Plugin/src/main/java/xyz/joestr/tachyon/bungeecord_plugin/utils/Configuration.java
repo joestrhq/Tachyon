@@ -60,6 +60,56 @@ public class Configuration {
                 return blankUsage() + " <Spielername>";
             }
         }
+        
+        public static class Ping {
+            
+            public static String command() {
+                return "ping";
+            }
+
+            public static String permission() {
+                return "tbungee.commands.ping";
+            }
+
+            public static String alias() {
+                return "";
+            }
+
+            public static String blankUsage() {
+
+                return "/" + command();
+            }
+
+            public static String usage() {
+
+                return blankUsage() + "";
+            }
+        }
+        
+        public static class PingOther {
+            
+            public static String command() {
+                return "ping-other";
+            }
+
+            public static String permission() {
+                return "tbungee.commands.ping-other";
+            }
+
+            public static String alias() {
+                return "";
+            }
+
+            public static String blankUsage() {
+
+                return "/" + command();
+            }
+
+            public static String usage() {
+
+                return blankUsage() + " <Spielername>";
+            }
+        }
 
         public static class StaffChat {
 
@@ -212,6 +262,41 @@ public class Configuration {
 
             return listMessage;
         }
+        
+        public static BaseComponent[] pingCommandOutput(ProxiedPlayer player) {
+            
+            return new ComponentBuilder("Dein Ping beträgt ")
+                .color(ChatColor.AQUA)
+                .append(String.valueOf(player.getPing()) + " ms")
+                .color(ChatColor.GRAY)
+                .append(".")
+                .color(ChatColor.AQUA)
+                .create();
+        }
+        
+        public static BaseComponent[] pingOtherCommandOutput(ProxiedPlayer player) {
+            
+            return new ComponentBuilder("Der Ping von ")
+                .color(ChatColor.AQUA)
+                .append(player.getName())
+                .color(ChatColor.GRAY)
+                .append(" beträgt ")
+                .color(ChatColor.AQUA)
+                .append(String.valueOf(player.getPing()) + " ms")
+                .color(ChatColor.GRAY)
+                .append(".")
+                .color(ChatColor.AQUA)
+                .create();
+        }
+        
+        public static BaseComponent[] pingOtherTargetNotOnline(String target) {
+            
+            return new ComponentBuilder(target)
+                .color(ChatColor.GRAY)
+                .append(" ist nicht online.")
+                .color(ChatColor.RED)
+                .create();
+        }
 
         @Deprecated
         public static BaseComponent tpaCommandOutput(ProxiedPlayer requester, ProxiedPlayer target) {
@@ -348,8 +433,6 @@ public class Configuration {
                 .color(ChatColor.RED)
                 .create();
         }
-
-        //spectatorMenu.teleport
     }
 
     public static class LoosePermission {

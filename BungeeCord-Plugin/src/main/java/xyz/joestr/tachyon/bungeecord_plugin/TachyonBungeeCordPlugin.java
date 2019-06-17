@@ -22,6 +22,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.RawChatFilter;
@@ -30,7 +31,6 @@ import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
 import xyz.joestr.tachyon.bungeecord_plugin.commands.TPACommand;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.ChatFilterListener;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.ChatFilter;
 
 /**
  * The Tachyon-BungeeCord-Plugin itself.
