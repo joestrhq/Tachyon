@@ -31,6 +31,8 @@ public class TPAcceptCommand extends Command implements TabExecutor {
     public void execute(CommandSender cs, String[] strings) {
 
         cs.sendMessage(Configuration.Messages.listCommandOutput(ProxyServer.getInstance().getPlayers()));
+        
+        ProxiedPlayer player = (ProxiedPlayer) cs;
     }
 
     @Override

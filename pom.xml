@@ -6,15 +6,27 @@
 
     <!-- Properties -->
     <properties>
+        <!-- UTF8 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Database drivers versions -->
         <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
         <oracle-jdbc.version>18.3.0.0</oracle-jdbc.version>
         <postgresql-jdbc.version>42.2.5</postgresql-jdbc.version>
         <sqlite-jdbc.version>3.27.2.1</sqlite-jdbc.version>
+        <!-- For the Bukkit plugin -->
         <bukkit-api.version>1.14-R0.1-SNAPSHOT</bukkit-api.version>
+        <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
+        <!-- For the Bungeecord plugin -->
         <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
+        <!-- Luckperms api for different uses -->
         <luckperms-api.version>4.3</luckperms-api.version>
+        <!-- Testing depedencies -->
         <junit.version>4.8.2</junit.version>
         <powermock.version>1.4.9</powermock.version>
+        <!-- Maven settings -->
+        <maven-compiler.source.version>1.8</maven-compiler.source.version>
+        <maven-compiler.target.version>1.8</maven-compiler.target.version>
     </properties>
     
     <!-- Project -->
@@ -178,6 +190,13 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>plugin-annotations</artifactId>
+                <version>${plugin-annotations.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
                 <groupId>net.md-5</groupId>
                 <artifactId>bungeecord-api</artifactId>
                 <version>${bungeecord.version}</version>
@@ -262,10 +281,39 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <doclint>none</doclint>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>${maven-compiler.source.version}</source>
+                        <target>${maven-compiler.target.version}</target>
                     </configuration>
                 </plugin>
             </plugins>
