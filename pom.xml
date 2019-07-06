@@ -7,7 +7,9 @@
     <!-- Properties -->
     <properties>
         <!-- Tachyon version -->
-        <tachyon.version>0.1.4-SNAPSHOT</tachyon.version>
+        <tachyon.version-number>0.1.6</tachyon.version-number>
+        <tachyon.version-suffix>SNAPSHOT</tachyon.version-suffix>
+        <tachyon.version>${tachyon.version-number}-${tachyon.version-suffix}</tachyon.version>
         <!-- UTF8 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

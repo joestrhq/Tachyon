@@ -24,6 +24,6 @@ public class RawChatFilter implements ChatFilter {
 
     @Override
     public String permission() {
-        throw new UnsupportedOperationException("raw");
+        return "raw";
     }
 }

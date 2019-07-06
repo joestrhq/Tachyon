@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.tachyon.bungeecord_plugin.api;
+package xyz.joestr.tachyon.bukkit_plugin.api;
 
 import java.lang.reflect.Type;
 import xyz.joestr.tachyon.api.TachyonAPI;
@@ -14,7 +14,11 @@ import xyz.joestr.tachyon.api.request.RequestManager;
  *
  * @author Joel
  */
-public class TachyonAPIBungeeCord extends TachyonAPI {
+public class TachyonAPIBukkit extends TachyonAPI {
+
+    public TachyonAPIBukkit() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public int getOnlineCountForServer(String serverName) {
@@ -28,6 +32,11 @@ public class TachyonAPIBungeeCord extends TachyonAPI {
 
     @Override
     public void unregisterChatFilter(ChatFilter chatFilter) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public RequestManager getRequestManager() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

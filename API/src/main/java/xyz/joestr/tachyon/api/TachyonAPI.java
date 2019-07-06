@@ -7,6 +7,7 @@ package xyz.joestr.tachyon.api;
 
 import java.lang.reflect.Type;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.request.RequestManager;
 
 
 /**
@@ -15,6 +16,8 @@ import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
  * @version ${project.version}
  */
 public abstract class TachyonAPI {
+    
+    private RequestManager requestManager = null;
     
     private static TachyonAPI instance = null;
     
@@ -44,7 +47,7 @@ public abstract class TachyonAPI {
      * Singleton access for the API to prevent multiple instances of it.
      * @return The {@link xyz.joestr.tachyon.api.TachyonAPI API} itself.
      */
-    public TachyonAPI getInstance() {
+    public static TachyonAPI getInstance() {
         
         // Return the instance
         return TachyonAPI.instance;
@@ -73,6 +76,42 @@ public abstract class TachyonAPI {
      * @param chatFilter Unregisters the specified chat filter.
      */
     public abstract void unregisterChatFilter(ChatFilter chatFilter);
+    
+    /**
+     * Gets the {@link RequestManager} for this Tachyon instance.
+     * 
+     * @return The {@link RequestManager} for this Tachyon unit or {@code null}
+     * if there is no request manager.
+     */
+    public RequestManager getRequestManager() {
+        
+        return this.requestManager;
+    }
+    
+    /**
+     * Sets the {@link RequestManager} for this Tachyon instance.
+     * Trying to set this to {@code null} is prohibited.<br>
+     * If there was a request manager instanciated, all request listners will be
+     * transferred to the new one.
+     * 
+     * @param newRequestManager The new request manager.
+     */
+    public void setRequestManager(RequestManager newRequestManager) {
+        
+        if(newRequestManager == null) {
+            throw new IllegalArgumentException("Argument can not be 'null'.");
+        }
+        
+        if(this.requestManager == null) {
+            this.requestManager = newRequestManager;
+        } else {
+            this.requestManager.getListeners().forEach(listener -> {
+                requestManager.unregisterListener(listener);
+                newRequestManager.registerListener(listener);
+            });
+            this.requestManager = newRequestManager;
+        }
+    }
     
     /**
      * Generic demo method.

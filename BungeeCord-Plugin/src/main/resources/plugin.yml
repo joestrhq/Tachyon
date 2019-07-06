@@ -1,4 +1,4 @@
 name: ${project.name}
-main: ${project.groupId}.${project.artifactId}.TachyonPlugin
+main: ${project.groupId}.${project.artifactId}.TachyonBungeeCordPlugin
 version: ${project.version}
 author: joestr

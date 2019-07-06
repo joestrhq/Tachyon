@@ -65,10 +65,14 @@
             <artifactId>bukkit</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>plugin-annotations</artifactId>
+        </dependency>
+        <dependency>
             <groupId>xyz.joestr.tachyon</groupId>
             <artifactId>api</artifactId>
         </dependency>
-                <dependency>
+        <dependency>
             <groupId>me.lucko.luckperms</groupId>
             <artifactId>luckperms-api</artifactId>
         </dependency>
@@ -88,6 +92,16 @@
     
     <!-- Build process -->
     <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/java</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

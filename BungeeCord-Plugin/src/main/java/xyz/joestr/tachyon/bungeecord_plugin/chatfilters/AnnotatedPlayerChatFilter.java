@@ -33,6 +33,6 @@ public class AnnotatedPlayerChatFilter implements ChatFilter {
 
     @Override
     public String permission() {
-        throw new UnsupportedOperationException("annotatedplayer");
+        return "annotatedplayer";
     }
 }
