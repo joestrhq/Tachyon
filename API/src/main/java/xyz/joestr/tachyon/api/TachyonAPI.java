@@ -31,7 +31,7 @@ public abstract class TachyonAPI {
         
         // If the argument is null
         if(instance == null) {
-            throw new IllegalArgumentException("Argument cannot be null!");
+            throw new IllegalArgumentException("Argument 'instance' cannot be null!");
         }
         
         // If the instance is not null anymore

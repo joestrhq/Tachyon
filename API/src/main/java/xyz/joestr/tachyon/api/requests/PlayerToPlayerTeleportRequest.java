@@ -6,9 +6,7 @@
 
 package xyz.joestr.tachyon.api.requests;
 
-import com.google.gson.Gson;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import xyz.joestr.tachyon.api.request.Request;
 
@@ -17,9 +15,6 @@ import xyz.joestr.tachyon.api.request.Request;
  * @author Joel
  */
 public class PlayerToPlayerTeleportRequest extends Request {
-
-    // The logger instance for this class
-    private static final Logger LOGGER = Logger.getLogger(PlayerToPlayerTeleportRequest.class.getName());
     
     private UUID sender;
     private UUID target;

@@ -38,9 +38,9 @@ import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
  *
  * @author Joel
  */
-@Plugin(name="${project.name}", version="${project.version}")
-@Description(value="${project.description}")
-@Website(value="${project.url}")
+@Plugin(name="Tachyon-Bukkit-Plugin", version="0.1.6")
+@Description(value="The Tachyon unit for servers which implement the Bukkit API.")
+@Website(value="https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin")
 @Author(value="joestr")
 @LoadOrder(value=PluginLoadOrder.POSTWORLD)
 @LogPrefix(value="ddd")
