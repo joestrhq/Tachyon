@@ -28,6 +28,8 @@
         <!-- Testing depedencies -->
         <junit.version>4.8.2</junit.version>
         <powermock.version>1.4.9</powermock.version>
+        <!-- Hikari Connection Pool -->
+        <hikaricp.version>3.3.1</hikaricp.version>
         <!-- Maven settings -->
         <maven-compiler.source.version>1.8</maven-compiler.source.version>
         <maven-compiler.target.version>1.8</maven-compiler.target.version>
@@ -241,6 +243,11 @@
                 <version>${powermock.version}</version>
                 <type>jar</type>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikaricp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

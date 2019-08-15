@@ -40,7 +40,7 @@ public class StaffChatMessageListener implements Listener {
             return;
         }
         
-        // Finally, send the 
+        // Finally, send the message
         StaffChatCommand
             .sendOutToStaff(
                 player.getName(),
