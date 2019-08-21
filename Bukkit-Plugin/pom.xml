@@ -94,10 +94,6 @@
     <build>
         <resources>
             <resource>
-                <directory>${project.basedir}/src/main/java</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
@@ -127,7 +123,7 @@
                                     <exclude>*:*</exclude>
                                 </excludes>-->
                             </artifactSet>
-                            <outputFile>./target/${project.name}-${project.version}-shaded.jar</outputFile>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
                         </configuration>
                     </execution>
                 </executions>
