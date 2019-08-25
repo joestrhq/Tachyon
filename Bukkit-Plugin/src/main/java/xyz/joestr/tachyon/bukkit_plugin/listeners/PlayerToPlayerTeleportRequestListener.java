@@ -17,10 +17,10 @@ import xyz.joestr.tachyon.api.requests.PlayerToPlayerTeleportRequest;
  *
  * @author Joel
  */
-public class TeleportRequestListener implements RequestEvent<PlayerToPlayerTeleportRequest> {
+public class PlayerToPlayerTeleportRequestListener implements RequestEvent<PlayerToPlayerTeleportRequest> {
 
     // The logger instance for this class
-    private static final Logger LOGGER = Logger.getLogger(TeleportRequestListener.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PlayerToPlayerTeleportRequestListener.class.getName());
 
     @Override
     public void onRequestReceived(Request request) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xyz.joestr.metis.classes;
+package xyz.joestr.tachyon.information_exchange_server.classes;
 
 import java.util.Objects;
 import java.util.UUID;

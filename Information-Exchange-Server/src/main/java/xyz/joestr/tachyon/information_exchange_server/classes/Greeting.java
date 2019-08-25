@@ -1,4 +1,4 @@
-package xyz.joestr.metis.classes;
+package xyz.joestr.tachyon.information_exchange_server.classes;
 
 public class Greeting {
 

@@ -52,6 +52,7 @@
         <module>API</module>
         <module>Bukkit-Plugin</module>
         <module>BungeeCord-Plugin</module>
+        <module>Information-Exchange-Server</module>
         <!--<module>Console</module>-->
         <!--
             The Tachyon-Console project differs too much from the other

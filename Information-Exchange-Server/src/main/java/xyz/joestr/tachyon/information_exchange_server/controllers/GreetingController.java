@@ -1,4 +1,4 @@
-package xyz.joestr.metis.controllers;
+package xyz.joestr.tachyon.information_exchange_server.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.joestr.metis.classes.Greeting;
-import xyz.joestr.metis.classes.User;
+import xyz.joestr.tachyon.information_exchange_server.classes.Greeting;
+import xyz.joestr.tachyon.information_exchange_server.classes.User;
 
 @RestController
 public class GreetingController {

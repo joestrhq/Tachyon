@@ -30,7 +30,7 @@ import xyz.joestr.tachyon.api.utils.Updater;
     desc = "The main command for the Tachyon Bukkit unit.",
     //aliases = {"", ""},
     permission = "tbukkit.commands.tbukkit",
-    permissionMessage = "&cYou are lacking the permission &7tbukkit.commands.tbukkit&c.",
+    permissionMessage = "&7[T] &cYou are lacking the permission &7tbukkit.commands.tbukkit&c.",
     usage = "/<command> [reload|update]"
 )
 public class TBukkitCommand implements TabExecutor {
@@ -48,7 +48,7 @@ public class TBukkitCommand implements TabExecutor {
         
         if(args.length != 1) {
             sender.sendMessage(
-                "&cSyntax: &7/" + command.getLabel() + " [reload|update]"
+                "&7[T-Bukkit] &cSyntax: &7/" + command.getLabel() + " [reload|update]"
             );
             return true; // false, if we want to display the standard usage message
         }
@@ -56,13 +56,13 @@ public class TBukkitCommand implements TabExecutor {
         if(args[0].equalsIgnoreCase("reload")) {
             
             sender.sendMessage(
-                "&bReloading config file ..."
+                "&7[T] &bReloading config file ..."
             );
             
             this.plugin.reloadConfig();
             
             sender.sendMessage(
-                "&bRe-establishing the connection to the MQTT-broker ..."
+                "&7[T] &bRe-establishing the connection to the MQTT-broker ..."
             );
             
             try {
@@ -85,7 +85,7 @@ public class TBukkitCommand implements TabExecutor {
                 );
 
                 sender.sendMessage(
-                    "&cRe-establishment failed. Please consult the server console or the log files."
+                    "&7[T] &cRe-establishment failed. Please consult the server console or the log files."
                 );
             }
             
@@ -98,19 +98,19 @@ public class TBukkitCommand implements TabExecutor {
            
            this.updater.check((updater_) -> {
                 if (updater_.isFetching()) {
-                    sender.sendMessage("&bChecking for an update ...");
+                    sender.sendMessage("&7[T] &bChecking for an update ...");
                 }
 
                 if (!updater_.updateAvailable()) {
-                    sender.sendMessage("&bAn update to version &7" + updater_.latestVersion() + " &bis available.");
+                    sender.sendMessage("&7[T] &bAn update to version &7" + updater_.latestVersion() + " &bis available.");
                 }
 
                 if (updater_.downloadUpdate()) {  
-                    sender.sendMessage("&bDownload URI: &7" + updater_.downloadUri());
+                    sender.sendMessage("&7[T] &bDownload URI: &7" + updater_.downloadUri());
                 }
 
                 if (updater_.downloadedUpdate()) {
-                    sender.sendMessage("&bThe update is placed in the update folder. Please restart the server to install the update.");
+                    sender.sendMessage("&7[T] &bThe update is placed in the update folder. Please restart the server to install the update.");
                 }
            });
            
@@ -118,7 +118,7 @@ public class TBukkitCommand implements TabExecutor {
         }
         
         sender.sendMessage(
-            "&cSyntax: &7/tbukkit [reload|update]"
+            "&7[T] &cSyntax: &7/tbukkit [reload|update]"
         );
         return true; // false, if we want to display the standard usage message
     }

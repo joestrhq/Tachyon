@@ -1,4 +1,4 @@
-package xyz.joestr.metis;
+package xyz.joestr.tachyon.information_exchange_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

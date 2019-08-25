@@ -72,7 +72,7 @@ public class RequestManager implements IMqttMessageListener {
         
         this.mqttClient =
             new MqttClient(
-                "tcp://" + ipAddress + ":" + port,
+                "wss://" + ipAddress + ":" + port,
                 clientId,
                 persistence
             );
