@@ -20,9 +20,9 @@
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
-    <name>Tachyon-Bukkit-Plugin</name>
+    <name>Tachyon Bukkit-Plugin</name>
     <url>https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin</url>
-    <description>The Tachyon Unit for servers, which implement the Bukkit API.</description>
+    <description>The Tachyon unit for servers, which implement the Bukkit API.</description>
     <inceptionYear>2019</inceptionYear>
 
     <!-- Dependency management -->
