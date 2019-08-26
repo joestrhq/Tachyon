@@ -22,7 +22,7 @@
     <!-- Project metadata -->
     <name>Tachyon-BungeeCord-Plugin</name>
     <url>https://git.joestr.xyz/joestr/Tachyon</url>
-    <description>The Tachyon Unit for servers, which implement the BungeeCord API.</description>
+    <description>The Tachyon unit for servers, which implement the BungeeCord API.</description>
     <inceptionYear>2019</inceptionYear>
 
     <!-- Dependency Management -->
@@ -112,10 +112,6 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>mysql:mysql-connector-java</include>
-                                    <include>com.oracle.jdbc:ojdbc8</include>
-                                    <include>org.postgresql:postgresql</include>
-                                    <include>org.xerial:sqlite-jdbc</include>
                                     <include>paho-releases.org.eclipse.paho:org.eclipse.paho.client.mqttv3</include>
                                     <include>xyz.joestr.tachyon:api</include>
                                 </includes>
