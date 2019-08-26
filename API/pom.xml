@@ -20,7 +20,7 @@
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
-    <name>Tachyon-API</name>
+    <name>Tachyon API</name>
     <url>https://git.joestr.xyz/joestr/Tachyon/API</url>
     <description>The Tachyon API.</description>
     <inceptionYear>2019</inceptionYear>
@@ -40,10 +40,6 @@
     <!-- Build process -->
     <build>
         <resources>
-            <resource>
-                <directory>${project.basedir}/src/main/java</directory>
-                <filtering>true</filtering>
-            </resource>
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
