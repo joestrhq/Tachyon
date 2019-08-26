@@ -24,7 +24,7 @@ public class ServerTPSController {
         produces = "application/json"
     )
     @ResponseBody
-    public String getTPS(/*@RequestHeader("authorization") String bearerToken,*/ @PathVariable String servername) {
+    public String getTPS(@RequestHeader("authorization") String bearerToken, @PathVariable String servername) {
         return "20";
     }
 }

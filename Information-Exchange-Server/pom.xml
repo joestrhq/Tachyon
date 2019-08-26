@@ -93,6 +93,15 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.1</version>
                 <configuration>
+                    <artifactSet>
+                        <includes>
+                            <include>mysql:mysql-connector-java</include>
+                            <include>com.oracle.jdbc:ojdbc8</include>
+                            <include>org.postgresql:postgresql</include>
+                            <include>org.xerial:sqlite-jdbc</include>
+                            <include>xyz.joestr.tachyon:api</include>
+                        </includes>
+                    </artifactSet>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
                 </configuration>
             </plugin>
