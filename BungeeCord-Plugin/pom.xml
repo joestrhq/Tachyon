@@ -20,7 +20,7 @@
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
-    <name>Tachyon-BungeeCord-Plugin</name>
+    <name>Tachyon BungeeCord-Plugin</name>
     <url>https://git.joestr.xyz/joestr/Tachyon</url>
     <description>The Tachyon unit for servers, which implement the BungeeCord API.</description>
     <inceptionYear>2019</inceptionYear>

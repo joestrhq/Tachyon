@@ -26,7 +26,7 @@
         <!-- Luckperms api for different uses -->
         <luckperms-api.version>4.3</luckperms-api.version>
         <!-- Testing depedencies -->
-        <junit.version>4.8.2</junit.version>
+        <junit.version>4.12</junit.version>
         <powermock.version>1.4.9</powermock.version>
         <!-- Hikari Connection Pool -->
         <hikaricp.version>3.3.1</hikaricp.version>
@@ -133,13 +133,13 @@
     <distributionManagement>
         <repository>
             <id>joestr-mvn-repo</id>
-            <name>joestr Repository</name>
+            <name>joestr's Maven Repository</name>
             <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
             <uniqueVersion>false</uniqueVersion>
         </repository>
         <snapshotRepository>
             <id>joestr-mvn-repo</id>
-            <name>joestr Repository</name>
+            <name>joestr's Maven Repository</name>
             <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
             <uniqueVersion>false</uniqueVersion>
         </snapshotRepository>
@@ -293,11 +293,8 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <configuration>
-                        <doclint>none</doclint>
-                    </configuration>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.1.0</version>
                     <executions>
                         <execution>
                             <phase>package</phase>
@@ -309,8 +306,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration>
+                        <doclint>none</doclint>
+                    </configuration>
                     <executions>
                         <execution>
                             <phase>package</phase>
