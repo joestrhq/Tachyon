@@ -256,15 +256,24 @@
     <!-- Repository Management -->
     <repositories>
         <repository>
-            <id>joestr-repo</id>
-            <name>joestr Repository</name>
-            <url>https://repo.joestr.xyz/maven/repository/repository/</url>
+            <id>release-repo</id>
+            <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </repository>
+        <repository>
+            <id>snapshot-repo</id>
+            <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
     
@@ -275,15 +284,24 @@
     <!-- Repository Management for plugins -->
     <pluginRepositories>
         <pluginRepository>
-            <id>joestr-repo</id>
-            <name>joestr Repository</name>
-            <url>https://repo.joestr.xyz/maven/repository/repository/</url>
+            <id>release-repo</id>
+            <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshot-repo</id>
+            <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </pluginRepository>
     </pluginRepositories>
     
