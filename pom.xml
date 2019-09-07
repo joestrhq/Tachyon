@@ -183,7 +183,7 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>paho-releases.org.eclipse.paho</groupId>
+                <groupId>org.eclipse.paho</groupId>
                 <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
                 <version>1.2.0</version>
                 <type>jar</type>
@@ -273,6 +273,16 @@
             </snapshots>
             <releases>
                 <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>maven.oracle.com</id>
+            <name>oracle-maven-repo</name>
+            <url>https://maven.oracle.com</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
             </releases>
         </repository>
     </repositories>

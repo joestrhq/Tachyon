@@ -57,7 +57,7 @@
             <artifactId>sqlite-jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>paho-releases.org.eclipse.paho</groupId>
+            <groupId>org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
         </dependency>
         <dependency>

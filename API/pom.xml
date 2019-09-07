@@ -32,7 +32,7 @@
             <artifactId>bungeecord-chat</artifactId>
         </dependency>
         <dependency>
-            <groupId>paho-releases.org.eclipse.paho</groupId>
+            <groupId>org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
         </dependency>
     </dependencies>
