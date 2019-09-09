@@ -42,16 +42,13 @@ public class GreetingController {
         
         if (user.getUniqueID() == null) {
             return user;
-//return Boolean.FALSE;
         }
         
         if (user.getName() == null) {
             return user;
-//return Boolean.FALSE; 
         }
         
         return user;
-        //return Boolean.TRUE;
     }
     
     @RequestMapping(

@@ -23,9 +23,6 @@ public class PooledDatabaseConnection {
     private HikariConfig config = null;
     private HikariDataSource dataSource = null;
 
-
-HikariDataSource ds = new HikariDataSource(config);
-
     private PooledDatabaseConnection(HikariConfig hikariConfig) {
         
         this.config = new HikariConfig();

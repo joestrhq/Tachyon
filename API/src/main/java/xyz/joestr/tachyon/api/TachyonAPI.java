@@ -5,9 +5,22 @@
  */
 package xyz.joestr.tachyon.api;
 
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 import xyz.joestr.tachyon.api.request.RequestManager;
+import xyz.joestr.tachyon.api.settings.PlayerSettings;
+import xyz.joestr.tachyon.api.settings.InstanceSettings;
 
 
 /**
@@ -111,6 +124,78 @@ public abstract class TachyonAPI {
             });
             this.requestManager = newRequestManager;
         }
+    }
+    
+    /**
+     * Get the settings for an instance.
+     * 
+     * @param instanceName The name of the instance
+     * @return The settings for the instance
+     * @throws MalformedURLException If the provided URL is woring.
+     * @throws ProtocolException If an error occours in the protocol.
+     * @throws IOException  If a general I/O error ocours.
+     */
+    public InstanceSettings getInstanceSettings(String instanceName) throws MalformedURLException, ProtocolException, IOException {
+        
+        URL obj = new URL("http://www.google.com/search?q=mkyong");
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("GET");
+
+		con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream())
+        );
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+        
+		in.close();
+
+		//print result
+		System.out.println(response.toString());
+        
+        return new Gson().fromJson(response.toString(), InstanceSettings.class);
+    }
+    
+     /**
+     * Get the settings for a players.
+     * 
+     * @param uuid The UUID of the player.
+     * @return The settings for the instance
+     * @throws MalformedURLException If the provided URL is woring.
+     * @throws ProtocolException If an error occours in the protocol.
+     * @throws IOException  If a general I/O error ocours.
+     */
+    public PlayerSettings getPlayerSettings(UUID uuid) throws MalformedURLException, ProtocolException, IOException {
+        
+        URL obj = new URL("/player/" + uuid.toString());
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("GET");
+
+		con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream())
+        );
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+        
+		in.close();
+
+		//print result
+		System.out.println(response.toString());
+        
+        return new Gson().fromJson(response.toString(), PlayerSettings.class);
     }
     
     /**

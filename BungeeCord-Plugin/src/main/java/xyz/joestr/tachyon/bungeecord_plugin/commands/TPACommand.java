@@ -13,12 +13,16 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
 import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
@@ -68,13 +72,19 @@ public class TPACommand extends Command implements TabExecutor {
                 .getInstance()
                 .getPlayer(strings[0]);
         
-        // If there i no such player
+        // If there is no such player
         if (targetPlayer == null) {
             // TODO: send a message
             return;
         }
 
-        // TODO: tpa logic
+        
+        try {
+            TachyonAPI.getInstance().getRequestManager().sendMessage("dd"
+            );
+        } catch (MqttException ex) {
+            Logger.getLogger(TPACommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         targetPlayer.sendMessage(
             Configuration

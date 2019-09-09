@@ -22,7 +22,12 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.request.RequestManager;
+import static xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin.configuration;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.RawChatFilter;
@@ -132,6 +137,23 @@ public class TachyonBungeeCordPlugin extends Plugin {
             return;
         }
 
+        try {
+            TachyonAPI.getInstance().setRequestManager(
+                new RequestManager(
+                    configuration.getString("mqtt.broker.address"),
+                    configuration.getInt("mqtt.broker.port"),
+                    configuration.getString("mqtt.topic"),
+                    configuration.getInt("mqtt.qos"),
+                    configuration.getString("mqtt.client-id"),
+                    new MemoryPersistence()
+                )
+            );
+        } catch (MqttException ex) {
+            Logger
+                .getLogger(TachyonBungeeCordPlugin.class.getName())
+                .log(Level.SEVERE, null, ex);
+        }
+        
         // Get the BungeeCord plugin manager here
         PluginManager pluginManager = this.getProxy().getPluginManager();
         

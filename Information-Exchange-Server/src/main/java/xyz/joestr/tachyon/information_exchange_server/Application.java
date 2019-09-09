@@ -1,6 +1,5 @@
 package xyz.joestr.tachyon.information_exchange_server;
 
-import java.io.File;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

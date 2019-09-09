@@ -13,11 +13,11 @@ import java.util.Map;
  *
  * @author Joel
  */
-public class ServerSettings {
+public class InstanceSettings {
     
     private final Map<String, String> settings;
     
-    public ServerSettings() {
+    public InstanceSettings() {
         this.settings = new HashMap<>();
     }
     
@@ -39,9 +39,9 @@ public class ServerSettings {
      * 
      * @param settings The settings. 
      */
-    synchronized public void setSettings(ServerSettings settings) {
+    synchronized public void setSettings(InstanceSettings settings) {
         
-        ServerSettings ps = this;
+        InstanceSettings ps = this;
         
         settings.getSettings().forEach((key, value) -> {
             ps.setSetting(key, value);
