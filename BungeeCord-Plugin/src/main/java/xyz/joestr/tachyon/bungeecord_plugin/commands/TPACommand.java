@@ -5,14 +5,6 @@
  */
 package xyz.joestr.tachyon.bungeecord_plugin.commands;
 
-import com.google.common.collect.ImmutableList;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -23,7 +15,6 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import xyz.joestr.tachyon.api.TachyonAPI;
-import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
 import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 
 /**
@@ -43,6 +34,10 @@ public class TPACommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender cs, String[] strings) {
 
+        if(cs == null) {
+            return;
+        }
+        
         // If the sender of the command is not a player ...
         if (!(cs instanceof ProxiedPlayer)) {
             // send a message and quit.

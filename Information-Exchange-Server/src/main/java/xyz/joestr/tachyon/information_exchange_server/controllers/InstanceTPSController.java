@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Joel
  */
 @RestController
-public class ServerTPSController {
+public class InstanceTPSController {
     @RequestMapping(
-        value = "/server/{servername}/settings",
+        value = "/instance/{instancename}/tps",
         method = RequestMethod.GET,
         produces = "application/json"
     )
     @ResponseBody
-    public String getTPS(@RequestHeader("authorization") String bearerToken, @PathVariable String servername) {
+    public String getTPS(@RequestHeader("authorization") String bearerToken, @PathVariable String instancename) {
         return "20";
     }
 }
