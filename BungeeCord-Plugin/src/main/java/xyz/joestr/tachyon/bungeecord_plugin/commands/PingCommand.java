@@ -11,7 +11,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
 
 /**
  * Represents the '/list' command.
@@ -21,17 +21,15 @@ import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 public class PingCommand extends Command implements TabExecutor {
 
     public PingCommand() {
-        super(
-            Configuration.Commands.List.command(),
-            Configuration.Commands.List.permission()
+        super(StaticConfiguration.Commands.List.command(),
+            StaticConfiguration.Commands.List.permission()
         );
     }
 
     @Override
     public void execute(CommandSender cs, String[] strings) {
 
-        cs.sendMessage(
-            Configuration.Messages.listCommandOutput(
+        cs.sendMessage(StaticConfiguration.Messages.Commands.List.output(
                 ProxyServer.getInstance().getPlayers()
             )
         );

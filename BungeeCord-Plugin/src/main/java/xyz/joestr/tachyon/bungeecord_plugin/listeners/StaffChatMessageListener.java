@@ -11,7 +11,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
 
 /**
  *
@@ -36,7 +36,7 @@ public class StaffChatMessageListener implements Listener {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
         
         // If the player does not have the necessary permission
-        if(!player.hasPermission(Configuration.Commands.StaffChat.permission())) {
+        if(!player.hasPermission(StaticConfiguration.Commands.StaffChat.permission())) {
             return;
         }
         

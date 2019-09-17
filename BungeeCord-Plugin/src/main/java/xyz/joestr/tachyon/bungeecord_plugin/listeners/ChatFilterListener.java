@@ -17,10 +17,10 @@ import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
 
 /**
- * Applie filters to sent chat messages
+ * Applies filters to sent chat messages
  * 
  * @author Joel
  */
@@ -55,11 +55,11 @@ public class ChatFilterListener implements Listener {
         // Run through the chat filters
         for(ChatFilter chatFilter : TachyonBungeeCordPlugin.chatFilters) {
             
-            if(!proxiedPlayer.hasPermission(Configuration.LoosePermission.bypassChatFilter())) {
+            if(!proxiedPlayer.hasPermission(StaticConfiguration.LoosePermission.bypassChatFilter())) {
                 break; // Player can bypass all filters -> break here
             }
             
-            if(!proxiedPlayer.hasPermission(Configuration.LoosePermission.bypassChatFilter(chatFilter.permission()))) {
+            if(!proxiedPlayer.hasPermission(StaticConfiguration.LoosePermission.bypassChatFilter(chatFilter.permission()))) {
                 continue; // Player can bypass this specific filter -> continue with next filter
             }
             
@@ -68,8 +68,7 @@ public class ChatFilterListener implements Listener {
         }
         
         // Alter filteration, broadcast the whole message
-        ProxyServer.getInstance().broadcast(
-            Configuration.Messages.transformMessageForGlobalChat(
+        ProxyServer.getInstance().broadcast(StaticConfiguration.Messages.transformMessageForGlobalChat(
                 proxiedPlayer.getName(),
                 baseComponents
             )

@@ -5,6 +5,7 @@
  */
 package xyz.joestr.tachyon.bungeecord_plugin.commands;
 
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -15,7 +16,9 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import xyz.joestr.tachyon.api.TachyonAPI;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.managers.TPAManager;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.TPAType;
 
 /**
  * Represents the '/tpa' command.
@@ -25,9 +28,8 @@ import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 public class TPACommand extends Command implements TabExecutor {
 
     public TPACommand() {
-        super(
-            Configuration.Commands.List.command(),
-            Configuration.Commands.List.permission()
+        super(StaticConfiguration.Commands.List.command(),
+            StaticConfiguration.Commands.List.permission()
         );
     }
 
@@ -41,18 +43,18 @@ public class TPACommand extends Command implements TabExecutor {
         // If the sender of the command is not a player ...
         if (!(cs instanceof ProxiedPlayer)) {
             // send a message and quit.
-            cs.sendMessage(Configuration.Messages.notAPlayer());
+            cs.sendMessage(StaticConfiguration.Messages.Generic.notAPlayer());
             return;
         }
-
+        
         // If there are not enough or too many parameters ...
         if (strings.length != 1) {
             // ... build a message, send and quit.
             cs.sendMessage(
-                Configuration.Messages.usage(
-                    Configuration.Commands.List.usage(),
-                    Configuration.Commands.List.blankUsage(),
-                    Configuration.Commands.List.blankUsage()
+                StaticConfiguration.Messages.Generic.usage(
+                    StaticConfiguration.Commands.List.usage(),
+                    StaticConfiguration.Commands.List.blankUsage(),
+                    StaticConfiguration.Commands.List.blankUsage()
                 )
             );
             return;
@@ -73,20 +75,27 @@ public class TPACommand extends Command implements TabExecutor {
             return;
         }
 
+        TPAManager tpaManager = TPAManager.getInstance();
         
-        try {
-            TachyonAPI.getInstance().getRequestManager().sendMessage("dd"
+        if(tpaManager.hasOutstandingRequest(sourcePlayer.getUniqueId())) {
+            sourcePlayer.sendMessage(
+                StaticConfiguration.Messages.Commands.TPA.sourceHasPendingRequest()
             );
-        } catch (MqttException ex) {
-            Logger.getLogger(TPACommand.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
-
-        targetPlayer.sendMessage(
-            Configuration
-                .Messages
-                .tpaCommandOutput(
-                    sourcePlayer.getName()
-                )
+        
+        if(tpaManager.hasOutstandingRequest(targetPlayer.getUniqueId())) {
+            sourcePlayer.sendMessage(
+                StaticConfiguration.Messages.Commands.TPA.targetHasPendingRequest(targetPlayer.getName())
+            );
+            return;
+        }
+        
+        tpaManager.createRequest(
+            sourcePlayer.getUniqueId(),
+            targetPlayer.getUniqueId(),
+            TPAType.TO,
+            LocalDateTime.now().plusSeconds(15)
         );
     }
 

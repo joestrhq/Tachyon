@@ -12,7 +12,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
 
 /**
  * Represents the '/list' command.
@@ -22,9 +22,8 @@ import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 public class PingOtherCommand extends Command implements TabExecutor {
 
     public PingOtherCommand() {
-        super(
-            Configuration.Commands.List.command(),
-            Configuration.Commands.List.permission()
+        super(StaticConfiguration.Commands.List.command(),
+            StaticConfiguration.Commands.List.permission()
         );
     }
 
@@ -32,11 +31,10 @@ public class PingOtherCommand extends Command implements TabExecutor {
     public void execute(CommandSender cs, String[] strings) {
 
         if(strings.length != 1) {
-            cs.sendMessage(
-                Configuration.Messages.usage(
-                    Configuration.Commands.PingOther.usage(),
-                    Configuration.Commands.PingOther.blankUsage(),
-                    Configuration.Commands.PingOther.blankUsage()
+            cs.sendMessage(StaticConfiguration.Messages.Generic.usage(
+                    StaticConfiguration.Commands.PingOther.usage(),
+                    StaticConfiguration.Commands.PingOther.blankUsage(),
+                    StaticConfiguration.Commands.PingOther.blankUsage()
                 )
             );
             return;
@@ -48,16 +46,14 @@ public class PingOtherCommand extends Command implements TabExecutor {
                 .getPlayer(strings[0]);
         
         if(target == null) {
-            cs.sendMessage(
-                Configuration.Messages
-                    .pingOtherTargetNotOnline(target.getName())
+            cs.sendMessage(StaticConfiguration.Messages.Commands.PingOther
+                    .targetNotOnline(target.getName())
             );
             return;
         }
         
-        cs.sendMessage(
-            Configuration.Messages
-                .pingOtherCommandOutput(target)
+        cs.sendMessage(StaticConfiguration.Messages.Commands.PingOther
+                .output(target.getName(), target.getPing())
         );
     }
 

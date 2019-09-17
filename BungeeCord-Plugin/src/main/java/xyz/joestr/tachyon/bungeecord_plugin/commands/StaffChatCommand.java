@@ -12,7 +12,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
 
 /**
  * Represents the '/staffchat' and '/sc' command.
@@ -22,21 +22,19 @@ import xyz.joestr.tachyon.bungeecord_plugin.utils.Configuration;
 public class StaffChatCommand extends Command implements TabExecutor {
 
     public StaffChatCommand() {
-        super(
-            Configuration.Commands.StaffChat.command(),
-            Configuration.Commands.StaffChat.permission(),
-            Configuration.Commands.StaffChat.alias()
+        super(StaticConfiguration.Commands.StaffChat.command(),
+            StaticConfiguration.Commands.StaffChat.permission(),
+            StaticConfiguration.Commands.StaffChat.alias()
         );
     }
 
     @Override
     public void execute(CommandSender cs, String[] strings) {
         
-        if(strings.length == 0) {
-           Configuration.Messages.usage(
-                Configuration.Commands.StaffChat.usage(),
-                Configuration.Commands.StaffChat.blankUsage(),
-                Configuration.Commands.StaffChat.blankUsage()
+        if(strings.length < 1) {
+           StaticConfiguration.Messages.Generic.usage(StaticConfiguration.Commands.StaffChat.usage(),
+                StaticConfiguration.Commands.StaffChat.blankUsage(),
+                StaticConfiguration.Commands.StaffChat.blankUsage()
             );
            return;
         }
@@ -64,14 +62,10 @@ public class StaffChatCommand extends Command implements TabExecutor {
     public static void sendOutToStaff(String source, String message) {
         ProxyServer.getInstance().getPlayers()
             .stream()
-            .filter(
-                proxiedPlayer -> proxiedPlayer.hasPermission(
-                    Configuration.Commands.StaffChat.permission()
+            .filter(proxiedPlayer -> proxiedPlayer.hasPermission(StaticConfiguration.Commands.StaffChat.permission()
                 )
             )
-            .forEach(
-                proxiedPlayer -> proxiedPlayer.sendMessage(
-                    Configuration.Messages.transformMessageForStaffChat(
+            .forEach(proxiedPlayer -> proxiedPlayer.sendMessage(StaticConfiguration.Messages.transformMessageForStaffChat(
                         source,
                         message
                     )
@@ -80,8 +74,7 @@ public class StaffChatCommand extends Command implements TabExecutor {
         
         ProxyServer.getInstance()
             .getConsole()
-            .sendMessage(
-                Configuration.Messages.transformMessageForStaffChat(
+            .sendMessage(StaticConfiguration.Messages.transformMessageForStaffChat(
                     source,
                     message
                 )
