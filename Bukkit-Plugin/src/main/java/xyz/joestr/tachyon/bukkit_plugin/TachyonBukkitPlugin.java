@@ -6,6 +6,7 @@
 package xyz.joestr.tachyon.bukkit_plugin;
 
 import java.io.File;
+import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
@@ -28,11 +29,14 @@ import org.bukkit.plugin.java.annotation.plugin.Website;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.request.RequestManager;
 import xyz.joestr.tachyon.api.utils.Updater;
 import xyz.joestr.tachyon.bukkit_plugin.api.TachyonAPIBukkit;
 import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 
 /**
  *
@@ -55,6 +59,7 @@ import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
 public class TachyonBukkitPlugin extends JavaPlugin {
     
     private Updater updater;
+    private HttpServer httpServer = null;
     
     @Override
     public void onEnable() {
@@ -92,11 +97,14 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         PluginCommand tBukkitPluginCommand = this.getServer().getPluginCommand("tbukkit");
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
+        
+        final ResourceConfig rc = new ResourceConfig().packages("com.example.rest");
+        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8080/rest/"), rc);
     }
 
     @Override
     public void onDisable() {
 
-        
+        this.httpServer.shutdownNow();
     }
 }
