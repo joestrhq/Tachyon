@@ -8,6 +8,7 @@ package xyz.joestr.tachyon.bungeecord_plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -24,6 +25,9 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 import xyz.joestr.tachyon.api.request.RequestManager;
@@ -61,6 +65,8 @@ public class TachyonBungeeCordPlugin extends Plugin {
 
     // Hold the teleports which have to be accepted or cancelled.
     public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
+    
+    private HttpServer httpServer = null;
 
     /**
      * Called when the plugin starts
@@ -188,6 +194,9 @@ public class TachyonBungeeCordPlugin extends Plugin {
             this,
             new ChatFilterListener()
         );
+        
+        final ResourceConfig rc = new ResourceConfig().packages("com.example.rest");
+        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8080/rest/"), rc);
     }
 
     /**
@@ -196,6 +205,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
     @Override
     public void onDisable() {
         
-        // TODO
+        this.httpServer.shutdownNow();
     }
 }

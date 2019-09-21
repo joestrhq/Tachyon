@@ -42,7 +42,7 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
  *
  * @author Joel
  */
-@Plugin(name="Tachyon-Bukkit-Plugin", version="0.1.6")
+@Plugin(name="Tachyon-Bukkit-Plugin", version="0.1.7")
 @Description(value="The Tachyon unit for servers which implement the Bukkit API.")
 @Website(value="https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin")
 @Author(value="joestr")
