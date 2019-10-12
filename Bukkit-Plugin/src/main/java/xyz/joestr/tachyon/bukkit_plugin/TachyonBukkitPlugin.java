@@ -27,12 +27,9 @@ import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.Website;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
-import xyz.joestr.tachyon.api.request.RequestManager;
 import xyz.joestr.tachyon.api.utils.Updater;
 import xyz.joestr.tachyon.bukkit_plugin.api.TachyonAPIBukkit;
 import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
@@ -75,23 +72,6 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         TachyonAPI.setInstance(new TachyonAPIBukkit());
         
         this.saveDefaultConfig();
-        
-        try {
-            TachyonAPI.getInstance().setRequestManager(
-                new RequestManager(
-                    this.getConfig().getString("mqtt.broker.address"),
-                    this.getConfig().getInt("mqtt.broker.port"),
-                    this.getConfig().getString("mqtt.topic"),
-                    this.getConfig().getInt("mqtt.qos"),
-                    this.getConfig().getString("mqtt.client-id"),
-                    new MemoryPersistence()
-                )
-            );
-        } catch (MqttException ex) {
-            Logger
-                .getLogger(TachyonBukkitPlugin.class.getName())
-                .log(Level.SEVERE, null, ex);
-        }
         
         TBukkitCommand tBukkitCommand = new TBukkitCommand(this, this.updater); 
         PluginCommand tBukkitPluginCommand = this.getServer().getPluginCommand("tbukkit");

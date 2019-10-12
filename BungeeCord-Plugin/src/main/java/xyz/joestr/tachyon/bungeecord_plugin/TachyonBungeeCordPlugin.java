@@ -23,14 +23,11 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
-import xyz.joestr.tachyon.api.request.RequestManager;
 import static xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin.configuration;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
@@ -142,23 +139,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
             // ... quit here.
             return;
         }
-
-        try {
-            TachyonAPI.getInstance().setRequestManager(
-                new RequestManager(
-                    configuration.getString("mqtt.broker.address"),
-                    configuration.getInt("mqtt.broker.port"),
-                    configuration.getString("mqtt.topic"),
-                    configuration.getInt("mqtt.qos"),
-                    configuration.getString("mqtt.client-id"),
-                    new MemoryPersistence()
-                )
-            );
-        } catch (MqttException ex) {
-            Logger
-                .getLogger(TachyonBungeeCordPlugin.class.getName())
-                .log(Level.SEVERE, null, ex);
-        }
         
         // Get the BungeeCord plugin manager here
         PluginManager pluginManager = this.getProxy().getPluginManager();
@@ -195,8 +175,8 @@ public class TachyonBungeeCordPlugin extends Plugin {
             new ChatFilterListener()
         );
         
-        final ResourceConfig rc = new ResourceConfig().packages("com.example.rest");
-        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8080/rest/"), rc);
+        final ResourceConfig rc = new ResourceConfig().packages("xyz.jordtr.tachyon.bungee_cord.rest");
+        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8080/"), rc);
     }
 
     /**

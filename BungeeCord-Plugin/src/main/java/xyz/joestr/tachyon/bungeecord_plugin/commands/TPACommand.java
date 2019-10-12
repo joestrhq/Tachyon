@@ -14,7 +14,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.bungeecord_plugin.managers.TPAManager;
 import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;

@@ -8,17 +8,11 @@ package xyz.joestr.tachyon.bukkit_plugin.commands;
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import xyz.joestr.tachyon.api.TachyonAPI;
-import xyz.joestr.tachyon.api.request.RequestManager;
 import xyz.joestr.tachyon.api.utils.Updater;
 
 /**
@@ -60,34 +54,6 @@ public class TBukkitCommand implements TabExecutor {
             );
             
             this.plugin.reloadConfig();
-            
-            sender.sendMessage(
-                "&7[T] &bRe-establishing the connection to the MQTT-broker ..."
-            );
-            
-            try {
-                TachyonAPI.getInstance().setRequestManager(
-                    new RequestManager(
-                        this.plugin.getConfig().getString("mqtt.broker.address"),
-                        this.plugin.getConfig().getInt("mqtt.broker.port"),
-                        this.plugin.getConfig().getString("mqtt.topic"),
-                        this.plugin.getConfig().getInt("mqtt.qos"),
-                        this.plugin.getConfig().getString("mqtt.client-id"),
-                        new MemoryPersistence()
-                    )
-                );
-            } catch (MqttException ex) {
-
-                Bukkit.getLogger().log(
-                    Level.SEVERE,
-                    null,
-                    ex
-                );
-
-                sender.sendMessage(
-                    "&7[T] &cRe-establishment failed. Please consult the server console or the log files."
-                );
-            }
             
             return true;
         }
