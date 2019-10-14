@@ -231,7 +231,7 @@
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
-                <version>${snakeyaml.verision}</version>
+                <version>${snakeyaml.version}</version>
                 <type>jar</type>
                 <scope>provided</scope>
             </dependency>
