@@ -8,7 +8,6 @@ package xyz.joestr.tachyon.bungeecord_plugin.api;
 import java.lang.reflect.Type;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
-import xyz.joestr.tachyon.api.request.RequestManager;
 
 /**
  *
