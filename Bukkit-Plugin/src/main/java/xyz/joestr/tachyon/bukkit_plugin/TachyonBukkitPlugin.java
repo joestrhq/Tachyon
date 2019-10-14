@@ -78,8 +78,8 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
         
-        final ResourceConfig rc = new ResourceConfig().packages("com.example.rest");
-        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8080/rest/"), rc);
+        final ResourceConfig rc = new ResourceConfig().packages("xyz.joestr.tachyon.bukkit_plugin.rest");
+        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:45000/"), rc);
     }
 
     @Override
