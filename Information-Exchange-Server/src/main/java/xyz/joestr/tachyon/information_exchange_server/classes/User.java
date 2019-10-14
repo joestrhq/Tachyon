@@ -7,7 +7,6 @@ package xyz.joestr.tachyon.information_exchange_server.classes;
 
 import java.util.Objects;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 /**
  *
