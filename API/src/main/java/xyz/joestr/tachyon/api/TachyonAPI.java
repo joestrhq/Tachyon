@@ -19,7 +19,6 @@ import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
 import xyz.joestr.tachyon.api.settings.PlayerSettings;
 import xyz.joestr.tachyon.api.settings.InstanceSettings;
 
-
 /**
  *
  * @author Joel
@@ -28,6 +27,7 @@ import xyz.joestr.tachyon.api.settings.InstanceSettings;
 public abstract class TachyonAPI {
     
     private static TachyonAPI instance = null;
+    private static URL informationExchangeServerURL = null;
     
     /**
      * Sets the instance of the API. This method may only be called once per an
@@ -44,11 +44,28 @@ public abstract class TachyonAPI {
         
         // If the instance is not null anymore
         if(TachyonAPI.instance != null) {
-            throw new IllegalStateException("API instance already set!");
+            throw new IllegalStateException("'instance' already set!");
         }
         
         // Set the instance
         TachyonAPI.instance = instance;
+    }
+    
+    /**
+     * Set the Information Exchange Server URL.
+     * @param informationExchangeServerURL The URL of the Information Exchange Server.
+     */
+    public static void setInformationExchangeServerURL(URL informationExchangeServerURL) {
+        
+        if(informationExchangeServerURL == null) {
+            throw new IllegalArgumentException("Argument 'informationExchangeServerHost' cannot be null!");
+        }
+        
+        if(TachyonAPI.informationExchangeServerURL != null) {
+             throw new IllegalStateException("'informationExchangeServerHost' already set!");
+        }
+        
+        TachyonAPI.informationExchangeServerURL = informationExchangeServerURL;
     }
     
     /**
@@ -96,7 +113,10 @@ public abstract class TachyonAPI {
      */
     public InstanceSettings getInstanceSettings(String instanceName) throws MalformedURLException, ProtocolException, IOException {
         
-        URL obj = new URL("http://www.google.com/search?q=mkyong");
+        URL obj = new URL(
+            informationExchangeServerURL.toString()
+                + "/instance/" + instanceName + "/settings"
+        );
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 		con.setRequestMethod("GET");
@@ -138,6 +158,8 @@ public abstract class TachyonAPI {
 		con.setRequestMethod("GET");
 
 		con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
+        
+        con.setRequestProperty("Authentication", "Bearer ");
 
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream())
