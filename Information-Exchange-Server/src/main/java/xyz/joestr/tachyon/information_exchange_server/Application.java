@@ -1,5 +1,6 @@
 package xyz.joestr.tachyon.information_exchange_server;
 
+import xyz.joestr.tachyon.information_exchange_server.configurations.YamlConfiguration;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,20 +9,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.yaml.snakeyaml.Yaml;
 
 @SpringBootApplication
 public class Application {
     
+    // This is the logger for this whole programm
     public static final Logger LOGGER = Logger.getLogger("Tachyon - IES");
     
     private File localConfigurationFile;
     private File externalConfigurationFile;
-    private Yaml configuration;
+    private Yaml yaml;
+    private YamlConfiguration yamlConfiguration;
     
     public void main(String[] args) throws URISyntaxException {
         
@@ -46,7 +51,11 @@ public class Application {
                 }
             } else {
                 // If we are unable to read this file
-                LOGGER.log(Level.WARNING, "File at '{0}' is not readable!", this.externalConfigurationFile.getAbsolutePath());
+                LOGGER.log(
+                    Level.WARNING,
+                    "File at '{0}' is not readable!",
+                    this.externalConfigurationFile.getAbsolutePath()
+                );
                 LOGGER.log(Level.SEVERE, "Configuration error!");
                 return;
             }
@@ -55,11 +64,15 @@ public class Application {
             if(this.externalConfigurationFile.canWrite()) {
                 // Trying to reading from the local and writing to the external file
                 try {
-                    InputStream initialStream = new FileInputStream(this.localConfigurationFile);
+                    InputStream initialStream = new FileInputStream(
+                        this.localConfigurationFile
+                    );
                     byte[] buffer = new byte[initialStream.available()];
                     initialStream.read(buffer);
                     
-                    OutputStream outStream = new FileOutputStream(this.externalConfigurationFile);
+                    OutputStream outStream = new FileOutputStream(
+                        this.externalConfigurationFile
+                    );
                     outStream.write(buffer);
                 } catch (IOException ex) {
                     LOGGER.log(Level.SEVERE, null, ex);
@@ -75,26 +88,46 @@ public class Application {
                         LOGGER.log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    LOGGER.log(Level.WARNING, "File at '{0}' is not readable!", this.externalConfigurationFile.getAbsolutePath());
+                    LOGGER.log(
+                        Level.WARNING,
+                        "File at '{0}' is not readable!",
+                        this.externalConfigurationFile.getAbsolutePath()
+                    );
                     LOGGER.log(Level.SEVERE, "Configuration error!");
                     return;
                 }
             } else {
                 // We are here beacuse we cannot read and write to the file
-                LOGGER.log(Level.WARNING, "File at '{0}' is not writeable!", this.externalConfigurationFile.getAbsolutePath());
+                LOGGER.log(
+                    Level.WARNING,
+                    "File at '{0}' is not writeable!",
+                    this.externalConfigurationFile.getAbsolutePath()
+                );
                 LOGGER.log(Level.SEVERE, "Configuration error!");
                 return;
             }
         }
         
-        SpringApplication.run(Application.class, args);
+        Map<String, Object> props = new HashMap<>();
+        props.put("server.address", this.yamlConfiguration.getAddress());
+        props.put("server.port", this.yamlConfiguration.getPort());
+
+        new SpringApplicationBuilder()
+            .sources(Application.class)                
+            .properties(props)
+            .run(args);
     }
+    
     /**
-     * Reads the external configuration file.
+     * Reads the external yaml file.
      * @throws FileNotFoundException If the file was not found.
      */
     private void loadConfiguration() throws FileNotFoundException {
-        InputStream input = new FileInputStream(this.externalConfigurationFile);
-        this.configuration.load(input);
+        InputStream input = new FileInputStream(
+            this.externalConfigurationFile
+        );
+        this.yamlConfiguration = this.yaml.loadAs(
+            input, YamlConfiguration.class
+        );
     }
 }
