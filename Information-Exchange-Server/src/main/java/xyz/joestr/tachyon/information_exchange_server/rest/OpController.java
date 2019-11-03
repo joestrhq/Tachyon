@@ -7,7 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-@Path("op/")
+@Path("/op")
 public class OpController {
  
     ArrayList<String> randomVids = new ArrayList<>();

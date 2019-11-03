@@ -14,26 +14,22 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.server.ManagedAsync;
 import xyz.joestr.tachyon.api.rest.RestPlayerSettings;
 import xyz.joestr.tachyon.information_exchange_server.managers.PlayerSettingsManager;
 
 @Path("/players/{uuid}/settings")
 public class PlayersSettingsController {
     
-    @Inject
-    Executor executor;
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @ManagedAsync
     public void get(@Suspended final AsyncResponse asyncResponse, @HeaderParam("authorization") String bearerToken, @PathParam("uuid") String uuid) {
         
-        executor.execute(() -> {
-            RestPlayerSettings result =
-                PlayerSettingsManager.getInstance().get(UUID.fromString(uuid));
-            
-            asyncResponse.resume(result);
-        });
-        
+        RestPlayerSettings result =
+            PlayerSettingsManager.getInstance().get(UUID.fromString(uuid));
+
+        asyncResponse.resume(result);
     }
     
     @PUT

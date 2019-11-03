@@ -14,6 +14,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.server.ManagedAsync;
 import xyz.joestr.tachyon.api.rest.RestPlayerCoordinates;
 import xyz.joestr.tachyon.information_exchange_server.managers.PlayerCoordinatesManager;
 
@@ -25,16 +26,13 @@ public class PlayersCoordinatesController {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @ManagedAsync
     public void get(@Suspended final AsyncResponse asyncResponse, @HeaderParam("authorization") String bearerToken, @PathParam("uuid") String uuid) {
-        
-        executor.execute(() -> {
-            
-            RestPlayerCoordinates result =
-                PlayerCoordinatesManager.getInstance()
-            .get(UUID.fromString(uuid));
-            
-            asyncResponse.resume(result);
-        });
+        RestPlayerCoordinates result =
+            PlayerCoordinatesManager.getInstance()
+        .get(UUID.fromString(uuid));
+
+        asyncResponse.resume(result);
     }
     
     @PUT
