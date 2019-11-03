@@ -285,12 +285,12 @@ public class Main {
      * @throws IOException If an I/O error occours
      */
     private void savePrivateKey(File file, PrivateKey privateKey) throws FileNotFoundException, IOException {
-        X509EncodedKeySpec x509EncodedKeySpec =
-            new X509EncodedKeySpec(
+        PKCS8EncodedKeySpec privateKeySpec =
+            new PKCS8EncodedKeySpec(
 				privateKey.getEncoded()
             );
 		FileOutputStream fos = new FileOutputStream(file);
-		fos.write(x509EncodedKeySpec.getEncoded());
+		fos.write(privateKeySpec.getEncoded());
 		fos.close();
     }
     
@@ -302,12 +302,12 @@ public class Main {
      * @throws IOException If an I/O error occours
      */
     private void savePublicKey(File file, PublicKey publicKey) throws FileNotFoundException, IOException {
-        X509EncodedKeySpec x509EncodedKeySpec =
+        X509EncodedKeySpec publicKeySpec =
             new X509EncodedKeySpec(
 				publicKey.getEncoded()
             );
 		FileOutputStream fos = new FileOutputStream(file);
-		fos.write(x509EncodedKeySpec.getEncoded());
+		fos.write(publicKeySpec.getEncoded());
 		fos.close();
     }
     
@@ -355,8 +355,8 @@ public class Main {
 		fis.close();
         
         KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
-        PKCS8EncodedKeySpec publicKeySpec =
-            new PKCS8EncodedKeySpec(
+        X509EncodedKeySpec publicKeySpec =
+            new X509EncodedKeySpec(
                 encodedPublicKey
             );
         
