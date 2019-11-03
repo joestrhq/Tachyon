@@ -8,7 +8,7 @@ package xyz.joestr.tachyon.bungeecord_plugin.chatfilters;
 import java.util.Arrays;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.classes.ChatFilter;
 
 /**
  * Strips out color codes from a message.

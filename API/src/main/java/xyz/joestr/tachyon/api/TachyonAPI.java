@@ -15,9 +15,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.UUID;
-import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
-import xyz.joestr.tachyon.api.settings.PlayerSettings;
-import xyz.joestr.tachyon.api.settings.InstanceSettings;
+import xyz.joestr.tachyon.api.classes.ChatFilter;
+import xyz.joestr.tachyon.api.rest.RestPlayerSettings;
+import xyz.joestr.tachyon.api.rest.RestInstanceSettings;
 
 /**
  *
@@ -102,6 +102,9 @@ public abstract class TachyonAPI {
      */
     public abstract void unregisterChatFilter(ChatFilter chatFilter);
     
+    @Deprecated
+    public abstract void payVoteReward();
+    
     /**
      * Get the settings for an instance.
      * 
@@ -111,7 +114,7 @@ public abstract class TachyonAPI {
      * @throws ProtocolException If an error occours in the protocol.
      * @throws IOException  If a general I/O error ocours.
      */
-    public InstanceSettings getInstanceSettings(String instanceName) throws MalformedURLException, ProtocolException, IOException {
+    public RestInstanceSettings getInstanceSettings(String instanceName) throws MalformedURLException, ProtocolException, IOException {
         
         URL obj = new URL(
             informationExchangeServerURL.toString()
@@ -138,7 +141,7 @@ public abstract class TachyonAPI {
 		//print result
 		System.out.println(response.toString());
         
-        return new Gson().fromJson(response.toString(), InstanceSettings.class);
+        return new Gson().fromJson(response.toString(), RestInstanceSettings.class);
     }
     
      /**
@@ -150,7 +153,7 @@ public abstract class TachyonAPI {
      * @throws ProtocolException If an error occours in the protocol.
      * @throws IOException  If a general I/O error ocours.
      */
-    public PlayerSettings getPlayerSettings(UUID uuid) throws MalformedURLException, ProtocolException, IOException {
+    public RestPlayerSettings getPlayerSettings(UUID uuid) throws MalformedURLException, ProtocolException, IOException {
         
         URL obj = new URL("/player/" + uuid.toString());
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -176,7 +179,7 @@ public abstract class TachyonAPI {
 		//print result
 		System.out.println(response.toString());
         
-        return new Gson().fromJson(response.toString(), PlayerSettings.class);
+        return new Gson().fromJson(response.toString(), RestPlayerSettings.class);
     }
     
     /**

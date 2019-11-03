@@ -17,7 +17,6 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import java.util.concurrent.Executor;
 import javax.inject.Inject;
-import org.bukkit.entity.Player;
 
 /**
  *
@@ -37,10 +36,9 @@ public class Players {
             
             JsonObject result = new JsonObject();
             
-            for(Player player : Bukkit.getOnlinePlayers()) {
-                
+            Bukkit.getOnlinePlayers().forEach((player) -> {
                 result.addProperty(player.getUniqueId().toString(), player.getName());
-            }
+            });
             
             asyncResponse.resume(new Gson().toJson(result));
         });

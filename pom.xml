@@ -29,11 +29,13 @@
         <jersey.version>2.17</jersey.version>
         <!-- SnakeYAML version -->
         <snakeyaml.version>1.26-SNAPSHOT</snakeyaml.version>
+        <nuvotifier.version>2.3.4</nuvotifier.version>
         <!-- Testing depedencies -->
         <junit.version>4.12</junit.version>
         <powermock.version>1.4.9</powermock.version>
         <!-- Hikari Connection Pool -->
         <hikaricp.version>3.3.1</hikaricp.version>
+        <dbwrapper.version>0.1.2</dbwrapper.version>
         <!-- Maven settings -->
         <maven-compiler.source.version>1.8</maven-compiler.source.version>
         <maven-compiler.target.version>1.8</maven-compiler.target.version>
@@ -233,7 +235,17 @@
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
                 <type>jar</type>
-                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.vexsoftware</groupId>
+                <artifactId>nuvotifier-common</artifactId>
+                <version>${nuvotifier.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.joestr</groupId>
+                <artifactId>dbwrapper</artifactId>
+                <version>${dbwrapper.version}</version>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>

@@ -20,29 +20,43 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import java.util.concurrent.Executor;
 import javax.inject.Inject;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import org.bukkit.entity.Player;
+import xyz.joestr.tachyon.api.rest.RestPlayerCoordinates;
 
 /**
  *
  * @author Joel
  */
+@Path("/players/{uuid}/coordinates")
 public class PlayersCoordinates {
     
     @Inject
     private Executor executor;
     
     @GET
-    @Path("/players/{uuid}/coordinates")
-    @Produces(MediaType.TEXT_PLAIN)
-    public void getCoordinates(@Suspended final AsyncResponse asyncResponse, @PathParam("uuid") UUID uuid) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public void getCoordinates(@Suspended final AsyncResponse asyncResponse, @PathParam("uuid") String uuid) {
         
         executor.execute(() -> {
-            Location location = Bukkit.getPlayer(uuid).getLocation();
+            Player player = Bukkit.getPlayer(UUID.fromString(uuid));
             
-            JsonObject result = new JsonObject();
+            if(player == null)
+                throw new WebApplicationException(
+                    String.format(
+                        "Player with UUID '{0}' not found.",
+                        uuid
+                    ),
+                    Response.Status.NOT_FOUND
+                );
             
-            result.addProperty("x", location.getX());
-            result.addProperty("y", location.getY());
-            result.addProperty("z", location.getZ());
+            Location location = player.getLocation();
+            
+            RestPlayerCoordinates result = new RestPlayerCoordinates();
+            result.setX(location.getX());
+            result.setY(location.getY());
+            result.setZ(location.getZ());
             
             asyncResponse.resume(new Gson().toJson(result));
         });

@@ -16,7 +16,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.bungeecord_plugin.managers.TPAManager;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
+import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 import xyz.joestr.tachyon.bungeecord_plugin.utils.TPAType;
 
 /**

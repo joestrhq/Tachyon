@@ -15,9 +15,9 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.classes.ChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
+import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
  * Applies filters to sent chat messages

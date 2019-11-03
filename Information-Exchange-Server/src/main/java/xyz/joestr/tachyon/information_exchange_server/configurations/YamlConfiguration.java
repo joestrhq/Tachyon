@@ -6,6 +6,7 @@
 package xyz.joestr.tachyon.information_exchange_server.configurations;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the configuration saved in a YAML file.<br>
@@ -37,7 +38,7 @@ public class YamlConfiguration {
     private String address;
     private int port;
     private String bungeecordInstanceURL;
-    private List<String> bukkitInstanceURLs;
+    private Map<String, String> bukkitInstanceURLs;
 
     public YamlConfiguration() {
     }
@@ -46,7 +47,7 @@ public class YamlConfiguration {
         return address;
     }
 
-    public void getAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -66,11 +67,11 @@ public class YamlConfiguration {
         this.bungeecordInstanceURL = bungeecordInstanceURL;
     }
 
-    public List<String> getBukkitInstanceURLs() {
+    public Map<String, String> getBukkitInstanceURLs() {
         return bukkitInstanceURLs;
     }
 
-    public void setBukkitInstanceURLs(List<String> bukkitInstanceURLs) {
+    public void setBukkitInstanceURLs(Map<String, String> bukkitInstanceURLs) {
         this.bukkitInstanceURLs = bukkitInstanceURLs;
     }
 }

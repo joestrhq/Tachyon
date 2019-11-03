@@ -84,7 +84,7 @@ public class TBukkitCommand implements TabExecutor {
         }
         
         sender.sendMessage(
-            "&7[T] &cSyntax: &7/tbukkit [reload|update]"
+            "&7[T] &cSyntax: &7/tbukkit [reload|update|info]"
         );
         return true; // false, if we want to display the standard usage message
     }

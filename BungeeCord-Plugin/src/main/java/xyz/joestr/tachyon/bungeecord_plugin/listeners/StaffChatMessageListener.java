@@ -11,7 +11,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
+import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
  *

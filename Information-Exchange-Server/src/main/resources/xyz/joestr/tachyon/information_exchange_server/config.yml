@@ -1,6 +1,6 @@
-address: "127.0.0.1"
+address: '127.0.0.1'
 port: 59800
-bungeecordinstanceurl: "http://127.0.0.1:59801"
-bukkitinstanceurls:
-  - "http://127.0.0.1:59802"
-  - "http://127.0.0.1:59803"
+bungeecordInstanceURL: 'http://127.0.0.1:59801'
+bukkitInstanceURLs:
+  server_a: 'http://127.0.0.1:59802'
+  server_b: 'http://127.0.0.1:59803'

@@ -7,7 +7,7 @@ package xyz.joestr.tachyon.bukkit_plugin.api;
 
 import java.lang.reflect.Type;
 import xyz.joestr.tachyon.api.TachyonAPI;
-import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.classes.ChatFilter;
 
 /**
  *
@@ -36,6 +36,11 @@ public class TachyonAPIBukkit extends TachyonAPI {
 
     @Override
     public Type demoMethod(Type type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void payVoteReward() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

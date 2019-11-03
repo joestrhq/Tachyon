@@ -23,11 +23,8 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
-import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.classes.ChatFilter;
 import static xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin.configuration;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
@@ -62,8 +59,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
 
     // Hold the teleports which have to be accepted or cancelled.
     public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
-    
-    private HttpServer httpServer = null;
 
     /**
      * Called when the plugin starts
@@ -174,9 +169,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
             this,
             new ChatFilterListener()
         );
-        
-        final ResourceConfig rc = new ResourceConfig().packages("xyz.jordtr.tachyon.bungee_cord.rest");
-        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:8080/"), rc);
     }
 
     /**
@@ -184,7 +176,5 @@ public class TachyonBungeeCordPlugin extends Plugin {
      */
     @Override
     public void onDisable() {
-        
-        this.httpServer.shutdownNow();
     }
 }

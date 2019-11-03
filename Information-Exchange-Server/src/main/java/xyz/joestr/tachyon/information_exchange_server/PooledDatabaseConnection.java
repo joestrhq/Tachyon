@@ -25,16 +25,9 @@ public class PooledDatabaseConnection {
 
     private PooledDatabaseConnection(HikariConfig hikariConfig) {
         
-        this.config = new HikariConfig();
-        
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/simpsons");
-        config.setUsername("bart");
-        config.setPassword("51mp50n");
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        this.config = hikariConfig;
 
-        this.dataSource = new HikariDataSource(hikariConfig);
+        this.dataSource = new HikariDataSource(this.config);
     }
     
     public static PooledDatabaseConnection getInstance() {

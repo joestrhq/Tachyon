@@ -6,7 +6,7 @@
 package xyz.joestr.tachyon.bungeecord_plugin.chatfilters;
 
 import net.md_5.bungee.api.chat.BaseComponent;
-import xyz.joestr.tachyon.api.chatfilter.ChatFilter;
+import xyz.joestr.tachyon.api.classes.ChatFilter;
 
 /**
  * This is a raw chat filter, which does not modify the array of

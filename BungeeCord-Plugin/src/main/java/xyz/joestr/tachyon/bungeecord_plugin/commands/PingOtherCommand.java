@@ -12,7 +12,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.StaticConfiguration;
+import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
  * Represents the '/list' command.
