@@ -78,7 +78,7 @@
             <artifactId>nuvotifier-common</artifactId>
             <scope>compile</scope>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>

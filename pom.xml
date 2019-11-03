@@ -248,6 +248,11 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
+                <groupId>com.github.phillip-kruger</groupId>
+                <artifactId>apiee-core</artifactId>
+                <version>${apiee.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
