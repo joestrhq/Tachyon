@@ -6,8 +6,11 @@
 package xyz.joestr.tachyon.bukkit_plugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.util.Enumeration;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -78,8 +81,30 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
         
-        final ResourceConfig rc = new ResourceConfig().packages("xyz.joestr.tachyon.bukkit_plugin.rest");
-        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:45000/"), rc);
+        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(
+            URI.create(
+                this.getConfig().getString("listenuri")
+            ),
+            new ResourceConfig().packages(
+                "xyz.joestr.tachyon.bukkit_plugin.rest"
+            ),
+            false
+        );
+        
+        Enumeration<String> loggers = LogManager.getLogManager().getLoggerNames();
+        while (loggers.hasMoreElements()) {
+            String loggerName = loggers.nextElement();
+            if(loggerName.contains("glassfish")) {
+                Logger logger = LogManager.getLogManager().getLogger(loggerName);
+                logger.setLevel(Level.OFF);     
+            }
+        }
+        
+        try {
+            httpServer.start();
+        } catch (IOException ex) {
+            Logger.getLogger(TachyonBukkitPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

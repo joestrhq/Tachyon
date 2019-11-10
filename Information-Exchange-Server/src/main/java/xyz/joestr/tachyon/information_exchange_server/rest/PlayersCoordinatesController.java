@@ -20,9 +20,6 @@ import xyz.joestr.tachyon.information_exchange_server.managers.PlayerCoordinates
 
 @Path("/players/{uuid}/coordinates")
 public class PlayersCoordinatesController {
-
-    @Inject
-    Executor executor;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)

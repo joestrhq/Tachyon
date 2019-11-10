@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,11 +19,15 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.classes.ChatFilter;
 import static xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin.configuration;
@@ -60,6 +65,8 @@ public class TachyonBungeeCordPlugin extends Plugin {
     // Hold the teleports which have to be accepted or cancelled.
     public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
 
+    private HttpServer httpServer = null;
+    
     /**
      * Called when the plugin starts
      */
@@ -169,6 +176,34 @@ public class TachyonBungeeCordPlugin extends Plugin {
             this,
             new ChatFilterListener()
         );
+        
+        final ResourceConfig rc = new ResourceConfig().packages("xyz.joestr.tachyon.bungeecord_plugin.rest");
+        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(
+            URI.create(
+                "http://"
+                    + configuration.getString("listenaddress")
+                    + ":"
+                    + configuration.getString("listenport")
+                    + "/"
+            ),
+            rc,
+            false
+        );
+        
+        Enumeration<String> loggers = LogManager.getLogManager().getLoggerNames();
+        while (loggers.hasMoreElements()) {
+            String loggerName = loggers.nextElement();
+            if(loggerName.contains("glassfish")) {
+                Logger logger = LogManager.getLogManager().getLogger(loggerName);
+                logger.setLevel(Level.OFF);     
+            }
+        }
+        
+        try {
+            httpServer.start();
+        } catch (IOException ex) {
+            Logger.getLogger(TachyonBungeeCordPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -176,5 +211,7 @@ public class TachyonBungeeCordPlugin extends Plugin {
      */
     @Override
     public void onDisable() {
+        
+        this.httpServer.shutdownNow();
     }
 }

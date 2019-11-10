@@ -15,8 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.bukkit.Bukkit;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import java.util.concurrent.Executor;
-import javax.inject.Inject;
+import org.glassfish.jersey.server.ManagedAsync;
 
 /**
  *
@@ -24,23 +23,18 @@ import javax.inject.Inject;
  */
 public class Players {
     
-    @Inject
-    private Executor executor;
-    
     @GET
     @Path("/players")
     @Produces(MediaType.APPLICATION_JSON)
+    @ManagedAsync
     public void getCoordinates(@Suspended final AsyncResponse asyncResponse) {
         
-        executor.execute(() -> {
-            
-            JsonObject result = new JsonObject();
-            
-            Bukkit.getOnlinePlayers().forEach((player) -> {
-                result.addProperty(player.getUniqueId().toString(), player.getName());
-            });
-            
-            asyncResponse.resume(new Gson().toJson(result));
+        JsonObject result = new JsonObject();
+
+        Bukkit.getOnlinePlayers().forEach((player) -> {
+            result.addProperty(player.getUniqueId().toString(), player.getName());
         });
+
+        asyncResponse.resume(new Gson().toJson(result));
     }
 }
