@@ -37,6 +37,7 @@ import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.yaml.snakeyaml.Yaml;
+import xyz.joestr.tachyon.information_exchange_server.managers.PlayerSettingsManager;
 
 public class Main {
     
@@ -62,6 +63,9 @@ public class Main {
     
     // The votifier server
     private VotifierServerBuilder votifierServerBuilder;
+    
+    // pooled database connection
+    private PooledDatabaseConnection pooledDatabaseConnection;
     
     public static void main(String[] args) throws URISyntaxException, NoSuchAlgorithmException, NoSuchProviderException, IOException, FileNotFoundException, InvalidKeySpecException, InvalidKeySpecException, InvalidKeySpecException, Throwable {
         
@@ -223,6 +227,15 @@ public class Main {
                 
             }
         }
+        
+        INSTANCE.pooledDatabaseConnection = PooledDatabaseConnection.getInstance(
+            new HikariConfig("some/path/hikari.properties")
+        );
+        
+        PlayerSettingsManager.getInstance(
+            INSTANCE.yamlConfiguration,
+            INSTANCE.pooledDatabaseConnection
+        );
         
         INSTANCE.votifierKeyPair = new KeyPair(loadedPublicKey, loadedPrivateKey);
         
