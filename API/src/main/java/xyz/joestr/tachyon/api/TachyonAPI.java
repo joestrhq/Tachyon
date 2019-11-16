@@ -14,7 +14,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.WeakHashMap;
 import xyz.joestr.tachyon.api.classes.ChatFilter;
 import xyz.joestr.tachyon.api.rest.RestPlayerSettings;
 import xyz.joestr.tachyon.api.rest.RestInstanceSettings;
@@ -28,6 +30,9 @@ public abstract class TachyonAPI {
     
     private static TachyonAPI instance = null;
     private static URL informationExchangeServerURL = null;
+    
+    private WeakHashMap<UUID, RestPlayerSettings> playerSettingsCache = new WeakHashMap<>();
+    private WeakHashMap<UUID, String> playerSettingsCacheTags = new WeakHashMap<>();
     
     /**
      * Sets the instance of the API. This method may only be called once per an
@@ -79,14 +84,6 @@ public abstract class TachyonAPI {
     }
     
     /**
-     * Get the amount of players on a server.
-     * 
-     * @param serverName The name of the server you want to query.
-     * @return The amount of players on a server.
-     */
-    public abstract int getOnlineCountForServer(String serverName);
-    
-    /**
      * Register a new chat filter. (Is only available in BungeeCord
      * implementations of this API.)
      * 
@@ -102,49 +99,7 @@ public abstract class TachyonAPI {
      */
     public abstract void unregisterChatFilter(ChatFilter chatFilter);
     
-    @Deprecated
-    public abstract void payVoteReward();
-    
     /**
-     * Get the settings for an instance.
-     * 
-     * @param instanceName The name of the instance
-     * @return The settings for the instance
-     * @throws MalformedURLException If the provided URL is woring.
-     * @throws ProtocolException If an error occours in the protocol.
-     * @throws IOException  If a general I/O error ocours.
-     */
-    public RestInstanceSettings getInstanceSettings(String instanceName) throws MalformedURLException, ProtocolException, IOException {
-        
-        URL obj = new URL(
-            informationExchangeServerURL.toString()
-                + "/instance/" + instanceName + "/settings"
-        );
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		con.setRequestMethod("GET");
-
-		con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
-
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream())
-        );
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-        
-		in.close();
-
-		//print result
-		System.out.println(response.toString());
-        
-        return new Gson().fromJson(response.toString(), RestInstanceSettings.class);
-    }
-    
-     /**
      * Get the settings for a players.
      * 
      * @param uuid The UUID of the player.
@@ -155,13 +110,50 @@ public abstract class TachyonAPI {
      */
     public RestPlayerSettings getPlayerSettings(UUID uuid) throws MalformedURLException, ProtocolException, IOException {
         
-        URL obj = new URL("/player/" + uuid.toString());
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		con.setRequestMethod("GET");
-
-		con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
+        URL obj;
+        HttpURLConnection con;
         
+        if(this.playerSettingsCache.containsKey(uuid) && this.playerSettingsCacheTags.containsKey(uuid)) {
+            obj = new URL(
+            informationExchangeServerURL.toString()
+                + "/players/"
+                + uuid.toString()
+                + "/settings"
+            );
+            
+            con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("HEAD");
+            con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
+            con.setRequestProperty("Authentication", "Bearer ");
+            
+            BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream())
+            );
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            in.close();
+            
+            if(con.getResponseCode() == 304) {
+                
+            }
+
+            return new Gson().fromJson(response.toString(), RestPlayerSettings.class);
+        }
+        
+        obj = new URL(
+            informationExchangeServerURL.toString()
+                + "/players/"
+                + uuid.toString()
+                + "/settings"
+        );
+		con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
         con.setRequestProperty("Authentication", "Bearer ");
 
 		BufferedReader in = new BufferedReader(
@@ -175,11 +167,26 @@ public abstract class TachyonAPI {
 		}
         
 		in.close();
-
-		//print result
-		System.out.println(response.toString());
         
         return new Gson().fromJson(response.toString(), RestPlayerSettings.class);
+    }
+    
+    /**
+     * Get a specific setting for a player or {@code null} if there is no such
+     * setting.
+     * 
+     * This method calls {@link #getPlayerSettings(java.util.UUID)} and returns
+     * and looks for the specified setting.
+     * 
+     * @param uuid The UUID of the player.
+     * @param setting The specific setting
+     * @return The settings for the instance
+     * @throws MalformedURLException If the provided URL is woring.
+     * @throws ProtocolException If an error occours in the protocol.
+     * @throws IOException  If a general I/O error ocours.
+     */
+    public String getPlayerSetting(UUID uuid, String setting) throws MalformedURLException, ProtocolException, IOException {
+        return instance.getPlayerSettings(uuid).getSetting(setting);
     }
     
     /**

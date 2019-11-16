@@ -52,20 +52,24 @@ public class Main {
     private Yaml yaml;
     private YamlConfiguration yamlConfiguration;
     
+    // Variables for Hikari CP
+    private InputStream localHikariConfigurationFile;
+    private File externalHikariConfigurationFile;
+    
+    // pooled database connection
+    private PooledDatabaseConnection pooledDatabaseConnection;
+    
     // The variables for votifier
     private File externalPrivateKeyFile;
     private File externalPublicKeyFile;
     private KeyPair votifierKeyPair;
     
-    // The server for the REST endpoints
-    private HttpServer httpServer;
-    private AccessLogBuilder accessLogBuilder;
-    
     // The votifier server
     private VotifierServerBuilder votifierServerBuilder;
     
-    // pooled database connection
-    private PooledDatabaseConnection pooledDatabaseConnection;
+    // The server for the REST endpoints
+    private HttpServer httpServer;
+    private AccessLogBuilder accessLogBuilder;
     
     public static void main(String[] args) throws URISyntaxException, NoSuchAlgorithmException, NoSuchProviderException, IOException, FileNotFoundException, InvalidKeySpecException, InvalidKeySpecException, InvalidKeySpecException, Throwable {
         
@@ -93,77 +97,13 @@ public class Main {
             selfJar.getParent(), "votifier.key.pub"
         );
         
-        //</editor-fold>
-        
-        //<editor-fold defaultstate="collapsed" desc="Configuration file logic">
-        
-        // Check if the config from the outside world exists
-        if(INSTANCE.externalConfigurationFile.exists()) {
-            // Check if we can read this file
-            if(INSTANCE.externalConfigurationFile.canRead()) {
-                // Let's try to load
-                try {
-                    INSTANCE.loadConfiguration();
-                } catch (FileNotFoundException ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
-                }
-            } else {
-                // If we are unable to read this file
-                LOGGER.log(Level.WARNING,
-                    "File at {0} is not readable!",
-                    INSTANCE.externalConfigurationFile.getAbsolutePath()
-                );
-                LOGGER.log(Level.SEVERE, "Configuration error!");
-                return;
-            }
-        } else {
-            // Let's check for rights to write
-            if(INSTANCE.externalConfigurationFile.getParentFile().canWrite()) {
-                // Trying to reading from the local and writing to the external file
-                try {
-                    InputStream initialStream =
-                        INSTANCE.localConfigurationFileInputStream;
-                    
-                    byte[] buffer = new byte[initialStream.available()];
-                    initialStream.read(buffer);
-                    
-                    OutputStream outStream = new FileOutputStream(
-                        INSTANCE.externalConfigurationFile
-                    );
-                    outStream.write(buffer);
-                } catch (IOException ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
-                    LOGGER.log(Level.SEVERE, "Configuration error!");
-                    return;
-                }
-                
-                // Check if we able to read the freshly written file again
-                if(INSTANCE.externalConfigurationFile.canRead()) {
-                    try {
-                        INSTANCE.loadConfiguration();
-                    } catch (FileNotFoundException ex) {
-                        LOGGER.log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    LOGGER.log(Level.WARNING,
-                        "File at {0} is not readable!",
-                        INSTANCE.externalConfigurationFile.getAbsolutePath()
-                    );
-                    LOGGER.log(Level.SEVERE, "Configuration error!");
-                    return;
-                }
-            } else {
-                // We are here beacuse we cannot read and write to the file
-                LOGGER.log(Level.WARNING,
-                    "File at {0} is not writeable!",
-                    INSTANCE.externalConfigurationFile.getAbsolutePath()
-                );
-                LOGGER.log(Level.SEVERE, "Configuration error!");
-                return;
-            }
+        if(!INSTANCE.handleConfiguration()) {
+            System.exit(10000);
         }
         
-        //</editor-fold>
+        if(!INSTANCE.handleHikariConfiguration()) {
+            System.exit(10001);
+        }
         
         PrivateKey loadedPrivateKey = null;
         PublicKey loadedPublicKey = null;
@@ -171,10 +111,10 @@ public class Main {
         kPG.initialize(2048);
         KeyPair generatedKeyPair = kPG.generateKeyPair();
         
-        
         if(INSTANCE.externalPrivateKeyFile.exists()) {
             if(INSTANCE.externalPrivateKeyFile.canRead()) {
-                loadedPrivateKey = INSTANCE.loadPrivateKey(INSTANCE.externalPrivateKeyFile,
+                loadedPrivateKey = INSTANCE.loadPrivateKey(
+                    INSTANCE.externalPrivateKeyFile,
                     "RSA"
                 );
             } else {
@@ -189,7 +129,8 @@ public class Main {
                 
                 if(INSTANCE.externalPrivateKeyFile.canRead()) {
                 
-                    loadedPrivateKey = INSTANCE.loadPrivateKey(INSTANCE.externalPrivateKeyFile,
+                    loadedPrivateKey = INSTANCE.loadPrivateKey(
+                        INSTANCE.externalPrivateKeyFile,
                         "RSA"
                     );
                     
@@ -203,7 +144,8 @@ public class Main {
         
         if(INSTANCE.externalPublicKeyFile.exists()) {
             if(INSTANCE.externalPublicKeyFile.canRead()) {
-                loadedPublicKey = INSTANCE.loadPublicKey(INSTANCE.externalPublicKeyFile,
+                loadedPublicKey = INSTANCE.loadPublicKey(
+                    INSTANCE.externalPublicKeyFile,
                     "RSA"
                 );
             } else {
@@ -217,7 +159,8 @@ public class Main {
                 );
                 
                 if(INSTANCE.externalPublicKeyFile.canRead()) {
-                    loadedPublicKey = INSTANCE.loadPublicKey(INSTANCE.externalPublicKeyFile,
+                    loadedPublicKey = INSTANCE.loadPublicKey(
+                        INSTANCE.externalPublicKeyFile,
                         "RSA"
                     );
                 } else {
@@ -229,7 +172,7 @@ public class Main {
         }
         
         INSTANCE.pooledDatabaseConnection = PooledDatabaseConnection.getInstance(
-            new HikariConfig("some/path/hikari.properties")
+            new HikariConfig()
         );
         
         PlayerSettingsManager.getInstance(
@@ -259,8 +202,12 @@ public class Main {
             .create()
             .start();
 
-        final ResourceConfig rc = new ResourceConfig().packages("xyz.joestr.tachyon.information_exchange_server.rest");
-        INSTANCE.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create("http://localhost:59000/"), rc, false);
+        INSTANCE.httpServer = GrizzlyHttpServerFactory.createHttpServer(
+            URI.create(INSTANCE.yamlConfiguration.getListenuri()),
+            new ResourceConfig()
+                .packages("xyz.joestr.tachyon.information_exchange_server.rest"),
+            false
+        );
         
         INSTANCE.accessLogBuilder = new AccessLogBuilder("access.log");
         INSTANCE.accessLogBuilder.rotatedHourly();
@@ -270,6 +217,164 @@ public class Main {
             INSTANCE.httpServer.start();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Handles logic for the configuration file.
+     * @return {@code true} if the operations were successfull; {@code false} if
+     * not
+     */
+    public boolean handleConfiguration() {
+        // Check if the config from the outside world exists
+        if(INSTANCE.externalConfigurationFile.exists()) {
+            // Check if we can read this file
+            if(INSTANCE.externalConfigurationFile.canRead()) {
+                // Let's try to load
+                try {
+                    INSTANCE.loadConfiguration();
+                } catch (FileNotFoundException ex) {
+                    LOGGER.log(Level.SEVERE, null, ex);
+                    return false;
+                }
+                
+                return true;
+            } else {
+                // If we are unable to read this file
+                LOGGER.log(Level.WARNING,
+                    "File at {0} is not readable!",
+                    INSTANCE.externalConfigurationFile.getAbsolutePath()
+                );
+                LOGGER.log(Level.SEVERE, "Configuration error!");
+                return false;
+            }
+        } else {
+            // Let's check for rights to write
+            if(INSTANCE.externalConfigurationFile.getParentFile().canWrite()) {
+                // Trying to reading from the local and writing to the external file
+                try {
+                    InputStream initialStream =
+                        INSTANCE.localConfigurationFileInputStream;
+                    
+                    byte[] buffer = new byte[initialStream.available()];
+                    initialStream.read(buffer);
+                    
+                    OutputStream outStream = new FileOutputStream(
+                        INSTANCE.externalConfigurationFile
+                    );
+                    outStream.write(buffer);
+                } catch (IOException ex) {
+                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "Configuration error!");
+                    return false;
+                }
+                
+                // Check if we able to read the freshly written file again
+                if(INSTANCE.externalConfigurationFile.canRead()) {
+                    try {
+                        INSTANCE.loadConfiguration();
+                    } catch (FileNotFoundException ex) {
+                        LOGGER.log(Level.SEVERE, null, ex);
+                        return false;
+                    }
+                    
+                    return true;
+                } else {
+                    LOGGER.log(Level.WARNING,
+                        "File at {0} is not readable!",
+                        INSTANCE.externalConfigurationFile.getAbsolutePath()
+                    );
+                    LOGGER.log(Level.SEVERE, "Configuration error!");
+                    return false;
+                }
+            } else {
+                // We are here beacuse we cannot read and write to the file
+                LOGGER.log(Level.WARNING,
+                    "File at {0} is not writeable!",
+                    INSTANCE.externalConfigurationFile.getAbsolutePath()
+                );
+                LOGGER.log(Level.SEVERE, "Configuration error!");
+                return false;
+            }
+        }
+    }
+    
+    /**
+     * Handles logic for the Hikari CP configuration file.
+     * @return {@code true} if the operations were successfull; {@code false} if
+     * not
+     */
+    public boolean handleHikariConfiguration() {
+        // Check if the config from the outside world exists
+        if(INSTANCE.externalHikariConfigurationFile.exists()) {
+            // Check if we can read this file
+            if(INSTANCE.externalHikariConfigurationFile.canRead()) {
+                // Let's try to load
+                INSTANCE.pooledDatabaseConnection =
+                    PooledDatabaseConnection.getInstance(
+                        new HikariConfig(
+                            INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
+                        )
+                    );
+                
+                return true;
+            } else {
+                // If we are unable to read this file
+                LOGGER.log(Level.WARNING,
+                    "File at {0} is not readable!",
+                    INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
+                );
+                LOGGER.log(Level.SEVERE, "Configuration error!");
+                return false;
+            }
+        } else {
+            // Let's check for rights to write
+            if(INSTANCE.externalHikariConfigurationFile.getParentFile().canWrite()) {
+                // Trying to reading from the local and writing to the external file
+                try {
+                    InputStream initialStream =
+                        INSTANCE.localHikariConfigurationFile;
+                    
+                    byte[] buffer = new byte[initialStream.available()];
+                    initialStream.read(buffer);
+                    
+                    OutputStream outStream = new FileOutputStream(
+                        INSTANCE.externalHikariConfigurationFile
+                    );
+                    outStream.write(buffer);
+                } catch (IOException ex) {
+                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "Configuration error!");
+                    return false;
+                }
+                
+                // Check if we able to read the freshly written file again
+                if(INSTANCE.externalHikariConfigurationFile.canRead()) {
+                    INSTANCE.pooledDatabaseConnection =
+                        PooledDatabaseConnection.getInstance(
+                            new HikariConfig(
+                                INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
+                            )
+                        );
+                    
+                    return true;
+                } else {
+                    LOGGER.log(Level.WARNING,
+                        "File at {0} is not readable!",
+                        INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
+                    );
+                    LOGGER.log(Level.SEVERE, "Configuration error!");
+                    return false;
+                }
+            } else {
+                // We are here beacuse we cannot read and write to the file
+                LOGGER.log(Level.WARNING,
+                    "File at {0} is not writeable!",
+                    INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
+                );
+                LOGGER.log(Level.SEVERE, "Configuration error!");
+                return false;
+            }
         }
     }
     

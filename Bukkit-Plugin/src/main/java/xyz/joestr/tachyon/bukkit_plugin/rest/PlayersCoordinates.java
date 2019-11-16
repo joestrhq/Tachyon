@@ -7,7 +7,6 @@ Only the owner is allowed to use this software.
 package xyz.joestr.tachyon.bukkit_plugin.rest;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.util.UUID;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,8 +17,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import java.util.concurrent.Executor;
-import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import org.bukkit.entity.Player;

@@ -8,6 +8,7 @@ package xyz.joestr.tachyon.api.rest;
 import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -66,5 +67,30 @@ public class RestPlayerSettings {
      */
     synchronized public void setSetting(String key, String value) {
         this.settings.put(key, value);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.settings);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RestPlayerSettings other = (RestPlayerSettings) obj;
+        if (!Objects.equals(this.settings, other.settings)) {
+            return false;
+        }
+        return true;
     }
 }
