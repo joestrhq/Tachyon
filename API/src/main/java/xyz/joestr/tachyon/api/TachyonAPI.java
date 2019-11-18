@@ -100,7 +100,7 @@ public abstract class TachyonAPI {
     public abstract void unregisterChatFilter(ChatFilter chatFilter);
     
     /**
-     * Get the settings for a players.
+     * Get the settings for a player.
      * 
      * @param uuid The UUID of the player.
      * @return The settings for the instance
@@ -125,24 +125,14 @@ public abstract class TachyonAPI {
             con.setRequestMethod("HEAD");
             con.setRequestProperty("User-Agent", "TachyonAPI/1.0");
             con.setRequestProperty("Authentication", "Bearer ");
-            
-            BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream())
+            con.setRequestProperty(
+                "If-None-Match",
+                this.playerSettingsCacheTags.get(uuid)
             );
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            in.close();
             
             if(con.getResponseCode() == 304) {
-                
+                return this.playerSettingsCache.get(uuid);
             }
-
-            return new Gson().fromJson(response.toString(), RestPlayerSettings.class);
         }
         
         obj = new URL(
@@ -160,7 +150,7 @@ public abstract class TachyonAPI {
 		        new InputStreamReader(con.getInputStream())
         );
 		String inputLine;
-		StringBuffer response = new StringBuffer();
+		StringBuilder response = new StringBuilder();
 
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);

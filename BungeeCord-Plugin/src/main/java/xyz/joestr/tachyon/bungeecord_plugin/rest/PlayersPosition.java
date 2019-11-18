@@ -29,8 +29,8 @@ import xyz.joestr.tachyon.api.rest.RestPlayerServer;
  *
  * @author Joel
  */
-@Path("/players/{uuid}/server")
-public class PlayersServer {
+@Path("/players/{uuid}/position")
+public class PlayersPosition {
     
     @Inject
     Executor executor;

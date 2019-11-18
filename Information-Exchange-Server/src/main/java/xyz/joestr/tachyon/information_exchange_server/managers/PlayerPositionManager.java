@@ -6,7 +6,7 @@
 package xyz.joestr.tachyon.information_exchange_server.managers;
 
 import java.util.UUID;
-import xyz.joestr.tachyon.api.rest.RestPlayerCoordinates;
+import xyz.joestr.tachyon.api.rest.RestPlayerPosition;
 import xyz.joestr.tachyon.api.rest.RestPlayerServer;
 import xyz.joestr.tachyon.information_exchange_server.configurations.YamlConfiguration;
 import xyz.joestr.tachyon.information_exchange_server.utils.RestRequest;
@@ -15,53 +15,62 @@ import xyz.joestr.tachyon.information_exchange_server.utils.RestRequest;
  *
  * @author Joel
  */
-public class PlayerCoordinatesManager {
+public class PlayerPositionManager {
     
-    private static PlayerCoordinatesManager instance;
+    private static PlayerPositionManager instance;
     
     private final YamlConfiguration yamlConfiguration;
     
-    private PlayerCoordinatesManager(YamlConfiguration yamlConfiguration) {
+    private PlayerPositionManager(YamlConfiguration yamlConfiguration) {
         this.yamlConfiguration = yamlConfiguration;
     }
     
-    public static PlayerCoordinatesManager getInstance() {
+    public static PlayerPositionManager getInstance() {
         if(instance == null)
             throw new IllegalStateException(
-                "PlayerCoordinatesManager has not been initialized yet!"
+                "PlayerPositionManager has not been initialized yet!"
             );
         
         return instance;
     }
     
-    public static PlayerCoordinatesManager getInstance(YamlConfiguration yamlConfiguration) {
+    public static PlayerPositionManager getInstance(YamlConfiguration yamlConfiguration) {
         if(instance == null)
-            instance = new PlayerCoordinatesManager(yamlConfiguration);
+            instance = new PlayerPositionManager(yamlConfiguration);
         
         return instance;
     }
     
-    public RestPlayerCoordinates get(UUID uuid) {
+    public RestPlayerPosition get(UUID uuid) {
         
-        RestPlayerServer playerServer =
+        RestPlayerPosition bungeecordPosition =
             RestRequest.make(
                 this.yamlConfiguration.getBungeecordInstanceURL()
                 + "/player/"
                 + uuid.toString()
-                + "/server",
-                RestPlayerServer.class
+                + "/position",
+                RestPlayerPosition.class
             );
-        RestPlayerCoordinates playerCoordinates =
+        RestPlayerPosition bukkitPosition =
             RestRequest.make(
                 this.yamlConfiguration.getBukkitInstanceURLs().get(
-                    playerServer.getServer()
+                    bungeecordPosition.getServer()
                 )
                 + "/player/"
                 + uuid.toString()
-                + "/coordinates",
-                RestPlayerCoordinates.class
+                + "/position",
+                RestPlayerPosition.class
             );
         
-        return playerCoordinates;
+        RestPlayerPosition result
+            = new RestPlayerPosition(
+                bungeecordPosition.getServer(),
+                bukkitPosition.getWorld(),
+                bukkitPosition.getX(),
+                bukkitPosition.getY(),
+                bukkitPosition.getZ()
+            );
+        
+        return result;
     }
 }

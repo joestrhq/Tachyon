@@ -18,13 +18,14 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ManagedAsync;
-import xyz.joestr.tachyon.api.rest.RestPlayerSettings;
+import xyz.joestr.tachyon.api.rest.RestPlayerPosition;
+import xyz.joestr.tachyon.information_exchange_server.managers.PlayerPositionManager;
 import xyz.joestr.tachyon.information_exchange_server.managers.PlayerSettingsManager;
 import xyz.joestr.tachyon.information_exchange_server.utils.APIKeyChecker;
 import xyz.joestr.tachyon.information_exchange_server.utils.ETagChecker;
 
-@Path("/players/{uuid}/settings")
-public class PlayersSettingsController {
+@Path("/players/{uuid}/position")
+public class PlayersPositionController {
     
     @HEAD
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,16 +38,9 @@ public class PlayersSettingsController {
     ) {
         APIKeyChecker.isPermitted(bearerToken, "players.settings.get");
         
-        RestPlayerSettings result = null;
+        RestPlayerPosition result = null;
         
-        try {
-            result = PlayerSettingsManager.getInstance().getSettings(UUID.fromString(uuid));
-        } catch (SQLException ex) {
-            throw new WebApplicationException(
-                ex,
-                Response.Status.INTERNAL_SERVER_ERROR
-            );
-        }
+        result = PlayerPositionManager.getInstance().get(UUID.fromString(uuid));
         
         Response response;
         
@@ -83,16 +77,9 @@ public class PlayersSettingsController {
         
         APIKeyChecker.isPermitted(bearerToken, "players.settings.get");
         
-        RestPlayerSettings result = null;
+        RestPlayerPosition result = null;
         
-        try {
-            result = PlayerSettingsManager.getInstance().getSettings(UUID.fromString(uuid));
-        } catch (SQLException ex) {
-            throw new WebApplicationException(
-                ex,
-                Response.Status.INTERNAL_SERVER_ERROR
-            );
-        }
+        result = PlayerPositionManager.getInstance().get(UUID.fromString(uuid));
         
         asyncResponse.resume(
             Response

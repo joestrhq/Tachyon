@@ -5,23 +5,46 @@
  */
 package xyz.joestr.tachyon.api.rest;
 
+import java.util.Objects;
+import java.util.UUID;
+
 /**
  *
  * @author Joel
  */
-public class RestPlayerCoordinates {
+public class RestPlayerPosition {
     
+    private String server;
+    private UUID world;
     private double x, y, z;
 
-    public RestPlayerCoordinates(double x, double y, double z) {
+    public RestPlayerPosition(String server, UUID world, double x, double y, double z) {
+        this.server = server;
+        this.world = world;
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public RestPlayerCoordinates() {
+    public RestPlayerPosition() {
+    }
+    
+    public String getServer() {
+        return server;
     }
 
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public UUID getWorld() {
+        return world;
+    }
+
+    public void setWorld(UUID world) {
+        this.world = world;
+    }
+    
     public double getX() {
         return x;
     }
@@ -48,15 +71,17 @@ public class RestPlayerCoordinates {
 
     @Override
     public String toString() {
-        return "RestPlayerCoordinates{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+        return "RestPlayerPosition{" + "server=" + server + ", world=" + world + ", x=" + x + ", y=" + y + ", z=" + z + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.server);
+        hash = 47 * hash + Objects.hashCode(this.world);
+        hash = 47 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+        hash = 47 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+        hash = 47 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
         return hash;
     }
 
@@ -71,7 +96,7 @@ public class RestPlayerCoordinates {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RestPlayerCoordinates other = (RestPlayerCoordinates) obj;
+        final RestPlayerPosition other = (RestPlayerPosition) obj;
         if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
             return false;
         }
@@ -81,8 +106,12 @@ public class RestPlayerCoordinates {
         if (Double.doubleToLongBits(this.z) != Double.doubleToLongBits(other.z)) {
             return false;
         }
+        if (!Objects.equals(this.server, other.server)) {
+            return false;
+        }
+        if (!Objects.equals(this.world, other.world)) {
+            return false;
+        }
         return true;
     }
-
-    
 }

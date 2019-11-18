@@ -21,7 +21,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import org.bukkit.entity.Player;
 import org.glassfish.jersey.server.ManagedAsync;
-import xyz.joestr.tachyon.api.rest.RestPlayerCoordinates;
+import xyz.joestr.tachyon.api.rest.RestPlayerPosition;
 
 /**
  *
@@ -48,7 +48,7 @@ public class PlayersCoordinates {
 
         Location location = player.getLocation();
 
-        RestPlayerCoordinates result = new RestPlayerCoordinates();
+        RestPlayerPosition result = new RestPlayerPosition();
         result.setX(location.getX());
         result.setY(location.getY());
         result.setZ(location.getZ());
