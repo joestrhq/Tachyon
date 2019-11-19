@@ -36,7 +36,7 @@ import xyz.joestr.tachyon.bukkit_plugin.TachyonBukkitPlugin;
  *
  * @author Joel
  */
-@Path("/players/{uuid}/iventory")
+//@Path("/players/{uuid}/iventory")
 public class PlayersInventory {
     
     @Inject

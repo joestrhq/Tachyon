@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.bukkit.Bukkit;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ManagedAsync;
 
 /**
@@ -35,6 +36,10 @@ public class Players {
             result.addProperty(player.getUniqueId().toString(), player.getName());
         });
 
-        asyncResponse.resume(new Gson().toJson(result));
+        asyncResponse.resume(
+            Response
+                .ok(new Gson().toJson(result))
+                .build()
+        );
     }
 }

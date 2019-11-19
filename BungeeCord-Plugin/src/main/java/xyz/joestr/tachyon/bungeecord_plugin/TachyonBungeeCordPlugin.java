@@ -47,6 +47,8 @@ import xyz.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
  */
 public class TachyonBungeeCordPlugin extends Plugin {
 
+    private static TachyonBungeeCordPlugin INSTANCE;
+    
     /**
      * A {@link Set} of {@link ChatFilter}s
      */
@@ -73,6 +75,8 @@ public class TachyonBungeeCordPlugin extends Plugin {
     @Override
     public void onEnable() {
 
+        INSTANCE = this;
+        
         // The chatfilters
         chatFilters = new HashSet<>();
         
@@ -213,5 +217,9 @@ public class TachyonBungeeCordPlugin extends Plugin {
     public void onDisable() {
         
         this.httpServer.shutdownNow();
+    }
+    
+    public static TachyonBungeeCordPlugin getInstance() {
+        return INSTANCE;
     }
 }

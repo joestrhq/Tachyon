@@ -58,11 +58,15 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 //@Permission(name = "test.*", desc = "Wildcard permission", children = {@ChildPermission(name ="test.foo")})
 public class TachyonBukkitPlugin extends JavaPlugin {
     
+    private static TachyonBukkitPlugin INSTANCE;
+    
     private Updater updater;
     private HttpServer httpServer = null;
     
     @Override
     public void onEnable() {
+        
+        INSTANCE = this;
         
         this.updater =
             new Updater(
@@ -111,5 +115,9 @@ public class TachyonBukkitPlugin extends JavaPlugin {
     public void onDisable() {
 
         this.httpServer.shutdownNow();
+    }
+    
+    public static TachyonBukkitPlugin getInstance() {
+        return INSTANCE;
     }
 }
