@@ -40,7 +40,7 @@ public class PlayersPositionController {
         
         RestPlayerPosition result = null;
         
-        result = PlayerPositionManager.getInstance().get(UUID.fromString(uuid));
+        result = PlayerPositionManager.getInstance().getPosition(UUID.fromString(uuid));
         
         Response response;
         
@@ -79,7 +79,7 @@ public class PlayersPositionController {
         
         RestPlayerPosition result = null;
         
-        result = PlayerPositionManager.getInstance().get(UUID.fromString(uuid));
+        result = PlayerPositionManager.getInstance().getPosition(UUID.fromString(uuid));
         
         asyncResponse.resume(
             Response
@@ -98,6 +98,12 @@ public class PlayersPositionController {
         @PathParam("uuid") String uuid, String json
     ) {
         
+        throw new WebApplicationException(
+            "Not implemented!",
+            Response.Status.NOT_IMPLEMENTED
+        );
+        
+        /*
         APIKeyChecker.isPermitted(bearerToken, "players.settings.put");
         
         JsonObject o = new Gson().fromJson(json, JsonObject.class);
@@ -118,5 +124,6 @@ public class PlayersPositionController {
         asyncResponse.resume(
             Response.noContent().build()
         );
+        */
     }
 }

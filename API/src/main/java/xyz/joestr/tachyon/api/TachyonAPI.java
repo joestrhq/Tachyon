@@ -14,12 +14,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.UUID;
 import java.util.WeakHashMap;
 import xyz.joestr.tachyon.api.classes.ChatFilter;
 import xyz.joestr.tachyon.api.rest.RestPlayerSettings;
-import xyz.joestr.tachyon.api.rest.RestInstanceSettings;
 
 /**
  *

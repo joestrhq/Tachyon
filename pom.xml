@@ -7,7 +7,7 @@
     <!-- Properties -->
     <properties>
         <!-- Tachyon version -->
-        <tachyon.version-number>0.1.7</tachyon.version-number>
+        <tachyon.version-number>0.1.8</tachyon.version-number>
         <tachyon.version-suffix>SNAPSHOT</tachyon.version-suffix>
         <tachyon.version>${tachyon.version-number}-${tachyon.version-suffix}</tachyon.version>
         <!-- UTF8 -->

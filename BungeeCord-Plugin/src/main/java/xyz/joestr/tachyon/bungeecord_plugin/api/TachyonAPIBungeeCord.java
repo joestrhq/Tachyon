@@ -16,11 +16,6 @@ import xyz.joestr.tachyon.api.classes.ChatFilter;
 public class TachyonAPIBungeeCord extends TachyonAPI {
 
     @Override
-    public int getOnlineCountForServer(String serverName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void registerChatFilter(ChatFilter chatFilter) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -34,10 +29,4 @@ public class TachyonAPIBungeeCord extends TachyonAPI {
     public Type demoMethod(Type type) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void payVoteReward() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

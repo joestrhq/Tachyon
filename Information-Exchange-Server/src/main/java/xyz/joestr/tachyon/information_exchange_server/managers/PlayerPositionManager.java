@@ -41,7 +41,7 @@ public class PlayerPositionManager {
         return instance;
     }
     
-    public RestPlayerPosition get(UUID uuid) {
+    public RestPlayerPosition getPosition(UUID uuid) {
         
         RestPlayerPosition bungeecordPosition =
             RestRequest.make(
