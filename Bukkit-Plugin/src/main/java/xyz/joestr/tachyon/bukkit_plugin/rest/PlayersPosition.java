@@ -6,6 +6,7 @@ Only the owner is allowed to use this software.
 */
 package xyz.joestr.tachyon.bukkit_plugin.rest;
 
+/*
 import com.google.gson.Gson;
 import java.util.UUID;
 import javax.ws.rs.GET;
@@ -28,7 +29,7 @@ import xyz.joestr.tachyon.bukkit_plugin.TachyonBukkitPlugin;
 /**
  *
  * @author Joel
- */
+ *
 @Path("/players/{uuid}/position")
 public class PlayersPosition {
     
@@ -103,3 +104,4 @@ public class PlayersPosition {
         );
     }
 }
+*/

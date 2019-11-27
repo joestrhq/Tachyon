@@ -5,13 +5,11 @@
  */
 package xyz.joestr.tachyon.bukkit_plugin;
 
+import io.undertow.Undertow;
+import io.undertow.server.HttpHandler;
+import io.undertow.server.HttpServerExchange;
+import io.undertow.util.Headers;
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.permissions.PermissionDefault;
@@ -30,25 +28,22 @@ import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.Website;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.server.ResourceConfig;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.utils.Updater;
 import xyz.joestr.tachyon.bukkit_plugin.api.TachyonAPIBukkit;
 import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 
 /**
  *
  * @author Joel
  */
-@Plugin(name="Tachyon-Bukkit-Plugin", version="0.1.7")
+@Plugin(name="Tachyon-Bukkit-Plugin", version="0.1.8")
 @Description(value="The Tachyon unit for servers which implement the Bukkit API.")
 @Website(value="https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin")
 @Author(value="joestr")
 @LoadOrder(value=PluginLoadOrder.STARTUP)
 @LogPrefix(value="Tachyon Bukkit")
-@Dependency(value="LuckPerms")
+//@Dependency(value="LuckPerms")
 @ApiVersion(value=ApiVersion.Target.v1_13)
 //@LoadBefore("")
 //@SoftDependency("")
@@ -61,7 +56,6 @@ public class TachyonBukkitPlugin extends JavaPlugin {
     private static TachyonBukkitPlugin INSTANCE;
     
     private Updater updater;
-    private HttpServer httpServer = null;
     
     @Override
     public void onEnable() {
@@ -85,36 +79,21 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
         
-        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(
-            URI.create(
-                this.getConfig().getString("listenuri")
-            ),
-            new ResourceConfig().packages(
-                "xyz.joestr.tachyon.bukkit_plugin.rest"
-            ),
-            false
-        );
-        
-        Enumeration<String> loggers = LogManager.getLogManager().getLoggerNames();
-        while (loggers.hasMoreElements()) {
-            String loggerName = loggers.nextElement();
-            if(loggerName.contains("glassfish")) {
-                Logger logger = LogManager.getLogManager().getLogger(loggerName);
-                logger.setLevel(Level.OFF);     
-            }
-        }
-        
-        try {
-            httpServer.start();
-        } catch (IOException ex) {
-            Logger.getLogger(TachyonBukkitPlugin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Undertow server = Undertow.builder()
+                .addHttpListener(8080, "localhost")
+                .setHandler(new HttpHandler() {
+                    @Override
+                    public void handleRequest(final HttpServerExchange exchange) throws Exception {
+                        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
+                        exchange.getResponseSender().send("Hello World");
+                    }
+                }).build();
+        server.start();
     }
 
     @Override
     public void onDisable() {
-
-        this.httpServer.shutdownNow();
+        
     }
     
     public static TachyonBukkitPlugin getInstance() {
