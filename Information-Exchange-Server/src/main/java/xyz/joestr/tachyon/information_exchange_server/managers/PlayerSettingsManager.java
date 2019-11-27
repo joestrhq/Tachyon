@@ -43,9 +43,8 @@ public class PlayerSettingsManager {
         
         Statement s = pDC.getConnection().createStatement();
         ResultSet r = s.executeQuery("SHOW TABLES LIKE 'tachyon_playersettings';");
-        int row = r.getRow();
         
-        if(row == 0) {
+        if(!r.first()) {
             throw new IllegalStateException(
                 "The table tachyon_playersettings has not been found!"
             );

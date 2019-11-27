@@ -79,6 +79,9 @@ public class Main {
         INSTANCE.localConfigurationFileInputStream =
             INSTANCE.getClass().getResourceAsStream("config.yml");
         
+        INSTANCE.localHikariConfigurationFile =
+            INSTANCE.getClass().getResourceAsStream("hikari.properties");
+        
         // The jar-file
         File selfJar = new File(
             INSTANCE.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()
@@ -87,6 +90,10 @@ public class Main {
         // Get the config.yml from the directory where the jar itself is
         INSTANCE.externalConfigurationFile = new File(
             selfJar.getParent(), "config.yml"
+        );
+        
+        INSTANCE.externalHikariConfigurationFile = new File(
+            selfJar.getParent(), "hikari.properties"
         );
         
         INSTANCE.externalPrivateKeyFile = new File(
@@ -170,10 +177,6 @@ public class Main {
                 
             }
         }
-        
-        INSTANCE.pooledDatabaseConnection = PooledDatabaseConnection.getInstance(
-            new HikariConfig()
-        );
         
         PlayerSettingsManager.getInstance(
             INSTANCE.yamlConfiguration,
