@@ -36,6 +36,8 @@
         <!-- Hikari Connection Pool -->
         <hikaricp.version>3.3.1</hikaricp.version>
         <dbwrapper.version>0.1.2</dbwrapper.version>
+        <rapidoid.version>5.5.5</rapidoid.version>
+        <undertow.version>2.0.1.Final</undertow.version>
         <!-- Maven settings -->
         <maven-compiler.source.version>1.8</maven-compiler.source.version>
         <maven-compiler.target.version>1.8</maven-compiler.target.version>
@@ -277,6 +279,16 @@
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
                 <version>${hikaricp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.rapidoid</groupId>
+                <artifactId>rapidoid-quick</artifactId>
+                <version>${rapidoid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.undertow</groupId>
+                <artifactId>undertow-core</artifactId>
+                <version>2.0.1.Final</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
