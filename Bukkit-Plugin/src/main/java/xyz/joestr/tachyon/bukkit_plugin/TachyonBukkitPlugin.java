@@ -5,11 +5,15 @@
  */
 package xyz.joestr.tachyon.bukkit_plugin;
 
+import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.server.handlers.resource.PathResourceManager;
+import io.undertow.server.handlers.resource.ResourceHandler;
 import io.undertow.util.Headers;
 import java.io.File;
+import java.nio.file.Paths;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.permissions.PermissionDefault;
@@ -79,15 +83,42 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
         
-        Undertow server = Undertow.builder()
-                .addHttpListener(8080, "localhost")
-                .setHandler(new HttpHandler() {
-                    @Override
-                    public void handleRequest(final HttpServerExchange exchange) throws Exception {
-                        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
-                        exchange.getResponseSender().send("Hello World");
-                    }
-                }).build();
+        Undertow server =
+            Undertow.builder()
+                .addHttpListener(8080, "0.0.0.0")
+                .setHandler(
+                    Handlers.path()
+                        .addPrefixPath(
+                            "/players",
+                            Handlers.routing()
+                                .get("/", null)
+                                .get(
+                                    "/{uuid}",
+                                    Handlers.routing()
+                                        .get("/position", null)
+                                    )
+                                .put(
+                                    "/{uuid}",
+                                    Handlers.routing()
+                                        .get("/position", null)
+                                )
+                                .setFallbackHandler(null)
+                        )
+                        // Redirect root path to /static to serve the index.html by default
+                        .addExactPath(
+                            "/",
+                            Handlers.redirect("/static")
+                        )
+                        // Serve all static files from a folder
+                        .addPrefixPath(
+                            "/static",
+                            new ResourceHandler(
+                                new PathResourceManager(Paths.get("/path/to/www/"), 100)
+                            )
+                            .setWelcomeFiles("index.html")
+                        )
+                ).build();
+        
         server.start();
     }
 

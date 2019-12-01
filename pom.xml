@@ -37,7 +37,7 @@
         <hikaricp.version>3.3.1</hikaricp.version>
         <dbwrapper.version>0.1.2</dbwrapper.version>
         <rapidoid.version>5.5.5</rapidoid.version>
-        <undertow.version>2.0.1.Final</undertow.version>
+        <undertow.version>2.0.28.Final</undertow.version>
         <!-- Maven settings -->
         <maven-compiler.source.version>1.8</maven-compiler.source.version>
         <maven-compiler.target.version>1.8</maven-compiler.target.version>
