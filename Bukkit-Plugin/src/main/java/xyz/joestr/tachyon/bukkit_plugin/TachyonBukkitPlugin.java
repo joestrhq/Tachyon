@@ -36,6 +36,9 @@ import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.utils.Updater;
 import xyz.joestr.tachyon.bukkit_plugin.api.TachyonAPIBukkit;
 import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
+import xyz.joestr.tachyon.bukkit_plugin.rest.EndPointPlayers;
+import xyz.joestr.tachyon.bukkit_plugin.rest.EndPointPlayersPosition;
+
 
 /**
  *
@@ -86,16 +89,14 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         Undertow server =
             Undertow.builder()
                 .addHttpListener(8080, "0.0.0.0")
-                .setHandler(
-                    Handlers.path()
-                        .addPrefixPath(
-                            "/players",
+                .setHandler(Handlers.path()
+                        .addPrefixPath("/players",
                             Handlers.routing()
-                                .get("/", null)
+                                .get("/", new EndPointPlayers())
                                 .get(
                                     "/{uuid}",
                                     Handlers.routing()
-                                        .get("/position", null)
+                                        .get("/position", new EndPointPlayersPosition())
                                     )
                                 .put(
                                     "/{uuid}",

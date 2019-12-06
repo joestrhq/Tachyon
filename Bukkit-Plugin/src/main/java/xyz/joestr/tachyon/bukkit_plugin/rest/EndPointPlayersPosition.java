@@ -14,9 +14,13 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import io.undertow.util.PathTemplateMatch;
+import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import xyz.joestr.tachyon.api.rest.RestPlayerPosition;
+import xyz.joestr.tachyon.bukkit_plugin.TachyonBukkitPlugin;
 
-public class Players implements HttpHandler {
+public class EndPointPlayersPosition implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange hse) throws Exception {
@@ -33,19 +37,32 @@ public class Players implements HttpHandler {
             return;
         }
         
-        String uuid = hse.getPathParameters().get("uuid").peekFirst();
+        String paramUuid = hse.getPathParameters().get("uuid").peekFirst();
         
-        if(uuid == null) {
+        if(paramUuid == null) {
             hse.setResponseCode(404); // Not found
             return;
         }
         
-        JsonObject result = new JsonObject();
-
-        Bukkit.getServer().getOnlinePlayers().forEach((player) -> {
-            result.addProperty(player.getUniqueId().toString(), player.getName());
-        });
-
+        UUID uuid = UUID.fromString(paramUuid);
+        
+        RestPlayerPosition result = new RestPlayerPosition();
+        
+        Bukkit.getServer().getScheduler().callSyncMethod(
+            TachyonBukkitPlugin.getInstance(),
+            () -> {
+                
+                Location l = Bukkit.getServer().getPlayer(uuid).getLocation();
+                result.setServer(null);
+                result.setWorld(l.getWorld().getUID());
+                result.setX(l.getX());
+                result.setY(l.getY());
+                result.setZ(l.getZ());
+                
+                return true;
+            }
+        );
+        
         hse.getResponseHeaders().put(
             Headers.CONTENT_TYPE,
             MediaType.JSON_UTF_8.toString()
