@@ -9,11 +9,9 @@ package xyz.joestr.tachyon.bukkit_plugin.rest;
 import com.google.common.base.Charsets;
 import com.google.common.net.MediaType;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import io.undertow.util.PathTemplateMatch;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,19 +26,19 @@ public class EndPointPlayersPosition implements HttpHandler {
         String accept = hse.getRequestHeaders().get(Headers.ACCEPT).peekFirst();
         
         if(accept == null) {
-            hse.setResponseCode(406); // Not Acceptable
+            hse.setStatusCode(406); // Not Acceptable
             return;
         }
         
         if(accept.equals(MediaType.JSON_UTF_8.toString())) {
-            hse.setResponseCode(406); // Not Acceptable
+            hse.setStatusCode(406); // Not Acceptable
             return;
         }
         
         String paramUuid = hse.getPathParameters().get("uuid").peekFirst();
         
         if(paramUuid == null) {
-            hse.setResponseCode(404); // Not found
+            hse.setStatusCode(404); // Not found
             return;
         }
         

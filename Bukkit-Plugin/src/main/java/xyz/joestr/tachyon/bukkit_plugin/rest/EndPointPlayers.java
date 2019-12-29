@@ -13,7 +13,6 @@ import com.google.gson.JsonObject;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import io.undertow.util.PathTemplateMatch;
 import org.bukkit.Bukkit;
 
 public class EndPointPlayers implements HttpHandler {
@@ -24,12 +23,12 @@ public class EndPointPlayers implements HttpHandler {
         String accept = hse.getRequestHeaders().get(Headers.ACCEPT).peekFirst();
         
         if(accept == null) {
-            hse.setResponseCode(406); // Not Acceptable
+            hse.setStatusCode(406); // Not Acceptable
             return;
         }
         
         if(accept.equals(MediaType.JSON_UTF_8.toString())) {
-            hse.setResponseCode(406); // Not Acceptable
+            hse.setStatusCode(406); // Not Acceptable
             return;
         }
         
