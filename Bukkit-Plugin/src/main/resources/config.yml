@@ -1,3 +1,5 @@
-listenuri: 'http://127.0.0.1:48001'
+listen:
+    host: '127.0.0.1'
+    uri: 48001
 information_exchange_server:
     uri: 'http://127.0.0.1'

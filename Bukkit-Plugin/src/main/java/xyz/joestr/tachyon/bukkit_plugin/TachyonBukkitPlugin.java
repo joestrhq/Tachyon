@@ -86,39 +86,29 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
         
-        Undertow server =
-            Undertow.builder()
-                .addHttpListener(8080, "0.0.0.0")
-                .setHandler(Handlers.path()
-                        .addPrefixPath("/players",
-                            Handlers.routing()
-                                .get("/", new EndPointPlayers())
-                                .get(
-                                    "/{uuid}",
-                                    Handlers.routing()
-                                        .get("/position", new EndPointPlayersPosition())
-                                    )
-                                .put(
-                                    "/{uuid}",
-                                    Handlers.routing()
-                                        .get("/position", null)
+        Undertow server = Undertow.builder()
+            .addHttpListener(
+                this.getConfig().getInt("liste.port"),
+                this.getConfig().getString("listen.host")
+            )
+            .setHandler(
+                Handlers.path()
+                    .addPrefixPath("/players",
+                        Handlers.routing()
+                            .get("/", new EndPointPlayers())
+                            .get(
+                                "/{uuid}",
+                                Handlers.routing()
+                                    .get("/position", new EndPointPlayersPosition())
                                 )
-                                .setFallbackHandler(null)
-                        )
-                        // Redirect root path to /static to serve the index.html by default
-                        .addExactPath(
-                            "/",
-                            Handlers.redirect("/static")
-                        )
-                        // Serve all static files from a folder
-                        .addPrefixPath(
-                            "/static",
-                            new ResourceHandler(
-                                new PathResourceManager(Paths.get("/path/to/www/"), 100)
+                            .put(
+                                "/{uuid}",
+                                Handlers.routing()
+                                    .get("/position", null)
                             )
-                            .setWelcomeFiles("index.html")
-                        )
-                ).build();
+                            .setFallbackHandler(null)
+                )
+            ).build();
         
         server.start();
     }
