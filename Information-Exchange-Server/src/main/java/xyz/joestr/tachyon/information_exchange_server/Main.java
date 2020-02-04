@@ -9,30 +9,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.server.NetworkListener;
-import org.glassfish.grizzly.http.server.ServerConfiguration;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -44,151 +38,139 @@ public class Main {
     public static final Main INSTANCE = new Main();
     
     // This is the logger for this whole programm
-    public static final Logger LOGGER = Logger.getLogger("Tachyon - IES");
+    public static final Logger LOGGER =
+        Logger.getLogger("org.glassfish.grizzly.http.server.HttpHandler");
     
-    // Variables for the configuration
-    private InputStream localConfigurationFileInputStream;
-    private File externalConfigurationFile;
-    private Yaml yaml;
-    private YamlConfiguration yamlConfiguration;
-    
-    // Variables for Hikari CP
-    private InputStream localHikariConfigurationFile;
-    private File externalHikariConfigurationFile;
+    public static YamlConfiguration CONFIGURTION;
     
     // pooled database connection
     private PooledDatabaseConnection pooledDatabaseConnection;
     
-    // The variables for votifier
-    private File externalPrivateKeyFile;
-    private File externalPublicKeyFile;
-    private KeyPair votifierKeyPair;
-    
-    // The votifier server
-    private VotifierServerBuilder votifierServerBuilder;
-    
-    // The server for the REST endpoints
     private HttpServer httpServer;
     private AccessLogBuilder accessLogBuilder;
     
-    public static void main(String[] args) throws URISyntaxException, NoSuchAlgorithmException, NoSuchProviderException, IOException, FileNotFoundException, InvalidKeySpecException, InvalidKeySpecException, InvalidKeySpecException, Throwable {
+    public static void main(String[] args) throws Throwable {
         
-        //<editor-fold defaultstate="collapsed" desc="Fill variables">
-        
-        // Get the config.yml from the jar file
-        INSTANCE.localConfigurationFileInputStream =
-            INSTANCE.getClass().getResourceAsStream("config.yml");
-        
-        INSTANCE.localHikariConfigurationFile =
-            INSTANCE.getClass().getResourceAsStream("hikari.properties");
-        
-        // The jar-file
+        // The jar file itself
         File selfJar = new File(
-            INSTANCE.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()
+            INSTANCE.getClass()
+                .getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .getPath()
         );
         
-        // Get the config.yml from the directory where the jar itself is
-        INSTANCE.externalConfigurationFile = new File(
-            selfJar.getParent(), "config.yml"
-        );
+        // The configuration files
+        File configFile = new File(selfJar.getParent(), "config.yml");
+        File hikariConfigFile = new File(selfJar.getParent(), "config-hikari.properties");
         
-        INSTANCE.externalHikariConfigurationFile = new File(
-            selfJar.getParent(), "hikari.properties"
-        );
+        File privateKeyFile = new File(selfJar.getParent(), "votifier-privatekey.pem");
+        File publicKeyFile = new File(selfJar.getParent(), "votifier-publickey.pem");
         
-        INSTANCE.externalPrivateKeyFile = new File(
-            selfJar.getParent(), "votifier.key"
-        );
-        
-        INSTANCE.externalPublicKeyFile = new File(
-            selfJar.getParent(), "votifier.key.pub"
-        );
-        
-        if(!INSTANCE.handleConfiguration()) {
-            System.exit(10000);
+        if(!configFile.exists()) {
+            if(!configFile.getParentFile().canWrite()) {
+                return;
+            }
+            
+            OutputStream oS = new FileOutputStream(configFile);
+            InputStream iS = INSTANCE.getClass().getResourceAsStream("config.yml");
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while((bytesRead = iS.read(buffer)) != -1)
+                oS.write(buffer, 0, bytesRead);
+
+            iS.close();
+            oS.flush();
+            oS.close();
         }
         
-        if(!INSTANCE.handleHikariConfiguration()) {
-            System.exit(10001);
+        if(!configFile.canRead()) {
+            return;
         }
         
-        PrivateKey loadedPrivateKey = null;
-        PublicKey loadedPublicKey = null;
+        CONFIGURTION = new Yaml().loadAs(
+            new FileReader(configFile),
+            YamlConfiguration.class
+        );
+        
+        if(!hikariConfigFile.exists()) {
+            if(!hikariConfigFile.getParentFile().canWrite()) {
+                return;
+            }
+            
+            OutputStream oS = new FileOutputStream(hikariConfigFile);
+            InputStream iS = INSTANCE.getClass().getResourceAsStream("config-hikari.properties");
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while((bytesRead = iS.read(buffer)) != -1)
+                oS.write(buffer, 0, bytesRead);
+
+            iS.close();
+            oS.flush();
+            oS.close();
+        }
+        
+        if(!hikariConfigFile.canRead()) {
+            return;
+        }
+        
+        PooledDatabaseConnection.getInstance(
+            new HikariConfig(hikariConfigFile.getAbsolutePath())
+        );
+        
+        PrivateKey loadedPrivateKey;
+        PublicKey loadedPublicKey;
+        
         KeyPairGenerator kPG = KeyPairGenerator.getInstance("RSA");
         kPG.initialize(2048);
         KeyPair generatedKeyPair = kPG.generateKeyPair();
         
-        if(INSTANCE.externalPrivateKeyFile.exists()) {
-            if(INSTANCE.externalPrivateKeyFile.canRead()) {
-                loadedPrivateKey = INSTANCE.loadPrivateKey(
-                    INSTANCE.externalPrivateKeyFile,
-                    "RSA"
-                );
-            } else {
-                
+        if(!privateKeyFile.exists()) {
+            if(!privateKeyFile.getParentFile().canWrite()) {
+                return;
             }
-        } else {
-            if(INSTANCE.externalPrivateKeyFile.getParentFile().canWrite()) {
-                
-                INSTANCE.savePrivateKey(INSTANCE.externalPrivateKeyFile,
-                    generatedKeyPair.getPrivate()
-                );
-                
-                if(INSTANCE.externalPrivateKeyFile.canRead()) {
-                
-                    loadedPrivateKey = INSTANCE.loadPrivateKey(
-                        INSTANCE.externalPrivateKeyFile,
-                        "RSA"
-                    );
-                    
-                } else {
-
-                }
-            } else {
-                
-            }
+            
+            INSTANCE.savePrivateKey(
+                privateKeyFile,
+                generatedKeyPair.getPrivate()
+            );
         }
         
-        if(INSTANCE.externalPublicKeyFile.exists()) {
-            if(INSTANCE.externalPublicKeyFile.canRead()) {
-                loadedPublicKey = INSTANCE.loadPublicKey(
-                    INSTANCE.externalPublicKeyFile,
-                    "RSA"
-                );
-            } else {
-                
-            }
-        } else {
-            if(INSTANCE.externalPublicKeyFile.getParentFile().canWrite()) {
-                
-                INSTANCE.savePublicKey(INSTANCE.externalPublicKeyFile,
-                    generatedKeyPair.getPublic()
-                );
-                
-                if(INSTANCE.externalPublicKeyFile.canRead()) {
-                    loadedPublicKey = INSTANCE.loadPublicKey(
-                        INSTANCE.externalPublicKeyFile,
-                        "RSA"
-                    );
-                } else {
-
-                }
-            } else {
-                
-            }
+        if(!privateKeyFile.canRead()) {
+            return;
         }
+        
+        loadedPrivateKey = INSTANCE.loadPrivateKey(privateKeyFile, "RSA");
+        
+        if(!publicKeyFile.exists()) {
+            if(!publicKeyFile.getParentFile().canWrite()) {
+                return;
+            }
+            
+            INSTANCE.savePublicKey(
+                publicKeyFile,
+                generatedKeyPair.getPublic()
+            );
+        }
+        
+        if(!publicKeyFile.canRead()) {
+            return;
+        }
+        
+        loadedPublicKey = INSTANCE.loadPublicKey(publicKeyFile, "RSA");
         
         PlayerSettingsManager.getInstance(
-            INSTANCE.yamlConfiguration,
+            CONFIGURTION,
             INSTANCE.pooledDatabaseConnection
         );
         
-        INSTANCE.votifierKeyPair = new KeyPair(loadedPublicKey, loadedPrivateKey);
-        
-        INSTANCE.votifierServerBuilder = new VotifierServerBuilder();
-        INSTANCE.votifierServerBuilder
+        new VotifierServerBuilder()
             .bind(new InetSocketAddress("0.0.0.0", 8019))
-            .v1Key(INSTANCE.votifierKeyPair)
+            .v1Key(new KeyPair(loadedPublicKey, loadedPrivateKey))
             .receiver(
                 new VoteReceiver() {
                     @Override
@@ -197,16 +179,16 @@ public class Main {
                     }
 
                     @Override
-                    public void onException(Throwable thrwbl) {
+                    public void onException(Throwable throwable) {
                         
                     }
-
-            })
+                    
+                })
             .create()
             .start();
 
         INSTANCE.httpServer = GrizzlyHttpServerFactory.createHttpServer(
-            URI.create(INSTANCE.yamlConfiguration.getListenuri()),
+            URI.create(CONFIGURTION.getListenuri()),
             new ResourceConfig()
                 .packages("xyz.joestr.tachyon.information_exchange_server.rest"),
             false
@@ -221,181 +203,6 @@ public class Main {
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    /**
-     * Handles logic for the configuration file.
-     * @return {@code true} if the operations were successfull; {@code false} if
-     * not
-     */
-    public boolean handleConfiguration() {
-        // Check if the config from the outside world exists
-        if(INSTANCE.externalConfigurationFile.exists()) {
-            // Check if we can read this file
-            if(INSTANCE.externalConfigurationFile.canRead()) {
-                // Let's try to load
-                try {
-                    INSTANCE.loadConfiguration();
-                } catch (FileNotFoundException ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
-                    return false;
-                }
-                
-                return true;
-            } else {
-                // If we are unable to read this file
-                LOGGER.log(Level.WARNING,
-                    "File at {0} is not readable!",
-                    INSTANCE.externalConfigurationFile.getAbsolutePath()
-                );
-                LOGGER.log(Level.SEVERE, "Configuration error!");
-                return false;
-            }
-        } else {
-            // Let's check for rights to write
-            if(INSTANCE.externalConfigurationFile.getParentFile().canWrite()) {
-                // Trying to reading from the local and writing to the external file
-                try {
-                    InputStream initialStream =
-                        INSTANCE.localConfigurationFileInputStream;
-                    
-                    byte[] buffer = new byte[initialStream.available()];
-                    initialStream.read(buffer);
-                    
-                    OutputStream outStream = new FileOutputStream(
-                        INSTANCE.externalConfigurationFile
-                    );
-                    outStream.write(buffer);
-                } catch (IOException ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
-                    LOGGER.log(Level.SEVERE, "Configuration error!");
-                    return false;
-                }
-                
-                // Check if we able to read the freshly written file again
-                if(INSTANCE.externalConfigurationFile.canRead()) {
-                    try {
-                        INSTANCE.loadConfiguration();
-                    } catch (FileNotFoundException ex) {
-                        LOGGER.log(Level.SEVERE, null, ex);
-                        return false;
-                    }
-                    
-                    return true;
-                } else {
-                    LOGGER.log(Level.WARNING,
-                        "File at {0} is not readable!",
-                        INSTANCE.externalConfigurationFile.getAbsolutePath()
-                    );
-                    LOGGER.log(Level.SEVERE, "Configuration error!");
-                    return false;
-                }
-            } else {
-                // We are here beacuse we cannot read and write to the file
-                LOGGER.log(Level.WARNING,
-                    "File at {0} is not writeable!",
-                    INSTANCE.externalConfigurationFile.getAbsolutePath()
-                );
-                LOGGER.log(Level.SEVERE, "Configuration error!");
-                return false;
-            }
-        }
-    }
-    
-    /**
-     * Handles logic for the Hikari CP configuration file.
-     * @return {@code true} if the operations were successfull; {@code false} if
-     * not
-     */
-    public boolean handleHikariConfiguration() {
-        // Check if the config from the outside world exists
-        if(INSTANCE.externalHikariConfigurationFile.exists()) {
-            // Check if we can read this file
-            if(INSTANCE.externalHikariConfigurationFile.canRead()) {
-                // Let's try to load
-                INSTANCE.pooledDatabaseConnection =
-                    PooledDatabaseConnection.getInstance(
-                        new HikariConfig(
-                            INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
-                        )
-                    );
-                
-                return true;
-            } else {
-                // If we are unable to read this file
-                LOGGER.log(Level.WARNING,
-                    "File at {0} is not readable!",
-                    INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
-                );
-                LOGGER.log(Level.SEVERE, "Configuration error!");
-                return false;
-            }
-        } else {
-            // Let's check for rights to write
-            if(INSTANCE.externalHikariConfigurationFile.getParentFile().canWrite()) {
-                // Trying to reading from the local and writing to the external file
-                try {
-                    InputStream initialStream =
-                        INSTANCE.localHikariConfigurationFile;
-                    
-                    byte[] buffer = new byte[initialStream.available()];
-                    initialStream.read(buffer);
-                    
-                    OutputStream outStream = new FileOutputStream(
-                        INSTANCE.externalHikariConfigurationFile
-                    );
-                    outStream.write(buffer);
-                } catch (IOException ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
-                    LOGGER.log(Level.SEVERE, "Configuration error!");
-                    return false;
-                }
-                
-                // Check if we able to read the freshly written file again
-                if(INSTANCE.externalHikariConfigurationFile.canRead()) {
-                    INSTANCE.pooledDatabaseConnection =
-                        PooledDatabaseConnection.getInstance(
-                            new HikariConfig(
-                                INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
-                            )
-                        );
-                    
-                    return true;
-                } else {
-                    LOGGER.log(Level.WARNING,
-                        "File at {0} is not readable!",
-                        INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
-                    );
-                    LOGGER.log(Level.SEVERE, "Configuration error!");
-                    return false;
-                }
-            } else {
-                // We are here beacuse we cannot read and write to the file
-                LOGGER.log(Level.WARNING,
-                    "File at {0} is not writeable!",
-                    INSTANCE.externalHikariConfigurationFile.getAbsolutePath()
-                );
-                LOGGER.log(Level.SEVERE, "Configuration error!");
-                return false;
-            }
-        }
-    }
-    
-    /**
-     * Reads the external yaml file.
-     * @throws FileNotFoundException If the file was not found.
-     */
-    private void loadConfiguration() throws FileNotFoundException {
-        InputStream input = new FileInputStream(
-            this.externalConfigurationFile
-        );
-        
-        this.yaml = new Yaml();
-        
-        this.yamlConfiguration = this.yaml.loadAs(
-            input,
-            YamlConfiguration.class
-        );
     }
     
     /**
