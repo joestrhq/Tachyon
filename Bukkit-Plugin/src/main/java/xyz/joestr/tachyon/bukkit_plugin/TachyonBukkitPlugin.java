@@ -64,6 +64,8 @@ public class TachyonBukkitPlugin extends JavaPlugin {
     
     private Updater updater;
     
+    private Undertow httpServer = null;
+    
     @Override
     public void onEnable() {
         
@@ -86,9 +88,9 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);
         
-        Undertow server = Undertow.builder()
+        this.httpServer = Undertow.builder()
             .addHttpListener(
-                this.getConfig().getInt("liste.port"),
+                this.getConfig().getInt("listen.port"),
                 this.getConfig().getString("listen.host")
             )
             .setHandler(
@@ -110,12 +112,12 @@ public class TachyonBukkitPlugin extends JavaPlugin {
                 )
             ).build();
         
-        server.start();
+        this.httpServer.start();
     }
 
     @Override
     public void onDisable() {
-        
+        this.httpServer.stop();
     }
     
     public static TachyonBukkitPlugin getInstance() {

@@ -11,7 +11,6 @@ package xyz.joestr.tachyon.bungeecord_plugin.utils;
  * @author Joel
  */
 public enum TPAType {
-
     TO,
     HERE
 }

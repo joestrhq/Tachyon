@@ -5,6 +5,8 @@
  */
 package xyz.joestr.tachyon.bungeecord_plugin;
 
+import io.undertow.Handlers;
+import io.undertow.Undertow;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +41,8 @@ import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
 import xyz.joestr.tachyon.bungeecord_plugin.commands.TPACommand;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.ChatFilterListener;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
+import xyz.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayers;
+import xyz.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayersPosition;
 
 /**
  * The Tachyon-BungeeCord-Plugin itself.
@@ -67,7 +71,7 @@ public class TachyonBungeeCordPlugin extends Plugin {
     // Hold the teleports which have to be accepted or cancelled.
     public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
 
-    private HttpServer httpServer = null;
+    private Undertow httpServer = null;
     
     /**
      * Called when the plugin starts
@@ -181,33 +185,31 @@ public class TachyonBungeeCordPlugin extends Plugin {
             new ChatFilterListener()
         );
         
-        final ResourceConfig rc = new ResourceConfig().packages("xyz.joestr.tachyon.bungeecord_plugin.rest");
-        this.httpServer = GrizzlyHttpServerFactory.createHttpServer(
-            URI.create(
-                "http://"
-                    + configuration.getString("listenaddress")
-                    + ":"
-                    + configuration.getString("listenport")
-                    + "/"
-            ),
-            rc,
-            false
-        );
+        this.httpServer = Undertow.builder()
+            .addHttpListener(
+                configuration.getInt("listenport"),
+                configuration.getString("listenaddress")
+            )
+            .setHandler(
+                Handlers.path()
+                    .addPrefixPath("/players",
+                        Handlers.routing()
+                            .get("/", new EndPointPlayers())
+                            .get(
+                                "/{uuid}",
+                                Handlers.routing()
+                                    .get("/position", new EndPointPlayersPosition())
+                                )
+                            .put(
+                                "/{uuid}",
+                                Handlers.routing()
+                                    .get("/position", null)
+                            )
+                            .setFallbackHandler(null)
+                )
+            ).build();
         
-        Enumeration<String> loggers = LogManager.getLogManager().getLoggerNames();
-        while (loggers.hasMoreElements()) {
-            String loggerName = loggers.nextElement();
-            if(loggerName.contains("glassfish")) {
-                Logger logger = LogManager.getLogManager().getLogger(loggerName);
-                logger.setLevel(Level.OFF);     
-            }
-        }
-        
-        try {
-            httpServer.start();
-        } catch (IOException ex) {
-            Logger.getLogger(TachyonBungeeCordPlugin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        httpServer.start();
     }
 
     /**
@@ -216,7 +218,7 @@ public class TachyonBungeeCordPlugin extends Plugin {
     @Override
     public void onDisable() {
         
-        this.httpServer.shutdownNow();
+        this.httpServer.stop();
     }
     
     public static TachyonBungeeCordPlugin getInstance() {

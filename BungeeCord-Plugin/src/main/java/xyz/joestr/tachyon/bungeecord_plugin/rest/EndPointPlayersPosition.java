@@ -4,7 +4,7 @@ Copyright (c) 2019 Joel Strasser
 
 Only the owner is allowed to use this software.
 */
-package xyz.joestr.tachyon.bukkit_plugin.rest;
+package xyz.joestr.tachyon.bungeecord_plugin.rest;
 
 import com.google.common.base.Charsets;
 import com.google.common.net.MediaType;
@@ -13,10 +13,9 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import java.util.UUID;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import net.md_5.bungee.api.ProxyServer;
 import xyz.joestr.tachyon.api.rest.RestPlayerPosition;
-import xyz.joestr.tachyon.bukkit_plugin.TachyonBukkitPlugin;
+import xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin;
 
 public class EndPointPlayersPosition implements HttpHandler {
 
@@ -46,18 +45,14 @@ public class EndPointPlayersPosition implements HttpHandler {
         
         RestPlayerPosition result = new RestPlayerPosition();
         
-        Bukkit.getServer().getScheduler().callSyncMethod(
-            TachyonBukkitPlugin.getInstance(),
+        ProxyServer.getInstance().getScheduler().runAsync(
+            TachyonBungeeCordPlugin.getInstance(),
             () -> {
                 
-                Location l = Bukkit.getServer().getPlayer(uuid).getLocation();
+                String server =
+                    ProxyServer.getInstance().getPlayer(uuid).getServer().getInfo().getName();
                 
-                result.setWorld(l.getWorld().getUID());
-                result.setX(l.getX());
-                result.setY(l.getY());
-                result.setZ(l.getZ());
-                
-                return true;
+                result.setServer(server);
             }
         );
         
