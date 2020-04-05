@@ -8,26 +8,27 @@
   <properties>
     <!-- Tachyon version -->
     <tachyon.version>0.1.8-SNAPSHOT</tachyon.version>
-    <!-- UTF8 -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <!-- Database drivers versions -->
-    <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
     <!-- For the Bukkit plugin -->
     <bukkit-api.version>1.14-R0.1-SNAPSHOT</bukkit-api.version>
     <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
     <!-- For the Bungeecord plugin -->
     <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
-    <!-- Luckperms api for different uses -->
-    <luckperms-api.version>5.0</luckperms-api.version>
     <!-- Jersey version -->
     <jersey.version>2.17</jersey.version>
     <!-- SnakeYAML version -->
     <snakeyaml.version>1.26-SNAPSHOT</snakeyaml.version>
+    <!-- NuVotifier version -->
     <nuvotifier.version>2.3.4</nuvotifier.version>
+    <!-- Ajave Ebeans -->
+    <ebean.version>12.2.1</ebean.version>
+    <!-- Database drivers versions -->
+    <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
     <!-- Testing depedencies -->
     <junit.version>4.12</junit.version>
     <powermock.version>1.4.9</powermock.version>
+    <!-- UTF8 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Maven settings -->
     <maven-compiler.source.version>1.8</maven-compiler.source.version>
     <maven-compiler.target.version>1.8</maven-compiler.target.version>
@@ -108,7 +109,7 @@
     <connection>scm:git:https://git.joestr.xyz/joestr/Tachyon</connection>
     <developerConnection>scm:git:https://git.joestr.xyz/joestr/Tachyon</developerConnection>
     <tag>HEAD</tag>
-    <url>https//git.joestr.xyz/joestr/Tachyon</url>
+    <url>https//github.com/joestr/Tachyon</url>
   </scm>
     
   <!-- Continous Integration Management -->
@@ -146,54 +147,43 @@
   <!-- Issue Management -->
   <issueManagement>
     <system>gitea</system>
-    <url>https://git.joestr.xyz/joestr/Tachyon/issues</url>
+    <url>https://github.com/joestr/Tachyon/issues</url>
   </issueManagement>
     
   <!-- Dependency Management -->
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>${mysql-jdbc.version}</version>
-        <type>jar</type>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
         <groupId>org.bukkit</groupId>
         <artifactId>bukkit</artifactId>
         <version>${bukkit-api.version}</version>
-        <type>jar</type>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>plugin-annotations</artifactId>
         <version>${plugin-annotations.version}</version>
-        <type>jar</type>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>net.md-5</groupId>
         <artifactId>bungeecord-api</artifactId>
         <version>${bungeecord.version}</version>
-        <type>jar</type>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>net.md-5</groupId>
         <artifactId>bungeecord-chat</artifactId>
         <version>${bungeecord.version}</version>
-        <type>jar</type>
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>net.luckperms</groupId>
-        <artifactId>api</artifactId>
-        <version>${luckperms-api.version}</version>
-        <type>jar</type>
-        <scope>provided</scope>
+        <groupId>io.undertow</groupId>
+        <artifactId>undertow-core</artifactId>
+        <version>2.0.23.Final</version>
+        <scope>compile</scope>
       </dependency>
+      <!-- For Tachyon IES -->
       <dependency>
         <groupId>org.glassfish.jersey</groupId>
         <artifactId>jersey-bom</artifactId>
@@ -205,25 +195,55 @@
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
         <version>${snakeyaml.version}</version>
-        <type>jar</type>
+        <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>com.vexsoftware</groupId>
         <artifactId>nuvotifier-common</artifactId>
         <version>${nuvotifier.version}</version>
+        <scope>compile</scope>
       </dependency>
+      <dependency>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean</artifactId>
+        <version>12.2.1</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean-querybean</artifactId>
+        <version>12.2.1</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.ebean</groupId>
+        <artifactId>querybean-generator</artifactId>
+        <version>12.2.1</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-jdbc.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>2.0.1.Final</version>
+        <scope>compile</scope>
+      </dependency>
+      <!-- Test dependencies -->
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
-        <type>jar</type>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.powermock</groupId>
         <artifactId>powermock-module-junit4</artifactId>
         <version>${powermock.version}</version>
-        <type>jar</type>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -234,9 +254,10 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>io.undertow</groupId>
-        <artifactId>undertow-core</artifactId>
-        <version>2.0.1.Final</version>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean-test</artifactId>
+        <version>12.2.1</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -263,7 +284,7 @@
         <enabled>false</enabled>
       </releases>
     </repository>
-    <repository>
+    <!--<repository>
       <id>oracle-maven-repo</id>
       <name>Oracle's Maven repo</name>
       <url>https://maven.oracle.com</url>
@@ -272,7 +293,7 @@
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
       </releases>
-    </repository>
+    </repository>-->
   </repositories>
     
   <!-- Dependencies -->
