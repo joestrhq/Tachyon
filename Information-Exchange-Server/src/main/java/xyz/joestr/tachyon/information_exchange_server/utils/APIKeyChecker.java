@@ -8,7 +8,7 @@ package xyz.joestr.tachyon.information_exchange_server.utils;
 import java.sql.SQLException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import xyz.joestr.tachyon.information_exchange_server.managers.APIKeyManager;
+import xyz.joestr.tachyon.information_exchange_server.managers.ApiKeyManager;
 
 /**
  *
@@ -18,15 +18,15 @@ public class APIKeyChecker {
     
     public static void isPermitted(String bearerToken, String category) {
         try {
-            if(!APIKeyManager
+            if(!ApiKeyManager
                 .getInstance()
                 .isPermitted(
                     bearerToken.split(" ")[1],
-                    "players.coordinates.get"
+                    category
                 )
             ) {
                 throw new WebApplicationException(
-                    "Unauthrozied",
+                    "Unauthrized",
                     Response.Status.UNAUTHORIZED
                 );
             }

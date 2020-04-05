@@ -1,4 +1,4 @@
-package xyz.joestr.tachyon.information_exchange_server.rest;
+package xyz.joestr.tachyon.information_exchange_server.webservice.controllers.v1;
 
 import java.net.URI;
 import java.util.ArrayList;

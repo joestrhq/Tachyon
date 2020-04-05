@@ -1,4 +1,4 @@
-package xyz.joestr.tachyon.information_exchange_server.rest;
+package xyz.joestr.tachyon.information_exchange_server.webservice.controllers.v1;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,14 +18,13 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ManagedAsync;
-import xyz.joestr.tachyon.api.rest.RestPlayerPosition;
-import xyz.joestr.tachyon.information_exchange_server.managers.PlayerPositionManager;
+import xyz.joestr.tachyon.api.rest.RestPlayerSettings;
 import xyz.joestr.tachyon.information_exchange_server.managers.PlayerSettingsManager;
 import xyz.joestr.tachyon.information_exchange_server.utils.APIKeyChecker;
 import xyz.joestr.tachyon.information_exchange_server.utils.ETagChecker;
 
-@Path("/players/{uuid}/position")
-public class PlayersPositionController {
+@Path("/players/{uuid}/settings")
+public class PlayersSettingsController {
     
     @HEAD
     @Produces(MediaType.APPLICATION_JSON)
@@ -36,11 +35,16 @@ public class PlayersPositionController {
         @HeaderParam("if-none-match") String ifNoneMatch,
         @PathParam("uuid") String uuid
     ) {
-        APIKeyChecker.isPermitted(bearerToken, "players.settings.get");
+        RestPlayerSettings result = null;
         
-        RestPlayerPosition result = null;
-        
-        result = PlayerPositionManager.getInstance().getPosition(UUID.fromString(uuid));
+        try {
+            result = PlayerSettingsManager.getInstance().getSettings(UUID.fromString(uuid));
+        } catch (SQLException ex) {
+            throw new WebApplicationException(
+                ex,
+                Response.Status.INTERNAL_SERVER_ERROR
+            );
+        }
         
         Response response;
         
@@ -77,9 +81,16 @@ public class PlayersPositionController {
         
         APIKeyChecker.isPermitted(bearerToken, "players.settings.get");
         
-        RestPlayerPosition result = null;
+        RestPlayerSettings result = null;
         
-        result = PlayerPositionManager.getInstance().getPosition(UUID.fromString(uuid));
+        try {
+            result = PlayerSettingsManager.getInstance().getSettings(UUID.fromString(uuid));
+        } catch (SQLException ex) {
+            throw new WebApplicationException(
+                ex,
+                Response.Status.INTERNAL_SERVER_ERROR
+            );
+        }
         
         asyncResponse.resume(
             Response
@@ -98,12 +109,6 @@ public class PlayersPositionController {
         @PathParam("uuid") String uuid, String json
     ) {
         
-        throw new WebApplicationException(
-            "Not implemented!",
-            Response.Status.NOT_IMPLEMENTED
-        );
-        
-        /*
         APIKeyChecker.isPermitted(bearerToken, "players.settings.put");
         
         JsonObject o = new Gson().fromJson(json, JsonObject.class);
@@ -124,6 +129,5 @@ public class PlayersPositionController {
         asyncResponse.resume(
             Response.noContent().build()
         );
-        */
     }
 }

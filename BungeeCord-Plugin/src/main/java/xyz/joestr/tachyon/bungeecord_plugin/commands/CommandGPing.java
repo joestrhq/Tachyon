@@ -8,18 +8,19 @@ package xyz.joestr.tachyon.bungeecord_plugin.commands;
 import com.google.common.collect.ImmutableList;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
- * Represents the '/list' command.
+ * Represents the '/gping' command.
  *
  * @author Joel Strasser
  */
-public class ListCommand extends Command implements TabExecutor {
+public class CommandGPing extends Command implements TabExecutor {
 
-    public ListCommand() {
+    public CommandGPing() {
         super(StaticConfiguration.Commands.List.command(),
             StaticConfiguration.Commands.List.permission()
         );

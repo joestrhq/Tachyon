@@ -3,7 +3,6 @@ package xyz.joestr.tachyon.information_exchange_server;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.util.standalone.VoteReceiver;
 import com.vexsoftware.votifier.util.standalone.VotifierServerBuilder;
-import com.zaxxer.hikari.HikariConfig;
 import xyz.joestr.tachyon.information_exchange_server.configurations.YamlConfiguration;
 import java.io.File;
 import java.io.FileInputStream;
@@ -190,7 +189,7 @@ public class Main {
         INSTANCE.httpServer = GrizzlyHttpServerFactory.createHttpServer(
             URI.create(CONFIGURTION.getListenuri()),
             new ResourceConfig()
-                .packages("xyz.joestr.tachyon.information_exchange_server.rest"),
+                .packages("xyz.joestr.tachyon.information_exchange_server.web.commonv1"),
             false
         );
         

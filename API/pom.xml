@@ -7,20 +7,20 @@
     
     <!-- Parent project -->
     <parent>
-        <groupId>xyz.joestr</groupId>
-        <artifactId>tachyon</artifactId>
+        <groupId>xyz.joestr.tachyon</groupId>
+        <artifactId>tachyon-parent</artifactId>
         <version>${tachyon.version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
     <!-- Project -->
     <groupId>xyz.joestr.tachyon</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>tachyon-api</artifactId>
     <version>${tachyon.version}</version>
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
-    <name>Tachyon API</name>
+    <name>Tachyon :: Api</name>
     <url>https://git.joestr.xyz/joestr/Tachyon/API</url>
     <description>The Tachyon API.</description>
     <inceptionYear>2019</inceptionYear>

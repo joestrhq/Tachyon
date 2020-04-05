@@ -36,9 +36,10 @@ import static xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin.confi
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.RawChatFilter;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.ListCommand;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.TPACommand;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGList;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGStaffChat;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGTpa;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandTList;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.ChatFilterListener;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
 import xyz.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayers;
@@ -46,182 +47,151 @@ import xyz.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayersPosition;
 
 /**
  * The Tachyon-BungeeCord-Plugin itself.
- * 
+ *
  * @author Joel
  */
 public class TachyonBungeeCordPlugin extends Plugin {
 
-    private static TachyonBungeeCordPlugin INSTANCE;
-    
-    /**
-     * A {@link Set} of {@link ChatFilter}s
-     */
-    public static Set<ChatFilter> chatFilters;
-    
-    /**
-     * The loaded {@link net.md_5.bungee.config.Configuration}.
-     */
-    public static net.md_5.bungee.config.Configuration configuration;
-    
-    /**
-     * The configuration file itself
-     */
-    public static File configurationFile;
+  private static TachyonBungeeCordPlugin INSTANCE;
 
-    // Hold the teleports which have to be accepted or cancelled.
-    public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
+  /**
+   * A {@link Set} of {@link ChatFilter}s
+   */
+  public static Set<ChatFilter> chatFilters;
 
-    private Undertow httpServer = null;
-    
-    /**
-     * Called when the plugin starts
-     */
-    @Override
-    public void onEnable() {
+  /**
+   * The loaded {@link net.md_5.bungee.config.Configuration}.
+   */
+  public static net.md_5.bungee.config.Configuration configuration;
 
-        INSTANCE = this;
-        
-        // The chatfilters
-        chatFilters = new HashSet<>();
-        
-        // Add the chat filters we provide
-        chatFilters.add(new RawChatFilter());
-        chatFilters.add(new ColorCodeFilter());
-        chatFilters.add(new AnnotatedPlayerChatFilter());
-        
-        // Success status
-        boolean successfullyLoaded = false;
+  /**
+   * The configuration file itself
+   */
+  public static File configurationFile;
 
-        // Set the filepath fot the configuration file
-        configurationFile = new File(this.getDataFolder(), "config.yml");
+  // Hold the teleports which have to be accepted or cancelled.
+  public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
 
-        // Check if the configuration file exists
-        if (configurationFile.exists()) {
+  private Undertow httpServer = null;
 
-            try {
-                configuration
-                    = ConfigurationProvider
-                        .getProvider(YamlConfiguration.class)
-                        .load(configurationFile);
-                successfullyLoaded = true;
-            } catch (IOException ex) {
-                Logger
-                    .getLogger(TachyonBungeeCordPlugin.class.getName())
-                    .log(Level.SEVERE, null, ex);
-            }
-        } else {
+  /**
+   * Called when the plugin starts
+   */
+  @Override
+  public void onEnable() {
 
-            // If the data folder for the plugin does not exist
-            if (!this.getDataFolder().exists()) {
-                // create it
-                this.getDataFolder().mkdir();
-            }
+    INSTANCE = this;
 
-            File file = new File(this.getDataFolder(), "config.yml");
+    // The chatfilters
+    chatFilters = new HashSet<>();
 
-            // If the configuration file does not exist
-            if (!file.exists()) {
-                // Copy the local ressource
-                try (InputStream in = getResourceAsStream("config.yml")) {
-                    Files.copy(in, file.toPath());
-                } catch (IOException ex) {
-                    Logger.getLogger(TachyonBungeeCordPlugin.class.getName())
-                        .log(Level.SEVERE, null, ex);
-                }
-            }
+    // Add the chat filters we provide
+    chatFilters.add(new RawChatFilter());
+    chatFilters.add(new ColorCodeFilter());
+    chatFilters.add(new AnnotatedPlayerChatFilter());
 
-            // Finally, load the configuration
-            try {
-                configuration =
-                    ConfigurationProvider
-                        .getProvider(YamlConfiguration.class)
-                        .load(configurationFile);
-                successfullyLoaded = true;
-            } catch (IOException ex) {
-                Logger
-                    .getLogger(TachyonBungeeCordPlugin.class.getName())
-                    .log(Level.SEVERE, null, ex);
-            }
+    // Success status
+    boolean successfullyLoaded = false;
+
+    // Set the filepath fot the configuration file
+    configurationFile = new File(this.getDataFolder(), "config.yml");
+
+    // Check if the configuration file exists
+    if (configurationFile.exists()) {
+
+      try {
+        configuration
+          = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configurationFile);
+        successfullyLoaded = true;
+      } catch (IOException ex) {
+        Logger.getLogger(TachyonBungeeCordPlugin.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    } else {
+
+      // If the data folder for the plugin does not exist
+      if (!this.getDataFolder().exists()) {
+        // create it
+        this.getDataFolder().mkdir();
+      }
+
+      File file = new File(this.getDataFolder(), "config.yml");
+
+      // If the configuration file does not exist
+      if (!file.exists()) {
+        // Copy the local ressource
+        try (InputStream in = getResourceAsStream("config.yml")) {
+          Files.copy(in, file.toPath());
+        } catch (IOException ex) {
+          Logger.getLogger(TachyonBungeeCordPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
+      }
 
-        // If the plugin was not loaded successfully ...
-        if (!successfullyLoaded) {
-            // ... quit here.
-            return;
-        }
-        
-        // Get the BungeeCord plugin manager here
-        PluginManager pluginManager = this.getProxy().getPluginManager();
-        
-        // Register the '/tpa' command here
-        //pluginManager.registerCommand(
-        //    this,
-        //    new TPACommand()
-        //);
-        
-        
-        
-        // Register the '/list'
-        pluginManager.registerCommand(
-            this,
-            new ListCommand()
-        );
-        
-        // Register the '/staffchat'
-        pluginManager.registerCommand(
-            this,
-            new StaffChatCommand()
-        );
-        
-        // Register the listener for the staff chat
-        pluginManager.registerListener(
-            this,
-            new StaffChatMessageListener()
-        );
-        
-        // Register the chat filter listener
-        pluginManager.registerListener(
-            this,
-            new ChatFilterListener()
-        );
-        
-        this.httpServer = Undertow.builder()
-            .addHttpListener(
-                configuration.getInt("listenport"),
-                configuration.getString("listenaddress")
-            )
-            .setHandler(
-                Handlers.path()
-                    .addPrefixPath("/players",
-                        Handlers.routing()
-                            .get("/", new EndPointPlayers())
-                            .get(
-                                "/{uuid}",
-                                Handlers.routing()
-                                    .get("/position", new EndPointPlayersPosition())
-                                )
-                            .put(
-                                "/{uuid}",
-                                Handlers.routing()
-                                    .get("/position", null)
-                            )
-                            .setFallbackHandler(null)
-                )
-            ).build();
-        
-        httpServer.start();
+      // Finally, load the configuration
+      try {
+        configuration
+          = ConfigurationProvider.getProvider(YamlConfiguration.class).load(configurationFile);
+        successfullyLoaded = true;
+      } catch (IOException ex) {
+        Logger.getLogger(TachyonBungeeCordPlugin.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
 
-    /**
-     * Called when the plugin will be disabled.
-     */
-    @Override
-    public void onDisable() {
-        
-        this.httpServer.stop();
+    // If the plugin was not loaded successfully ...
+    if (!successfullyLoaded) {
+      // ... quit here.
+      return;
     }
-    
-    public static TachyonBungeeCordPlugin getInstance() {
-        return INSTANCE;
-    }
+
+    // Get the BungeeCord plugin manager here
+    PluginManager pluginManager = this.getProxy().getPluginManager();
+
+    // Register the '/tpa' command here
+    // pluginManager.registerCommand(
+    //    this,
+    //    new TPACommand()
+    // );
+    // Register the '/tlist'
+    pluginManager.registerCommand(this, new CommandTList("tlist", "tachyon.command.tlist"));
+
+    // Register the '/staffchat'
+    pluginManager.registerCommand(this, new CommandGStaffChat());
+
+    // Register the listener for the staff chat
+    pluginManager.registerListener(this, new StaffChatMessageListener());
+
+    // Register the chat filter listener
+    pluginManager.registerListener(this, new ChatFilterListener());
+
+    this.httpServer
+      = Undertow.builder()
+        .addHttpListener(
+          configuration.getInt("listenport"), configuration.getString("listenaddress"))
+        .setHandler(
+          Handlers.path()
+            .addPrefixPath(
+              "/players",
+              Handlers.routing()
+                .get("/", new EndPointPlayers())
+                .get(
+                  "/{uuid}",
+                  Handlers.routing().get("/position", new EndPointPlayersPosition()))
+                .put("/{uuid}", Handlers.routing().get("/position", null))
+                .setFallbackHandler(null)))
+        .build();
+
+    httpServer.start();
+  }
+
+  /**
+   * Called when the plugin will be disabled.
+   */
+  @Override
+  public void onDisable() {
+
+    this.httpServer.stop();
+  }
+
+  public static TachyonBungeeCordPlugin getInstance() {
+    return INSTANCE;
+  }
 }

@@ -14,13 +14,13 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
- * Represents the '/list' command.
+ * Represents the '/tpaccept' command.
  *
  * @author Joel Strasser
  */
-public class PingCommand extends Command implements TabExecutor {
+public class CommandGTpaccept extends Command implements TabExecutor {
 
-    public PingCommand() {
+    public CommandGTpaccept() {
         super(StaticConfiguration.Commands.List.command(),
             StaticConfiguration.Commands.List.permission()
         );
@@ -29,16 +29,14 @@ public class PingCommand extends Command implements TabExecutor {
     @Override
     public void execute(CommandSender cs, String[] strings) {
 
-        cs.sendMessage(StaticConfiguration.Messages.Commands.List.output(
-                ProxyServer.getInstance().getPlayers()
-            )
-        );
+        cs.sendMessage(StaticConfiguration.Messages.Commands.List.output(ProxyServer.getInstance().getPlayers()));
+        
+        ProxiedPlayer player = (ProxiedPlayer) cs;
     }
 
     @Override
     public Iterable<String> onTabComplete(CommandSender cs, String[] strings) {
 
-        // Does not need a tab completion, so empty list
         return ImmutableList.of();
     }
 }

@@ -35,7 +35,7 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.utils.Updater;
 import xyz.joestr.tachyon.bukkit_plugin.api.TachyonAPIBukkit;
-import xyz.joestr.tachyon.bukkit_plugin.commands.TBukkitCommand;
+import xyz.joestr.tachyon.bukkit_plugin.commands.CommandTBukkit;
 import xyz.joestr.tachyon.bukkit_plugin.rest.EndPointPlayers;
 import xyz.joestr.tachyon.bukkit_plugin.rest.EndPointPlayersPosition;
 
@@ -83,7 +83,7 @@ public class TachyonBukkitPlugin extends JavaPlugin {
         
         this.saveDefaultConfig();
         
-        TBukkitCommand tBukkitCommand = new TBukkitCommand(this, this.updater); 
+        CommandTBukkit tBukkitCommand = new CommandTBukkit(this, this.updater); 
         PluginCommand tBukkitPluginCommand = this.getServer().getPluginCommand("tbukkit");
         tBukkitPluginCommand.setExecutor(tBukkitCommand);
         tBukkitPluginCommand.setTabCompleter(tBukkitCommand);

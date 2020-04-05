@@ -10,7 +10,7 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.StaffChatCommand;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGStaffChat;
 import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
@@ -41,7 +41,7 @@ public class StaffChatMessageListener implements Listener {
         }
         
         // Finally, send the message
-        StaffChatCommand
+        CommandGStaffChat
             .sendOutToStaff(
                 player.getName(),
                 event.getMessage().substring(1)

@@ -19,9 +19,9 @@ import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
  * 
  * @author Joel
  */
-public class StaffChatCommand extends Command implements TabExecutor {
+public class CommandGStaffChat extends Command implements TabExecutor {
 
-    public StaffChatCommand() {
+    public CommandGStaffChat() {
         super(StaticConfiguration.Commands.StaffChat.command(),
             StaticConfiguration.Commands.StaffChat.permission(),
             StaticConfiguration.Commands.StaffChat.alias()

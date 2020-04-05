@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.TPARequest;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.TPAType;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.TpaRequest;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.TpaType;
 
 /**
  * Handles TPA requests of players.
@@ -23,7 +23,7 @@ public class TPAManager {
 
     private static TPAManager instance = null;
 
-    private Collection<TPARequest> tpaRequests = null;
+    private Collection<TpaRequest> tpaRequests = null;
 
     /**
      * Private constrcutor for singelton
@@ -56,16 +56,16 @@ public class TPAManager {
      * @param expiry When the request should expire
      * @return {@code true} if the request could be added, otherwise {@code false}
      */
-    public boolean createRequest(UUID source, UUID target, TPAType tpaType, LocalDateTime expiry) {
+    public boolean createRequest(UUID source, UUID target, TpaType tpaType, LocalDateTime expiry) {
 
         this.filterOldRequests();
 
-        TPARequest tpaRequestToAdd = new TPARequest(source, target, tpaType, expiry);
+        TpaRequest tpaRequestToAdd = new TpaRequest(source, target, tpaType, expiry);
 
         return this.tpaRequests.add(tpaRequestToAdd);
     }
 
-    public boolean addRequest(TPARequest tpaRequest) {
+    public boolean addRequest(TpaRequest tpaRequest) {
 
         this.filterOldRequests();
 
@@ -99,7 +99,7 @@ public class TPAManager {
      * @param uuid The UUID of the source
      * @return An optional. You have to check yourself if it is present or not.
      */
-    public Optional<TPARequest> getOutstandingRequest(UUID uuid) {
+    public Optional<TpaRequest> getOutstandingRequest(UUID uuid) {
         return this.tpaRequests
             .stream()
             .filter(

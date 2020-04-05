@@ -27,12 +27,12 @@ import xyz.joestr.tachyon.api.utils.Updater;
     permissionMessage = "&7[T] &cYou are lacking the permission &7tbukkit.commands.tbukkit&c.",
     usage = "/<command> [reload|update]"
 )
-public class TBukkitCommand implements TabExecutor {
+public class CommandTBukkit implements TabExecutor {
 
     Plugin plugin;
     Updater updater;
 
-    public TBukkitCommand(Plugin plugin, Updater updater) {
+    public CommandTBukkit(Plugin plugin, Updater updater) {
         this.plugin = plugin;
         this.updater = updater;
     }

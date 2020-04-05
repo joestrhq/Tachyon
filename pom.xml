@@ -2,359 +2,349 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <!-- Properties -->
-    <properties>
-        <!-- Tachyon version -->
-        <tachyon.version-number>0.1.8</tachyon.version-number>
-        <tachyon.version-suffix>SNAPSHOT</tachyon.version-suffix>
-        <tachyon.version>${tachyon.version-number}-${tachyon.version-suffix}</tachyon.version>
-        <!-- UTF8 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- Database drivers versions -->
-        <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
-        <!-- For the Bukkit plugin -->
-        <bukkit-api.version>1.14-R0.1-SNAPSHOT</bukkit-api.version>
-        <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
-        <!-- For the Bungeecord plugin -->
-        <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
-        <!-- Luckperms api for different uses -->
-        <luckperms-api.version>4.3</luckperms-api.version>
-        <!-- Jersey version -->
-        <jersey.version>2.17</jersey.version>
-        <!-- SnakeYAML version -->
-        <snakeyaml.version>1.26-SNAPSHOT</snakeyaml.version>
-        <nuvotifier.version>2.3.4</nuvotifier.version>
-        <!-- Testing depedencies -->
-        <junit.version>4.12</junit.version>
-        <powermock.version>1.4.9</powermock.version>
-        <!-- Hikari Connection Pool -->
-        <hikaricp.version>3.3.1</hikaricp.version>
-        <undertow.version>2.0.28.Final</undertow.version>
-        <!-- Maven settings -->
-        <maven-compiler.source.version>1.8</maven-compiler.source.version>
-        <maven-compiler.target.version>1.8</maven-compiler.target.version>
-    </properties>
+  <!-- Properties -->
+  <properties>
+    <!-- Tachyon version -->
+    <tachyon.version>0.1.8-SNAPSHOT</tachyon.version>
+    <!-- UTF8 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Database drivers versions -->
+    <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
+    <!-- For the Bukkit plugin -->
+    <bukkit-api.version>1.14-R0.1-SNAPSHOT</bukkit-api.version>
+    <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
+    <!-- For the Bungeecord plugin -->
+    <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
+    <!-- Luckperms api for different uses -->
+    <luckperms-api.version>5.0</luckperms-api.version>
+    <!-- Jersey version -->
+    <jersey.version>2.17</jersey.version>
+    <!-- SnakeYAML version -->
+    <snakeyaml.version>1.26-SNAPSHOT</snakeyaml.version>
+    <nuvotifier.version>2.3.4</nuvotifier.version>
+    <!-- Testing depedencies -->
+    <junit.version>4.12</junit.version>
+    <powermock.version>1.4.9</powermock.version>
+    <!-- Maven settings -->
+    <maven-compiler.source.version>1.8</maven-compiler.source.version>
+    <maven-compiler.target.version>1.8</maven-compiler.target.version>
+  </properties>
     
-    <!-- Project -->
-    <groupId>xyz.joestr</groupId>
-    <artifactId>tachyon</artifactId>
-    <packaging>pom</packaging>
-    <version>${tachyon.version}</version>
+  <!-- Project -->
+  <groupId>xyz.joestr.tachyon</groupId>
+  <artifactId>tachyon-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>${tachyon.version}</version>
     
-    <!-- Project metadata -->
-    <name>Tachyon</name>
-    <url>https://git.joestr.xyz/joestr/Tachyon</url>
-    <description>The Tachyon project.</description>
-    <inceptionYear>2019</inceptionYear>
+  <!-- Project metadata -->
+  <name>Tachyon :: Parent</name>
+  <url>https://git.joestr.xyz/joestr/Tachyon</url>
+  <description>The Tachyon project.</description>
+  <inceptionYear>2019</inceptionYear>
 
-    <!-- Modules -->
-    <modules>
-        <module>API</module>
-        <module>Bukkit-Plugin</module>
-        <module>BungeeCord-Plugin</module>
-        <module>Information-Exchange-Server</module>
-        <!--<module>Console</module>-->
-        <!--
-            The Tachyon-Console project differs too much from the other
-            projects!
-        -->
-    </modules>
+  <!-- Modules -->
+  <modules>
+    <module>API</module>
+    <module>Bukkit-Plugin</module>
+    <module>BungeeCord-Plugin</module>
+    <module>Information-Exchange-Server</module>
+    <!--<module>Console</module>-->
+    <!--
+        The Tachyon-Console project differs too much from the other
+        projects!
+    -->
+  </modules>
 
-    <!-- Organization information -->
-    <organization>
-        <name>joestr</name>
-        <url>https://joestr.xyz</url>
-    </organization>
+  <!-- Organization information -->
+  <organization>
+    <name>joestr</name>
+    <url>https://joestr.xyz</url>
+  </organization>
 
-    <!-- Licensing -->
-    <licenses>
-        <license>
-            <name>Private license</name>
-            <distribution>repo</distribution>
-            <url>https://git.joestr.xyz/joestr/Tachyon/LICENSE</url>
-            <!--<comments></comments>-->
-        </license>
-    </licenses>
+  <!-- Licensing -->
+  <licenses>
+    <license>
+      <name>Private license</name>
+      <distribution>repo</distribution>
+      <url>https://git.joestr.xyz/joestr/Tachyon/LICENSE</url>
+      <!--<comments></comments>-->
+    </license>
+  </licenses>
     
-    <!-- Developer information -->
-    <developers>
-        <developer>
-            <id>joestr</id>
-            <name>Joel Strasser</name>
-            <email>strasser999@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <url>https://joestr.xyz</url>
-            <organization>joestr</organization>
-            <organizationUrl>https://joestr.xyz</organizationUrl>
-        </developer>
-    </developers>
+  <!-- Developer information -->
+  <developers>
+    <developer>
+      <id>joestr</id>
+      <name>Joel Strasser</name>
+      <email>strasser999@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <url>https://joestr.xyz</url>
+      <organization>joestr</organization>
+      <organizationUrl>https://joestr.xyz</organizationUrl>
+    </developer>
+  </developers>
     
-    <!-- Contributor information -->
-    <contributors>
-        <contributor>
-            <name>Joel Strasser</name>
-            <email>strasser999@gmail.com</email>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <url>https://joestr.xyz</url>
-            <organization>joestr</organization>
-            <organizationUrl>https://joestr.xyz</organizationUrl>
-        </contributor>
-    </contributors>
+  <!-- Contributor information -->
+  <contributors>
+    <contributor>
+      <name>Joel Strasser</name>
+      <email>strasser999@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <url>https://joestr.xyz</url>
+      <organization>joestr</organization>
+      <organizationUrl>https://joestr.xyz</organizationUrl>
+    </contributor>
+  </contributors>
     
-    <!-- Source Code Management -->
-    <scm>
-        <connection>scm:git:https://git.joestr.xyz/joestr/Tachyon</connection>
-        <developerConnection>scm:git:https://git.joestr.xyz/joestr/Tachyon</developerConnection>
-        <tag>HEAD</tag>
-        <url>https//git.joestr.xyz/joestr/Tachyon</url>
-    </scm>
+  <!-- Source Code Management -->
+  <scm>
+    <connection>scm:git:https://git.joestr.xyz/joestr/Tachyon</connection>
+    <developerConnection>scm:git:https://git.joestr.xyz/joestr/Tachyon</developerConnection>
+    <tag>HEAD</tag>
+    <url>https//git.joestr.xyz/joestr/Tachyon</url>
+  </scm>
     
-    <!-- Continous Integration Management -->
-    <ciManagement>
-        <system>jenkins</system>
-        <url>https://ci.joestr.xyz</url>
-        <notifiers>
-            <notifier>
-                <type>email</type>
-                <address>strasser999@gmail.com</address>
-                <sendOnError>true</sendOnError>
-                <sendOnFailure>true</sendOnFailure>
-                <sendOnWarning>true</sendOnWarning>
-                <sendOnSuccess>false</sendOnSuccess>
-            </notifier>
-        </notifiers>
-    </ciManagement>
+  <!-- Continous Integration Management -->
+  <ciManagement>
+    <system>jenkins</system>
+    <url>https://ci.joestr.xyz</url>
+    <notifiers>
+      <notifier>
+        <type>email</type>
+        <address>strasser999@gmail.com</address>
+        <sendOnError>true</sendOnError>
+        <sendOnFailure>true</sendOnFailure>
+        <sendOnWarning>true</sendOnWarning>
+        <sendOnSuccess>false</sendOnSuccess>
+      </notifier>
+    </notifiers>
+  </ciManagement>
     
-    <!-- Distribution Management -->
-    <distributionManagement>
-        <repository>
-            <id>joestr-mvn-repo</id>
-            <name>joestr's Maven Repository</name>
-            <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </repository>
-        <snapshotRepository>
-            <id>joestr-mvn-repo</id>
-            <name>joestr's Maven Repository</name>
-            <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
-            <uniqueVersion>false</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
+  <!-- Distribution Management -->
+  <distributionManagement>
+    <repository>
+      <id>joestr-mvn-repo</id>
+      <name>joestr's Maven Repository</name>
+      <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </repository>
+    <snapshotRepository>
+      <id>joestr-mvn-repo</id>
+      <name>joestr's Maven Repository</name>
+      <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
     
-    <!-- Issue Management -->
-    <issueManagement>
-        <system>gitea</system>
-        <url>https://git.joestr.xyz/joestr/Tachyon/issues</url>
-    </issueManagement>
+  <!-- Issue Management -->
+  <issueManagement>
+    <system>gitea</system>
+    <url>https://git.joestr.xyz/joestr/Tachyon/issues</url>
+  </issueManagement>
     
-    <!-- Dependency Management -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-jdbc.version}</version>
-                <type>jar</type>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.bukkit</groupId>
-                <artifactId>bukkit</artifactId>
-                <version>${bukkit-api.version}</version>
-                <type>jar</type>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.spigotmc</groupId>
-                <artifactId>plugin-annotations</artifactId>
-                <version>${plugin-annotations.version}</version>
-                <type>jar</type>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>net.md-5</groupId>
-                <artifactId>bungeecord-api</artifactId>
-                <version>${bungeecord.version}</version>
-                <type>jar</type>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>net.md-5</groupId>
-                <artifactId>bungeecord-chat</artifactId>
-                <version>${bungeecord.version}</version>
-                <type>jar</type>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>me.lucko.luckperms</groupId>
-                <artifactId>luckperms-api</artifactId>
-                <version>${luckperms-api.version}</version>
-                <type>jar</type>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.jersey</groupId>
-                <artifactId>jersey-bom</artifactId>
-                <version>${jersey.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>${snakeyaml.version}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>com.vexsoftware</groupId>
-                <artifactId>nuvotifier-common</artifactId>
-                <version>${nuvotifier.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <type>jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-junit4</artifactId>
-                <version>${powermock.version}</version>
-                <type>jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito</artifactId>
-                <version>${powermock.version}</version>
-                <type>jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.zaxxer</groupId>
-                <artifactId>HikariCP</artifactId>
-                <version>${hikaricp.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.undertow</groupId>
-                <artifactId>undertow-core</artifactId>
-                <version>2.0.1.Final</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-    
-    <!-- Repository Management -->
-    <repositories>
-        <repository>
-            <id>release-repo</id>
-            <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>snapshot-repo</id>
-            <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>maven.oracle.com</id>
-            <name>oracle-maven-repo</name>
-            <url>https://maven.oracle.com</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </repository>
-    </repositories>
-    
-    <!-- Dependencies -->
+  <!-- Dependency Management -->
+  <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-jdbc.version}</version>
+        <type>jar</type>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.bukkit</groupId>
+        <artifactId>bukkit</artifactId>
+        <version>${bukkit-api.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>plugin-annotations</artifactId>
+        <version>${plugin-annotations.version}</version>
+        <type>jar</type>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.md-5</groupId>
+        <artifactId>bungeecord-api</artifactId>
+        <version>${bungeecord.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.md-5</groupId>
+        <artifactId>bungeecord-chat</artifactId>
+        <version>${bungeecord.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.luckperms</groupId>
+        <artifactId>api</artifactId>
+        <version>${luckperms-api.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey</groupId>
+        <artifactId>jersey-bom</artifactId>
+        <version>${jersey.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.yaml</groupId>
+        <artifactId>snakeyaml</artifactId>
+        <version>${snakeyaml.version}</version>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>com.vexsoftware</groupId>
+        <artifactId>nuvotifier-common</artifactId>
+        <version>${nuvotifier.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <type>jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-junit4</artifactId>
+        <version>${powermock.version}</version>
+        <type>jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-api-mockito</artifactId>
+        <version>${powermock.version}</version>
+        <type>jar</type>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.undertow</groupId>
+        <artifactId>undertow-core</artifactId>
+        <version>2.0.1.Final</version>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
+
+  <!-- Repository Management -->
+  <repositories>
+    <repository>
+      <id>joestr-release-repo</id>
+      <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>joestr-snapshot-repo</id>
+      <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>oracle-maven-repo</id>
+      <name>Oracle's Maven repo</name>
+      <url>https://maven.oracle.com</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+    </repository>
+  </repositories>
     
-    <!-- Repository Management for plugins -->
-    <pluginRepositories>
-        <pluginRepository>
-            <id>release-repo</id>
-            <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-        <pluginRepository>
-            <id>snapshot-repo</id>
-            <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+  <!-- Dependencies -->
+  <dependencies>
+  </dependencies>
     
-    <!-- Build process -->
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.1.0</version>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.1</version>
-                    <configuration>
-                        <doclint>none</doclint>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${maven-compiler.source.version}</source>
-                        <target>${maven-compiler.target.version}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+  <!-- Repository Management for plugins -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>joestr-release-repo</id>
+      <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>joestr-snapshot-repo</id>
+      <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
+    
+  <!-- Build process -->
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.1.0</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.1.1</version>
+          <configuration>
+            <doclint>none</doclint>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>${maven-compiler.source.version}</source>
+            <target>${maven-compiler.target.version}</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

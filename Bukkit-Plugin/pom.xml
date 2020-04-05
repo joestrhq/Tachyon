@@ -7,20 +7,20 @@
     
     <!-- Parent project -->
     <parent>
-        <groupId>xyz.joestr</groupId>
-        <artifactId>tachyon</artifactId>
+        <groupId>xyz.joestr.tachyon</groupId>
+        <artifactId>tachyon-parent</artifactId>
         <version>${tachyon.version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
     <!-- Project -->
     <groupId>xyz.joestr.tachyon</groupId>
-    <artifactId>bukkit_plugin</artifactId>
+    <artifactId>tachyon-bukkit_plugin</artifactId>
     <version>${tachyon.version}</version>
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
-    <name>Tachyon Bukkit-Plugin</name>
+    <name>Tachyon :: Bukkit-Plugin</name>
     <url>https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin</url>
     <description>The Tachyon unit for servers, which implement the Bukkit API.</description>
     <inceptionYear>2019</inceptionYear>
@@ -50,8 +50,8 @@
             <artifactId>plugin-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>me.lucko.luckperms</groupId>
-            <artifactId>luckperms-api</artifactId>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
         </dependency>
         <!-- Dependecies to include -->
         <dependency>
@@ -91,18 +91,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.1</version>
-                <configuration>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>META-INF/*.SF</exclude>
-                                <exclude>META-INF/*.DSA</exclude>
-                                <exclude>META-INF/*.RSA</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>

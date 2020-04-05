@@ -1,4 +1,4 @@
-package xyz.joestr.tachyon.information_exchange_server.rest;
+package xyz.joestr.tachyon.information_exchange_server.webservice.controllers.v1;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

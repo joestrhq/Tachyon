@@ -19,9 +19,9 @@ import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
  *
  * @author Joel Strasser
  */
-public class PingOtherCommand extends Command implements TabExecutor {
+public class CommandGPingOther extends Command implements TabExecutor {
 
-    public PingOtherCommand() {
+    public CommandGPingOther() {
         super(StaticConfiguration.Commands.List.command(),
             StaticConfiguration.Commands.List.permission()
         );

@@ -17,16 +17,16 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.bungeecord_plugin.managers.TPAManager;
 import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
-import xyz.joestr.tachyon.bungeecord_plugin.utils.TPAType;
+import xyz.joestr.tachyon.bungeecord_plugin.utils.TpaType;
 
 /**
  * Represents the '/tpa' command.
  *
  * @author Joel Strasser
  */
-public class TPACommand extends Command implements TabExecutor {
+public class CommandGTpa extends Command implements TabExecutor {
 
-    public TPACommand() {
+    public CommandGTpa() {
         super(StaticConfiguration.Commands.List.command(),
             StaticConfiguration.Commands.List.permission()
         );
@@ -90,10 +90,9 @@ public class TPACommand extends Command implements TabExecutor {
             return;
         }
         
-        tpaManager.createRequest(
-            sourcePlayer.getUniqueId(),
+        tpaManager.createRequest(sourcePlayer.getUniqueId(),
             targetPlayer.getUniqueId(),
-            TPAType.TO,
+            TpaType.TO,
             LocalDateTime.now().plusSeconds(15)
         );
     }
