@@ -7,13 +7,11 @@ Only the owner is allowed to use this software.
  */
 package xyz.joestr.tachyon.bungeecord_plugin.configuration;
 
-import com.sun.istack.internal.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +96,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     return this.lookupObject(path, config) != null;
   }
   
-  @Nullable
   public Integer getInteger(String path) {
     return getObject(path, Integer.class);
   }
@@ -107,7 +104,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, Integer.class, value);
   }
   
-  @Nullable
   public Double getDouble(String path) {
     return getObject(path, Double.class);
   }
@@ -116,7 +112,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, Double.class, value);
   }
   
-  @Nullable
   public Float getFloat(String path) {
     return getObject(path, Float.class);
   }
@@ -125,7 +120,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, Float.class, value);
   }
   
-  @Nullable
   public String getString(String path) {
     return getObject(path, String.class);
   }
@@ -134,7 +128,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, String.class, value);
   }
   
-  @Nullable
   public List<Integer> getIntegerList(String path) {
     return getObject(path, new ArrayList<Integer>().getClass());
   }
@@ -143,7 +136,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public List<Double> getDoubleList(String path) {
     return getObject(path, new ArrayList<Double>().getClass());
   }
@@ -152,7 +144,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public List<Float> getFloatList(String path) {
     return getObject(path, new ArrayList<Float>().getClass());
   }
@@ -161,7 +152,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public List<String> getStringList(String path) {
     return getObject(path, new ArrayList<String>().getClass());
   }
@@ -170,7 +160,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public Map<Object, Integer> getIntegerMap(String path) {
     return getObject(path, new HashMap<Object, Integer>().getClass());
   }
@@ -179,7 +168,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public Map<Object, Double> getDoubleMap(String path) {
     return getObject(path, new HashMap<Object, Double>().getClass());
   }
@@ -188,7 +176,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public Map<Object, Float> getFloatMap(String path) {
     return getObject(path, new HashMap<Object, Float>().getClass());
   }
@@ -197,7 +184,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public Map<Object, String> getStringMap(String path) {
     return getObject(path, new HashMap<Object, String>().getClass());
   }
@@ -206,7 +192,6 @@ public class YamlFileConfiguration extends YamlConfiguration {
     setObject(path, value.getClass(), value);
   }
   
-  @Nullable
   public <T> T getCustomObject(String path, Class<T> claszz) {
     return getObject(path, claszz);
   }

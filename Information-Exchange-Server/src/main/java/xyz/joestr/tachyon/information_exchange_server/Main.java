@@ -3,6 +3,7 @@ package xyz.joestr.tachyon.information_exchange_server;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.util.standalone.VoteReceiver;
 import com.vexsoftware.votifier.util.standalone.VotifierServerBuilder;
+import io.ebean.EbeanServer;
 import xyz.joestr.tachyon.information_exchange_server.configurations.YamlConfiguration;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.nio.channels.AsynchronousServerSocketChannel;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -41,13 +43,15 @@ public class Main {
     = Logger.getLogger("org.glassfish.grizzly.http.server.HttpHandler");
 
   public static YamlConfiguration CONFIGURTION;
+  
+  private static EbeanServer orm;
 
   // pooled database connection
   private HttpServer httpServer;
   private AccessLogBuilder accessLogBuilder;
 
   public static void main(String[] args) throws Throwable {
-
+    
     // The jar file itself
     File selfJar = new File(
       INSTANCE.getClass()
@@ -59,7 +63,6 @@ public class Main {
 
     // The configuration files
     File configFile = new File(selfJar.getParent(), "config.yml");
-    File hikariConfigFile = new File(selfJar.getParent(), "config-hikari.properties");
 
     File privateKeyFile = new File(selfJar.getParent(), "votifier-privatekey.pem");
     File publicKeyFile = new File(selfJar.getParent(), "votifier-publickey.pem");
@@ -92,30 +95,6 @@ public class Main {
       new FileReader(configFile),
       YamlConfiguration.class
     );
-
-    if (!hikariConfigFile.exists()) {
-      if (!hikariConfigFile.getParentFile().canWrite()) {
-        return;
-      }
-
-      OutputStream oS = new FileOutputStream(hikariConfigFile);
-      InputStream iS = INSTANCE.getClass().getResourceAsStream("config-hikari.properties");
-
-      byte[] buffer = new byte[1024];
-      int bytesRead;
-
-      while ((bytesRead = iS.read(buffer)) != -1) {
-        oS.write(buffer, 0, bytesRead);
-      }
-
-      iS.close();
-      oS.flush();
-      oS.close();
-    }
-
-    if (!hikariConfigFile.canRead()) {
-      return;
-    }
 
     PrivateKey loadedPrivateKey;
     PublicKey loadedPublicKey;
@@ -157,11 +136,6 @@ public class Main {
     }
 
     loadedPublicKey = INSTANCE.loadPublicKey(publicKeyFile, "RSA");
-
-    PlayerSettingsManager.getInstance(
-      CONFIGURTION,
-      INSTANCE.pooledDatabaseConnection
-    );
 
     new VotifierServerBuilder()
       .bind(new InetSocketAddress("0.0.0.0", 8019))

@@ -10,10 +10,8 @@ import io.undertow.Undertow;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,25 +19,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
-import xyz.joestr.tachyon.api.TachyonAPI;
 import xyz.joestr.tachyon.api.classes.ChatFilter;
 import static xyz.joestr.tachyon.bungeecord_plugin.TachyonBungeeCordPlugin.configuration;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.AnnotatedPlayerChatFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.ColorCodeFilter;
 import xyz.joestr.tachyon.bungeecord_plugin.chatfilters.RawChatFilter;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGList;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGStaffChat;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGTpa;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandTList;
+import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandTGList;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.ChatFilterListener;
 import xyz.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
 import xyz.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayers;
@@ -151,13 +141,10 @@ public class TachyonBungeeCordPlugin extends Plugin {
     //    new TPACommand()
     // );
     // Register the '/tlist'
-    pluginManager.registerCommand(this, new CommandTList("tlist", "tachyon.command.tlist"));
-
-    // Register the '/staffchat'
-    pluginManager.registerCommand(this, new CommandGStaffChat());
-
+    pluginManager.registerCommand(this, new CommandTGList("tlist", "tachyon.command.tlist"));
+    
     // Register the listener for the staff chat
-    pluginManager.registerListener(this, new StaffChatMessageListener());
+    //pluginManager.registerListener(this, new StaffChatMessageListener());
 
     // Register the chat filter listener
     pluginManager.registerListener(this, new ChatFilterListener());

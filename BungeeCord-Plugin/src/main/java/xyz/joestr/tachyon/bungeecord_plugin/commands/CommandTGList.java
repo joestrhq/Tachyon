@@ -11,7 +11,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -23,9 +22,9 @@ import net.md_5.bungee.api.plugin.TabExecutor;
  *
  * @author Joel Strasser
  */
-public class CommandTList extends Command implements TabExecutor {
+public class CommandTGList extends Command implements TabExecutor {
 
-    public CommandTList(String name, String permission, String... aliases) {
+    public CommandTGList(String name, String permission, String... aliases) {
         super(name, permission, aliases);
     }
     
@@ -38,7 +37,7 @@ public class CommandTList extends Command implements TabExecutor {
 
                 TextComponent listMessageBody = new TextComponent();
 
-                Iterator<ProxiedPlayer> it = players.iterator();
+                Iterator<ProxiedPlayer> it = ProxyServer.getInstance().getPlayers().iterator();
                 
                 while (it.hasNext()) {
 

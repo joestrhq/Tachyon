@@ -10,8 +10,6 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import xyz.joestr.tachyon.bungeecord_plugin.commands.CommandGStaffChat;
-import xyz.joestr.tachyon.bungeecord_plugin.configuration.StaticConfiguration;
 
 /**
  *
@@ -36,16 +34,11 @@ public class StaffChatMessageListener implements Listener {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
         
         // If the player does not have the necessary permission
-        if(!player.hasPermission(StaticConfiguration.Commands.StaffChat.permission())) {
+        if(!player.hasPermission("")) {
             return;
         }
         
         // Finally, send the message
-        CommandGStaffChat
-            .sendOutToStaff(
-                player.getName(),
-                event.getMessage().substring(1)
-            );
         
         event.setCancelled(true);
     }

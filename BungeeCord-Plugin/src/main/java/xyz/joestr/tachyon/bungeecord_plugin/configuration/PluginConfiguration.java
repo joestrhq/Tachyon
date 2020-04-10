@@ -7,7 +7,6 @@ Only the owner is allowed to use this software.
 */
 package xyz.joestr.tachyon.bungeecord_plugin.configuration;
 
-import com.sun.istack.internal.Nullable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,7 +51,6 @@ public class PluginConfiguration {
     );
   }
   
-  @Nullable
   public Integer getInt(String path) {
     Integer result =
       this.external.getInteger(path);
@@ -72,7 +70,6 @@ public class PluginConfiguration {
     this.external.setInteger(path, value);
   }
   
-  @Nullable
   public Double getDouble(String path) {
     Double result =
       this.external.getDouble(path);
@@ -92,7 +89,6 @@ public class PluginConfiguration {
     this.external.setDouble(path, value);
   }
   
-  @Nullable
   public Float getFloat(String path) {
     Float result =
       this.external.getFloat(path);
@@ -112,7 +108,6 @@ public class PluginConfiguration {
     this.external.setFloat(path, value);
   }
   
-  @Nullable
   public String getString(String path) {
     String result =
       this.external.getString(path);
@@ -132,7 +127,6 @@ public class PluginConfiguration {
     this.external.setString(path, value);
   }
   
-  @Nullable
   public List<Integer> getIntegerList(String path) {
     List<Integer> result =
       this.external.getIntegerList(path);
@@ -152,7 +146,6 @@ public class PluginConfiguration {
     this.external.setIntegerList(path, value);
   }
   
-  @Nullable
   public List<Double> getDoubleList(String path) {
    List<Double> result =
       this.external.getDoubleList(path);
@@ -172,7 +165,6 @@ public class PluginConfiguration {
     this.external.setDoubleList(path, value);
   }
   
-  @Nullable
   public List<Float> getFloatList(String path) {
     List<Float> result =
       this.external.getFloatList(path);
@@ -192,7 +184,6 @@ public class PluginConfiguration {
     this.external.setFloatList(path, value);
   }
   
-  @Nullable
   public List<String> getStringList(String path) {
     List<String> result =
       this.external.getStringList(path);
@@ -212,7 +203,6 @@ public class PluginConfiguration {
     this.external.setStringList(path, value);
   }
   
-  @Nullable
   public Map<Object, Integer> getIntegerMap(String path) {
     Map<Object, Integer> result =
       this.external.getIntegerMap(path);
@@ -232,7 +222,6 @@ public class PluginConfiguration {
     this.external.setIntegerMap(path, value);
   }
   
-  @Nullable
   public Map<Object, Double> getDoubleMap(String path) {
     Map<Object, Double> result =
       this.external.getDoubleMap(path);
@@ -252,7 +241,6 @@ public class PluginConfiguration {
     this.external.setDoubleMap(path, value);
   }
   
-  @Nullable
   public Map<Object, Float> getFloatMap(String path) {
     Map<Object, Float> result =
       this.external.getFloatMap(path);
@@ -272,7 +260,6 @@ public class PluginConfiguration {
     this.external.setFloatMap(path, value);
   }
   
-  @Nullable
   public Map<Object, String> getStringMap(String path) {
     Map<Object, String> result =
       this.external.getStringMap(path);
@@ -292,7 +279,6 @@ public class PluginConfiguration {
     this.external.setStringMap(path, value);
   }
   
-  @Nullable
   public <T> T getCustomObject(String path, Class<T> claszz) {
     T result =
       this.external.getCustomObject(path, claszz);

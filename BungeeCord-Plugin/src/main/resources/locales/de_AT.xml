@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tlist>
+    <!-- {0}: The number of players currently online -->
+    <!-- {1}: The number of maxmium players online -->
+    <line>
+        <![CDATA[["",
+            {"text":"[TList] ","color":"dark_aqua"},
+            {"text":"Es sind zurzeit ","color":"aqua"},
+            {"text":"{0}","color":"gray"},
+            {"text":" von ","color":"aqua"},
+            {"text":"{0}","color":"gray"},
+            {"text":" online:","color":"aqua"}
+        ]]]>
+    </line>
+    <!-- {0}: The name of the currently iterating player -->
+    <players>
+        <![CDATA[["",
+            {"text":"{0}","color":"aqua",
+                "clickEvent":{"action":"suggest_command","value":"/ttell {0} "}
+            }
+        ]]]>
+    </players>
+    <!-- The delimiter between the players -->
+    <delimiter>
+        <![CDATA[["",
+            {"text":", ","color":"gray"}
+        ]]]>
+    </delimiter>
+</tlist>
+</xml>
