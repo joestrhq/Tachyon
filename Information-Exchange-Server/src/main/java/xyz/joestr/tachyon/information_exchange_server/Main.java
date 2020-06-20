@@ -11,11 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.channels.AsynchronousServerSocketChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -32,7 +32,6 @@ import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.yaml.snakeyaml.Yaml;
-import xyz.joestr.tachyon.information_exchange_server.managers.PlayerSettingsManager;
 
 public class Main {
 
@@ -44,9 +43,13 @@ public class Main {
 
   public static YamlConfiguration CONFIGURTION;
   
-  private static EbeanServer orm;
+	// For the internal socket channel
+	private AsynchronousServerSocketChannel internalServer;
 
-  // pooled database connection
+	// Ebean ORM for the database#
+	private EbeanServer ebeanServer;
+	
+  // The HTTP server for the REST API
   private HttpServer httpServer;
   private AccessLogBuilder accessLogBuilder;
 
@@ -63,31 +66,26 @@ public class Main {
 
     // The configuration files
     File configFile = new File(selfJar.getParent(), "config.yml");
-
     File privateKeyFile = new File(selfJar.getParent(), "votifier-privatekey.pem");
     File publicKeyFile = new File(selfJar.getParent(), "votifier-publickey.pem");
 
     if (!configFile.exists()) {
+			LOGGER.log(Level.WARNING, "{0} does not exists", configFile.getAbsolutePath());
+			
       if (!configFile.getParentFile().canWrite()) {
+				LOGGER.log(Level.SEVERE, "Cannot write to {0}", configFile.getAbsolutePath());
         return;
       }
-
-      OutputStream oS = new FileOutputStream(configFile);
-      InputStream iS = INSTANCE.getClass().getResourceAsStream("config.yml");
-
-      byte[] buffer = new byte[1024];
-      int bytesRead;
-
-      while ((bytesRead = iS.read(buffer)) != -1) {
-        oS.write(buffer, 0, bytesRead);
-      }
-
-      iS.close();
-      oS.flush();
-      oS.close();
+			
+			Files.copy(
+				INSTANCE.getClass().getResourceAsStream("config.yml"),
+				configFile.toPath(),
+				StandardCopyOption.REPLACE_EXISTING
+			);
     }
 
     if (!configFile.canRead()) {
+			LOGGER.log(Level.SEVERE, "Cannot read from {0}", configFile.getAbsolutePath());
       return;
     }
 
@@ -159,7 +157,7 @@ public class Main {
     INSTANCE.httpServer = GrizzlyHttpServerFactory.createHttpServer(
       URI.create(CONFIGURTION.getListenuri()),
       new ResourceConfig()
-        .packages("xyz.joestr.tachyon.information_exchange_server.web.commonv1"),
+        .packages("xyz.joestr.tachyon.information_exchange_server.webservice.controllers.v1"),
       false
     );
 
