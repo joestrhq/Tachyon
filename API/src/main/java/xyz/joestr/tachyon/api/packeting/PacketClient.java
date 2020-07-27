@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import xyz.joestr.tachyon.api.packeting.Packet;
+import xyz.joestr.tachyon.api.packeting.packets.Packet;
 import xyz.joestr.tachyon.api.utils.ByteSerializer;
 
 /**
@@ -26,7 +26,7 @@ public class PacketClient {
 
 	public PacketClient(String hostname, int port) throws IOException, InterruptedException, ExecutionException {
 		client = AsynchronousSocketChannel.open();
-		InetSocketAddress hostAddress = new InetSocketAddress("localhost", 4999);
+		InetSocketAddress hostAddress = new InetSocketAddress(hostname, port);
 		future = client.connect(hostAddress);
 		future.get();
 	}

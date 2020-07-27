@@ -11,7 +11,8 @@ package xyz.joestr.tachyon.api.packeting;
  *
  * @author Joel
  */
-public enum Packets {
-	GET_ALL_PLAYERS,
-	OTHER
+public enum StandardPackets {
+	ERROR_RECEIVE,
+	ERROR_SEND,
+	GET_ALL_PLAYERS
 }
