@@ -7,7 +7,7 @@
 // 
 package xyz.joestr.tachyon.api.packeting.packets;
 
-import xyz.joestr.tachyon.api.packeting.StandardPackets;
+import xyz.joestr.tachyon.api.packeting.Packets;
 
 /**
  *
@@ -15,14 +15,21 @@ import xyz.joestr.tachyon.api.packeting.StandardPackets;
  */
 public class PacketInit extends Packet {
 	
-	short nextPacketByteSize;
+	int nextPacketByteSize;
 	
-	public PacketInit(short nextPacketByteSize) {
-		super(StandardPackets.INIT);
+	public PacketInit(int nextPacketByteSize) {
+		super(Packets.Provided.INIT);
+		
+		if (nextPacketByteSize > Packets.MAX_BYTES) {
+			throw new IllegalArgumentException(
+				"The maximum number of bytes per packet is " + Packets.MAX_BYTES
+			);
+		}
+		
 		this.nextPacketByteSize = nextPacketByteSize;
 	}
 
-	public short getNextPacketByteSize() {
+	public int getNextPacketByteSize() {
 		return nextPacketByteSize;
 	}
 }

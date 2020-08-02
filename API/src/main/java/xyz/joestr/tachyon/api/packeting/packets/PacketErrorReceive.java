@@ -7,7 +7,7 @@
 // 
 package xyz.joestr.tachyon.api.packeting.packets;
 
-import xyz.joestr.tachyon.api.packeting.StandardPackets;
+import xyz.joestr.tachyon.api.packeting.Packets;
 
 /**
  *
@@ -16,7 +16,7 @@ import xyz.joestr.tachyon.api.packeting.StandardPackets;
 public class PacketErrorReceive extends Packet {
 	
 	public PacketErrorReceive() {
-		super(StandardPackets.ERROR_RECEIVE);
+		super(Packets.Provided.ERROR_RECEIVE);
 	}
 	
 }

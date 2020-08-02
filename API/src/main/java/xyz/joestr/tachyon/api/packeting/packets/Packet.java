@@ -7,24 +7,24 @@ Only the owner is allowed to use this software.
  */
 package xyz.joestr.tachyon.api.packeting.packets;
 
-import xyz.joestr.tachyon.api.packeting.StandardPackets;
+import xyz.joestr.tachyon.api.packeting.Packets;
 
 /**
  *
  * @author Joel
  */
 public abstract class Packet {
-	StandardPackets Id;
+	Packets.Provided Id;
 
-	public Packet(StandardPackets Id) {
+	public Packet(Packets.Provided Id) {
 		this.Id = Id;
 	}
 
-	public StandardPackets getId() {
+	public Packets.Provided getId() {
 		return Id;
 	}
 
-	public void setId(StandardPackets Id) {
+	public void setId(Packets.Provided Id) {
 		this.Id = Id;
 	}
 }

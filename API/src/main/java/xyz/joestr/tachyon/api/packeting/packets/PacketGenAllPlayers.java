@@ -7,7 +7,8 @@
 // 
 package xyz.joestr.tachyon.api.packeting.packets;
 
-import xyz.joestr.tachyon.api.packeting.StandardPackets;
+import xyz.joestr.tachyon.api.packeting.Packets;
+
 
 /**
  *
@@ -16,7 +17,7 @@ import xyz.joestr.tachyon.api.packeting.StandardPackets;
 public class PacketGenAllPlayers extends Packet {
 	
 	public PacketGenAllPlayers() {
-		super(StandardPackets.GET_ALL_PLAYERS);
+		super(Packets.Provided.GET_ALL_PLAYERS);
 	}
 	
 }

@@ -60,7 +60,7 @@ public class PacketServer {
 				clientChannel = result;
 				if ((clientChannel != null) && (clientChannel.isOpen())) {
 					
-					ByteBuffer readBuffer = ByteBuffer.allocate(512);
+					ByteBuffer readBuffer = ByteBuffer.allocate(Packets.MAX_BYTES);
 					clientChannel.read(readBuffer);
 					
 					Packet received = null;
