@@ -20,9 +20,9 @@
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
-    <name>Tachyon :: Bukkit-Plugin</name>
+    <name>Tachyon :: Spigot-Plugin</name>
     <url>https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin</url>
-    <description>The Tachyon unit for servers, which implement the Bukkit API.</description>
+    <description>The Tachyon unit for servers, which implement the Spigot API.</description>
     <inceptionYear>2019</inceptionYear>
 
     <!-- Dependency management -->
@@ -41,9 +41,9 @@
     <dependencies>
         <!-- Provided dependencies -->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-        </dependency>
+					<groupId>org.spigotmc</groupId>
+					<artifactId>spigot-api</artifactId>
+				</dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>plugin-annotations</artifactId>

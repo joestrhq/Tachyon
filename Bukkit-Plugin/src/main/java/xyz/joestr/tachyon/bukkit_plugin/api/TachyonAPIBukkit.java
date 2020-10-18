@@ -6,14 +6,14 @@
 package xyz.joestr.tachyon.bukkit_plugin.api;
 
 import java.lang.reflect.Type;
-import xyz.joestr.tachyon.api.TachyonAPI;
+import xyz.joestr.tachyon.api.TachyonApi;
 import xyz.joestr.tachyon.api.classes.ChatFilter;
 
 /**
  *
  * @author Joel
  */
-public class TachyonAPIBukkit extends TachyonAPI {
+public class TachyonAPIBukkit extends TachyonApi {
 
     @Override
     public void registerChatFilter(ChatFilter chatFilter) {
