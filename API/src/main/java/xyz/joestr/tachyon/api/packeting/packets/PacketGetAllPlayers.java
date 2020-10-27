@@ -16,11 +16,11 @@ import xyz.joestr.tachyon.api.packeting.Packets;
  *
  * @author Joel
  */
-public class PacketGenAllPlayers extends Packet {
+public class PacketGetAllPlayers extends Packet {
 	
 	public Map<UUID, String> players;
 	
-	public PacketGenAllPlayers(Map<UUID, String> players) {
+	public PacketGetAllPlayers(Map<UUID, String> players) {
 		super(Packets.Provided.GET_ALL_PLAYERS);
 		
 		this.players = players;

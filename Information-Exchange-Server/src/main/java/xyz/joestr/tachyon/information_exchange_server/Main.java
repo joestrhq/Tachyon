@@ -46,7 +46,7 @@ public class Main {
 	// For the internal socket channel
 	private AsynchronousServerSocketChannel internalServer;
 
-	// Ebean ORM for the database#
+	// Ebean ORM for the database
 	private EbeanServer ebeanServer;
 	
   // The HTTP server for the REST API

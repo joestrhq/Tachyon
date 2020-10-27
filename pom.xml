@@ -9,7 +9,7 @@
     <!-- Tachyon version -->
     <tachyon.version>0.1.8-SNAPSHOT</tachyon.version>
     <!-- For the Bukkit plugin -->
-    <bukkit-api.version>1.14-R0.1-SNAPSHOT</bukkit-api.version>
+    <spigot-api.version>1.16.1-R0.1-SNAPSHOT</spigot-api.version>
     <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
     <!-- For the Bungeecord plugin -->
     <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
@@ -61,8 +61,8 @@
 
   <!-- Organization information -->
   <organization>
-    <name>joestr</name>
-    <url>https://joestr.xyz</url>
+    <name>joestr.at</name>
+    <url>https://www.joestr.at</url>
   </organization>
 
   <!-- Licensing -->
@@ -70,7 +70,7 @@
     <license>
       <name>Private license</name>
       <distribution>repo</distribution>
-      <url>https://git.joestr.xyz/joestr/Tachyon/LICENSE</url>
+      <url>https://github.com/joestr-at/Tachyon</url>
       <!--<comments></comments>-->
     </license>
   </licenses>
@@ -84,9 +84,9 @@
       <roles>
         <role>developer</role>
       </roles>
-      <url>https://joestr.xyz</url>
-      <organization>joestr</organization>
-      <organizationUrl>https://joestr.xyz</organizationUrl>
+      <url>https://www.joestr.priv.at</url>
+      <organization>joestr.at</organization>
+      <organizationUrl>https://www.joestr.at</organizationUrl>
     </developer>
   </developers>
     
@@ -98,24 +98,24 @@
       <roles>
         <role>developer</role>
       </roles>
-      <url>https://joestr.xyz</url>
-      <organization>joestr</organization>
-      <organizationUrl>https://joestr.xyz</organizationUrl>
+      <url>https://www.joestr.priv.at</url>
+      <organization>joestr.at</organization>
+      <organizationUrl>https://www.joestr.at</organizationUrl>
     </contributor>
   </contributors>
     
   <!-- Source Code Management -->
   <scm>
-    <connection>scm:git:https://git.joestr.xyz/joestr/Tachyon</connection>
-    <developerConnection>scm:git:https://git.joestr.xyz/joestr/Tachyon</developerConnection>
+    <connection>scm:git:https://github.com/joestr-at/Tachyon.git</connection>
+    <developerConnection>scm:git:https://github.com/joestr-at/Tachyon.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https//github.com/joestr/Tachyon</url>
+    <url>https://github.com/joestr-at/Tachyon</url>
   </scm>
     
   <!-- Continous Integration Management -->
   <ciManagement>
     <system>jenkins</system>
-    <url>https://ci.joestr.xyz</url>
+    <url>https://ci.joestr.at</url>
     <notifiers>
       <notifier>
         <type>email</type>
@@ -133,13 +133,13 @@
     <repository>
       <id>joestr-mvn-repo</id>
       <name>joestr's Maven Repository</name>
-      <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
+      <url>https://mvn-repo.joestr.at/repository/releases/</url>
       <uniqueVersion>false</uniqueVersion>
     </repository>
     <snapshotRepository>
       <id>joestr-mvn-repo</id>
       <name>joestr's Maven Repository</name>
-      <url>https://mvn-repo.joestr.xyz/repository/repository/</url>
+      <url>https://mvn-repo.joestr.at/repository/snapshots/</url>
       <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
@@ -147,16 +147,16 @@
   <!-- Issue Management -->
   <issueManagement>
     <system>gitea</system>
-    <url>https://github.com/joestr/Tachyon/issues</url>
+    <url>https://github.com/joestr-at/Tachyon/issues</url>
   </issueManagement>
     
   <!-- Dependency Management -->
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.bukkit</groupId>
-        <artifactId>bukkit</artifactId>
-        <version>${bukkit-api.version}</version>
+        <groupId>org.spigotmc</groupId>
+        <artifactId>spigot-api</artifactId>
+        <version>${spigot-api.version}</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
