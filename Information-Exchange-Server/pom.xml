@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>xyz.joestr.tachyon</groupId>
+    <groupId>at.or.joestr.tachyon</groupId>
     <artifactId>tachyon-parent</artifactId>
     <version>${tachyon.version}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
     
-  <groupId>xyz.joestr.tachyon</groupId>
+  <groupId>at.or.joestr.tachyon</groupId>
   <artifactId>tachyon-information_exchange_server</artifactId>
   <version>${tachyon.version}</version>
 
@@ -20,7 +20,7 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>xyz.joestr.tachyon</groupId>
+        <groupId>at.or.joestr.tachyon</groupId>
         <artifactId>tachyon-api</artifactId>
         <version>${tachyon.version}</version>
         <type>jar</type>
@@ -50,19 +50,8 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.ebean</groupId>
-      <artifactId>ebean</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.ebean</groupId>
-      <artifactId>ebean-querybean</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.ebean</groupId>
-      <artifactId>querybean-generator</artifactId>
-      <scope>compile</scope>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
@@ -108,7 +97,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>xyz.joestr.tachyon.information_exchange_server.Main</mainClass>
+              <mainClass>at.or.joestr.tachyon.information_exchange_server.Main</mainClass>
             </manifest>
           </archive>
         </configuration>

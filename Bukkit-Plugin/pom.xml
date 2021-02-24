@@ -7,21 +7,21 @@
     
     <!-- Parent project -->
     <parent>
-        <groupId>xyz.joestr.tachyon</groupId>
+        <groupId>at.or.joestr.tachyon</groupId>
         <artifactId>tachyon-parent</artifactId>
         <version>${tachyon.version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
     <!-- Project -->
-    <groupId>xyz.joestr.tachyon</groupId>
+    <groupId>at.or.joestr.tachyon</groupId>
     <artifactId>tachyon-bukkit_plugin</artifactId>
     <version>${tachyon.version}</version>
     <packaging>jar</packaging>
     
     <!-- Project metadata -->
     <name>Tachyon :: Spigot-Plugin</name>
-    <url>https://git.joestr.xyz/joestr/Tachyon/Bukkit-Plugin</url>
+    <url>https://github.com/joestr-at/Tachyon</url>
     <description>The Tachyon unit for servers, which implement the Spigot API.</description>
     <inceptionYear>2019</inceptionYear>
 
@@ -29,7 +29,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>xyz.joestr.tachyon</groupId>
+                <groupId>at.or.joestr.tachyon</groupId>
                 <artifactId>tachyon-api</artifactId>
                 <version>${tachyon.version}</version>
                 <scope>compile</scope>
@@ -50,12 +50,8 @@
         </dependency>
         <!-- Dependecies to include -->
         <dependency>
-            <groupId>xyz.joestr.tachyon</groupId>
+            <groupId>at.or.joestr.tachyon</groupId>
             <artifactId>tachyon-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-core</artifactId>
         </dependency>
         <!-- Test dependecies -->
         <dependency>
