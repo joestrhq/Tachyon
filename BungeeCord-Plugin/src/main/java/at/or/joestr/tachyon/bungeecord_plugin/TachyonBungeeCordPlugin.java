@@ -5,8 +5,6 @@
  */
 package at.or.joestr.tachyon.bungeecord_plugin;
 
-import io.undertow.Handlers;
-import io.undertow.Undertow;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,8 +30,6 @@ import at.or.joestr.tachyon.bungeecord_plugin.chatfilters.RawChatFilter;
 import at.or.joestr.tachyon.bungeecord_plugin.commands.CommandTGList;
 import at.or.joestr.tachyon.bungeecord_plugin.listeners.ChatFilterListener;
 import at.or.joestr.tachyon.bungeecord_plugin.listeners.StaffChatMessageListener;
-import at.or.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayers;
-import at.or.joestr.tachyon.bungeecord_plugin.rest.EndPointPlayersPosition;
 
 /**
  * The Tachyon-BungeeCord-Plugin itself.
@@ -61,8 +57,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
 
   // Hold the teleports which have to be accepted or cancelled.
   public static Map<Entry<UUID, UUID>, LocalDate> ongoingTeleports = new HashMap<>();
-
-  private Undertow httpServer = null;
 
   /**
    * Called when the plugin starts
@@ -148,25 +142,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
 
     // Register the chat filter listener
     pluginManager.registerListener(this, new ChatFilterListener());
-
-    this.httpServer
-      = Undertow.builder()
-        .addHttpListener(
-          configuration.getInt("listenport"), configuration.getString("listenaddress"))
-        .setHandler(
-          Handlers.path()
-            .addPrefixPath(
-              "/players",
-              Handlers.routing()
-                .get("/", new EndPointPlayers())
-                .get(
-                  "/{uuid}",
-                  Handlers.routing().get("/position", new EndPointPlayersPosition()))
-                .put("/{uuid}", Handlers.routing().get("/position", null))
-                .setFallbackHandler(null)))
-        .build();
-
-    httpServer.start();
   }
 
   /**
@@ -174,8 +149,6 @@ public class TachyonBungeeCordPlugin extends Plugin {
    */
   @Override
   public void onDisable() {
-
-    this.httpServer.stop();
   }
 
   public static TachyonBungeeCordPlugin getInstance() {

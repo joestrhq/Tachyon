@@ -5,8 +5,6 @@
  */
 package at.or.joestr.tachyon.bukkit_plugin;
 
-import io.undertow.Handlers;
-import io.undertow.Undertow;
 import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
