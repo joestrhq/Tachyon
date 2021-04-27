@@ -15,10 +15,10 @@ import at.or.joestr.tachyon.api.packeting.Packets;
  */
 public class PacketInit extends Packet {
 	
-	int nextPacketByteSize;
+	private int nextPacketByteSize;
 	
 	public PacketInit(int nextPacketByteSize) {
-		super(Packets.Provided.INIT);
+		super(Packets.Provided.INIT.ordinal(), false);
 		
 		if (nextPacketByteSize > Packets.MAX_BYTES) {
 			throw new IllegalArgumentException(
@@ -29,7 +29,11 @@ public class PacketInit extends Packet {
 		this.nextPacketByteSize = nextPacketByteSize;
 	}
 
-	public int getNextPacketByteSize() {
-		return nextPacketByteSize;
-	}
+  public int getNextPacketByteSize() {
+    return nextPacketByteSize;
+  }
+
+  public void setNextPacketByteSize(int nextPacketByteSize) {
+    this.nextPacketByteSize = nextPacketByteSize;
+  }
 }

@@ -25,6 +25,7 @@ public class Packets {
 		X2,
 		ERROR_RECEIVE,
 		ERROR_SEND,
-		GET_ALL_PLAYERS
+		GET_ALL_PLAYERS,
+    GET_PLAYER_SETTINGS
 	}
 }

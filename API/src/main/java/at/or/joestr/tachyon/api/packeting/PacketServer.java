@@ -19,8 +19,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import at.or.joestr.tachyon.api.packeting.packets.PacketErrorReceive;
-import at.or.joestr.tachyon.api.packeting.packets.PacketErrorSend;
+import at.or.joestr.tachyon.api.packeting.packets.PacketError;
 import at.or.joestr.tachyon.api.utils.ByteSerializer;
 
 /**
@@ -67,16 +66,14 @@ public class PacketServer {
 					
 					try {
 						received = (Packet) ByteSerializer.deserialize(readBuffer.array());
-					} catch (IOException ex) {
-						Logger.getLogger(PacketServer.class.getName()).log(Level.SEVERE, null, ex);
-					} catch (ClassNotFoundException ex) {
+					} catch (IOException | ClassNotFoundException ex) {
 						Logger.getLogger(PacketServer.class.getName()).log(Level.SEVERE, null, ex);
 					}
 					
 					ByteBuffer writeBuffer = null;
 					try {
 						writeBuffer =  ByteBuffer.allocate(512);
-						writeBuffer.put(ByteSerializer.serialize(new PacketErrorReceive()));
+						writeBuffer.put(ByteSerializer.serialize(new PacketError("Error on reading")));
 					} catch (IOException ex) {
 						Logger.getLogger(PacketServer.class.getName()).log(Level.SEVERE, null, ex);
 					}
@@ -88,18 +85,18 @@ public class PacketServer {
 					
 					try {
 						writeBuffer =  ByteBuffer.allocate(512);
-						writeBuffer.put(ByteSerializer.serialize(new PacketErrorSend()));
+						writeBuffer.put(ByteSerializer.serialize(new PacketError("Error on receiving")));
 					} catch (IOException ex) {
 						Logger.getLogger(PacketServer.class.getName()).log(Level.SEVERE, null, ex);
 					}
 					
 					Packet sending = null;
 					
-					for (Packet p : packetHandlers.keySet()) {
-						if (!p.getId().equals(received.getId())) continue;
+					for (Packet packet : packetHandlers.keySet()) {
+						if (packet.getId() != received.getId()) continue;
 						
 						try {
-							sending = packetHandlers.get(p).call();
+							sending = packetHandlers.get(packet).call();
 						} catch (Exception ex) {
 							Logger.getLogger(PacketServer.class.getName()).log(Level.SEVERE, null, ex);
 						}

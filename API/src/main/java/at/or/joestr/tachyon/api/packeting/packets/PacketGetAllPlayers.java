@@ -18,15 +18,17 @@ import at.or.joestr.tachyon.api.packeting.Packets;
  */
 public class PacketGetAllPlayers extends Packet {
 	
-	public Map<UUID, String> players;
+	private Map<UUID, String> players = null;
 	
-	public PacketGetAllPlayers(Map<UUID, String> players) {
-		super(Packets.Provided.GET_ALL_PLAYERS);
-		
-		this.players = players;
+	public PacketGetAllPlayers() {
+		super(Packets.Provided.GET_ALL_PLAYERS.ordinal(), false);
 	}
-	
-	public Map<UUID, String> getPlayers() {
-		return this.players;
-	}
+
+  public Map<UUID, String> getPlayers() {
+    return players;
+  }
+
+  public void setPlayers(Map<UUID, String> players) {
+    this.players = players;
+  }
 }

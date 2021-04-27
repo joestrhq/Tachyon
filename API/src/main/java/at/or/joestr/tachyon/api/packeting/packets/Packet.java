@@ -14,17 +14,28 @@ import at.or.joestr.tachyon.api.packeting.Packets;
  * @author Joel
  */
 public abstract class Packet {
-	Packets.Provided Id;
+  
+	private int id;
+  private boolean response;
 
-	public Packet(Packets.Provided Id) {
-		this.Id = Id;
+	public Packet(int id, boolean response) {
+		this.id = id;
+    this.response = response;
 	}
 
-	public Packets.Provided getId() {
-		return Id;
+	public int getId() {
+		return id;
 	}
 
-	public void setId(Packets.Provided Id) {
-		this.Id = Id;
+	public void setId(int id) {
+		this.id = id;
 	}
+
+  public boolean isResponse() {
+    return response;
+  }
+
+  public void setResponse(boolean response) {
+    this.response = response;
+  }
 }
