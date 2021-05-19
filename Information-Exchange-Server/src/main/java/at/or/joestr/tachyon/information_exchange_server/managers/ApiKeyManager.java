@@ -5,6 +5,8 @@
  */
 package at.or.joestr.tachyon.information_exchange_server.managers;
 
+import at.or.joestr.tachyon.information_exchange_server.models.ApiKeyModel;
+import io.ebean.DB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,10 +22,7 @@ import java.util.List;
 public class ApiKeyManager {
     private static ApiKeyManager INSTANCE;
     
-    private final PooledDatabaseConnection pDC;
-    
-    private ApiKeyManager(PooledDatabaseConnection pDC) {
-        this.pDC = pDC;
+    private ApiKeyManager() {
     }
     
     public static ApiKeyManager getInstance() {
@@ -35,44 +34,18 @@ public class ApiKeyManager {
         return INSTANCE;
     }
     
-    public static ApiKeyManager getInstance(PooledDatabaseConnection pDC) throws SQLException {
-        if(INSTANCE != null) {
-            throw new IllegalStateException(
-                "APIKeyManager has already been initialized!"
-            );
-        }
-        
-        Statement s = pDC.getConnection().createStatement();
-        ResultSet r = s.executeQuery("SHOW TABLES LIKE 'tachyon_apikeys';");
-        int row = r.getRow();
-        
-        if(row == 0) {
-            throw new IllegalStateException(
-                "The table 'tachyon_apikeys' has not been found!"
-            );
-        }
-        
-        INSTANCE = new ApiKeyManager(pDC);
-        
-        return INSTANCE;
-    }
-    
     public boolean isPermitted(String apiKey, String category) throws SQLException {
         
-        PreparedStatement pS = pDC.getConnection().prepareStatement(
-            "SELECT * FROM `tachyon_apikeys` WHERE `apikey` = ?;"
-        );
+        ApiKeyModel result =
+          DB.find(ApiKeyModel.class)
+            .where()
+              .eq("id", apiKey)
+              .and()
+                .eq("category", category)
+                .or().eq("category", "*").endOr()
+              .endAnd()
+            .findOne();
         
-        pS.setString(0, apiKey);
-        ResultSet rs = pS.executeQuery();
-        
-        List<String> allowedCategories = new ArrayList<>();
-        while(rs.next()) {
-            allowedCategories.add(
-                rs.getString(2)
-            );
-        }
-        
-        return allowedCategories.contains("*") || allowedCategories.contains(category);
+        return result != null;
     }
 }

@@ -50,10 +50,6 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-    </dependency>
-    <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <scope>compile</scope>
@@ -69,6 +65,10 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean</artifactId>
+      </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
@@ -79,6 +79,10 @@
     <dependency>
       <groupId>org.powermock</groupId>
       <artifactId>powermock-api-mockito</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>ebean-test</artifactId>
     </dependency>
   </dependencies>
 

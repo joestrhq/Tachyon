@@ -21,8 +21,8 @@
     <nuvotifier.version>2.3.4</nuvotifier.version>
     <!-- Database drivers versions -->
     <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
-    <!-- HikariCP -->
-    <hakaricp.version>4.0.2</hakaricp.version>
+    <!-- Ebean version -->
+    <ebean.version>12.8.0</ebean.version>
     <!-- Testing depedencies -->
     <junit.version>4.12</junit.version>
     <powermock.version>1.4.9</powermock.version>
@@ -42,7 +42,7 @@
     
   <!-- Project metadata -->
   <name>Tachyon :: Parent</name>
-  <url>https://github.com/joestr-at/Tachyon</url>
+  <url>https://github.com/joestrhq/Tachyon</url>
   <description>The Tachyon project.</description>
   <inceptionYear>2019</inceptionYear>
 
@@ -70,7 +70,7 @@
     <license>
       <name>Private license</name>
       <distribution>repo</distribution>
-      <url>https://github.com/joestr-at/Tachyon</url>
+      <url>https://github.com/joestrhq/Tachyon</url>
       <!--<comments></comments>-->
     </license>
   </licenses>
@@ -106,15 +106,15 @@
     
   <!-- Source Code Management -->
   <scm>
-    <connection>scm:git:https://github.com/joestr-at/Tachyon.git</connection>
-    <developerConnection>scm:git:https://github.com/joestr-at/Tachyon.git</developerConnection>
+    <connection>scm:git:https://github.com/joestrhq/Tachyon.git</connection>
+    <developerConnection>scm:git:https://github.com/joestrhq/Tachyon.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/joestr-at/Tachyon</url>
+    <url>https://github.com/joestrhq/Tachyon</url>
   </scm>
     
   <!-- Continous Integration Management -->
   <ciManagement>
-    <system>jenkins</system>
+    <system>gocd</system>
     <url>https://ci.joestr.at</url>
     <notifiers>
       <notifier>
@@ -146,13 +146,14 @@
     
   <!-- Issue Management -->
   <issueManagement>
-    <system>gitea</system>
-    <url>https://github.com/joestr-at/Tachyon/issues</url>
+    <system>github</system>
+    <url>https://github.com/joestrhq/Tachyon/issues</url>
   </issueManagement>
     
   <!-- Dependency Management -->
   <dependencyManagement>
     <dependencies>
+      <!-- For Tachyon Spigot -->
       <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-api</artifactId>
@@ -165,6 +166,7 @@
         <version>${plugin-annotations.version}</version>
         <scope>compile</scope>
       </dependency>
+      <!-- For Tachyon Bungeecord -->
       <dependency>
         <groupId>net.md-5</groupId>
         <artifactId>bungeecord-api</artifactId>
@@ -198,6 +200,11 @@
         <scope>compile</scope>
       </dependency>
       <dependency>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean</artifactId>
+        <version>${ebean.version}</version>
+      </dependency>
+      <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>${mysql-jdbc.version}</version>
@@ -207,12 +214,6 @@
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>2.0.1.Final</version>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.zaxxer</groupId>
-        <artifactId>HikariCP</artifactId>
-        <version>${hakaricp.version}</version>
         <scope>compile</scope>
       </dependency>
       <!-- Test dependencies -->
@@ -235,6 +236,12 @@
         <type>jar</type>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>io.ebean</groupId>
+        <artifactId>ebean-test</artifactId>
+        <version>${ebean.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -242,7 +249,7 @@
   <repositories>
     <repository>
       <id>joestr-release-repo</id>
-      <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
+      <url>https://mvn-repo.joestr.at/repository/releases/</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
@@ -252,7 +259,7 @@
     </repository>
     <repository>
       <id>joestr-snapshot-repo</id>
-      <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
+      <url>https://mvn-repo.joestr.at/repository/snapshots/</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
@@ -280,7 +287,7 @@
   <pluginRepositories>
     <pluginRepository>
       <id>joestr-release-repo</id>
-      <url>https://mvn-repo.joestr.xyz/repository/releases/</url>
+      <url>https://mvn-repo.joestr.at/repository/releases/</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
@@ -290,7 +297,7 @@
     </pluginRepository>
     <pluginRepository>
       <id>joestr-snapshot-repo</id>
-      <url>https://mvn-repo.joestr.xyz/repository/snapshots/</url>
+      <url>https://mvn-repo.joestr.at/repository/snapshots/</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>

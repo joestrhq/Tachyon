@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.or.joestr.tachyon.information_exchange_server.utils;
+package at.or.joestr.tachyon.information_exchange_server.webservice.utils;
 
 import java.sql.SQLException;
 import javax.ws.rs.WebApplicationException;
@@ -14,7 +14,7 @@ import at.or.joestr.tachyon.information_exchange_server.managers.ApiKeyManager;
  *
  * @author Joel
  */
-public class APIKeyChecker {
+public class ApiKeyChecker {
     
     public static void isPermitted(String bearerToken, String category) {
         try {
