@@ -248,25 +248,31 @@
   <!-- Repository Management -->
   <repositories>
     <repository>
-      <id>joestr-release-repo</id>
-      <url>https://mvn-repo.joestr.at/repository/releases/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
-    <repository>
-      <id>joestr-snapshot-repo</id>
-      <url>https://mvn-repo.joestr.at/repository/snapshots/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
+			<id>joestrhq-public-releases-repo</id>
+			<name>joestrhq's public repo for releases</name>
+			<url>https://mvn-repo.joestr.at/repository/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</releases>
+		</repository>
+		<repository>
+			<id>joestrhq-public-snapshots-repo</id>
+			<name>joestrhq's public repo for snapshots</name>
+			<url>https://mvn-repo.joestr.at/repository/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
     <!--<repository>
       <id>oracle-maven-repo</id>
       <name>Oracle's Maven repo</name>
