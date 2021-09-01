@@ -16,7 +16,7 @@
     <!-- Jersey version -->
     <jersey.version>2.17</jersey.version>
     <!-- SnakeYAML version -->
-    <snakeyaml.version>1.26-SNAPSHOT</snakeyaml.version>
+    <snakeyaml.version>1.26</snakeyaml.version>
     <!-- NuVotifier version -->
     <nuvotifier.version>2.3.4</nuvotifier.version>
     <!-- Database drivers versions -->
