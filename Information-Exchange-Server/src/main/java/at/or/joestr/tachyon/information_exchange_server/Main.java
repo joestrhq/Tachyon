@@ -1,18 +1,15 @@
 package at.or.joestr.tachyon.information_exchange_server;
 
-import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.util.standalone.VoteReceiver;
 import com.vexsoftware.votifier.util.standalone.VotifierServerBuilder;
 import at.or.joestr.tachyon.information_exchange_server.configurations.YamlConfiguration;
 import at.or.joestr.tachyon.information_exchange_server.utils.RSAKeyUtil;
+import com.vexsoftware.votifier.model.Vote;
 import io.ebean.Database;
 import io.ebean.DatabaseFactory;
-import io.ebean.EbeanServerFactory;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -22,10 +19,6 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.yaml.snakeyaml.Yaml;
 
 public class Main {
@@ -34,7 +27,7 @@ public class Main {
 
   // This is the logger for this whole programm
   public static final Logger LOGGER
-    = Logger.getLogger("org.glassfish.grizzly.http.server.HttpHandler");
+    = Logger.getLogger(Main.class.getCanonicalName());
 
   public static YamlConfiguration tCONFIGURATION;
   
@@ -42,10 +35,6 @@ public class Main {
   
 	// For the internal socket channel
 	private AsynchronousServerSocketChannel internalServer;
-	
-  // The HTTP server for the REST API
-  private HttpServer httpServer;
-  private AccessLogBuilder accessLogBuilder;
 
   public static void main(String[] args) throws Throwable {
     
@@ -123,33 +112,16 @@ public class Main {
     new VotifierServerBuilder()
       .bind(new InetSocketAddress("0.0.0.0", 8019))
       .v1Key(new KeyPair(loadedPublicKey, loadedPrivateKey))
-      .receiver(
-        new VoteReceiver() {
+      .receiver(new VoteReceiver(){
         @Override
         public void onVote(Vote vote) throws Exception {
-
+          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        public void onException(Throwable throwable) {
-
+        public void onException(Throwable thrwbl) {
+          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
       }).create().start();
-
-    INSTANCE.httpServer = GrizzlyHttpServerFactory.createHttpServer(URI.create(tCONFIGURATION.getListenuri()),
-      new ResourceConfig()
-        .packages("xyz.joestr.tachyon.information_exchange_server.webservice.controllers.v1"),
-      false
-    );
-
-    INSTANCE.accessLogBuilder = new AccessLogBuilder("access.log");
-    INSTANCE.accessLogBuilder.rotatedHourly();
-    INSTANCE.accessLogBuilder.instrument(INSTANCE.httpServer.getServerConfiguration());
-
-    try {
-      INSTANCE.httpServer.start();
-    } catch (IOException ex) {
-      Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-    }
   }
 }

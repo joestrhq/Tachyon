@@ -52,14 +52,19 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.vexsoftware</groupId>
+      <groupId>com.github.NuVotifier.NuVotifier</groupId>
       <artifactId>nuvotifier-common</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-        <groupId>io.ebean</groupId>
-        <artifactId>ebean</artifactId>
-      </dependency>
+      <groupId>com.github.NuVotifier.NuVotifier</groupId>
+      <artifactId>nuvotifier-api</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>ebean</artifactId>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

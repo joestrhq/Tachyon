@@ -9,20 +9,18 @@
     <!-- Tachyon version -->
     <tachyon.version>0.1.8-SNAPSHOT</tachyon.version>
     <!-- For the Bukkit plugin -->
-    <spigot-api.version>1.16.1-R0.1-SNAPSHOT</spigot-api.version>
+    <spigot-api.version>1.17.1-R0.1-SNAPSHOT</spigot-api.version>
     <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
     <!-- For the Bungeecord plugin -->
-    <bungeecord.version>1.14-SNAPSHOT</bungeecord.version>
-    <!-- Jersey version -->
-    <jersey.version>2.17</jersey.version>
+    <bungeecord.version>1.17-R0.1-SNAPSHOT</bungeecord.version>
     <!-- SnakeYAML version -->
-    <snakeyaml.version>1.26-SNAPSHOT</snakeyaml.version>
+    <snakeyaml.version>1.29</snakeyaml.version>
     <!-- NuVotifier version -->
-    <nuvotifier.version>2.3.4</nuvotifier.version>
+    <nuvotifier.version>2.7.2</nuvotifier.version>
     <!-- Database drivers versions -->
     <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
     <!-- Ebean version -->
-    <ebean.version>12.8.0</ebean.version>
+    <ebean.version>12.11.0</ebean.version>
     <!-- Testing depedencies -->
     <junit.version>4.12</junit.version>
     <powermock.version>1.4.9</powermock.version>
@@ -181,21 +179,20 @@
       </dependency>
       <!-- For Tachyon IES -->
       <dependency>
-        <groupId>org.glassfish.jersey</groupId>
-        <artifactId>jersey-bom</artifactId>
-        <version>${jersey.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
         <version>${snakeyaml.version}</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
-        <groupId>com.vexsoftware</groupId>
+        <groupId>com.github.NuVotifier.NuVotifier</groupId>
         <artifactId>nuvotifier-common</artifactId>
+        <version>${nuvotifier.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.github.NuVotifier.NuVotifier</groupId>
+        <artifactId>nuvotifier-api</artifactId>
         <version>${nuvotifier.version}</version>
         <scope>compile</scope>
       </dependency>
