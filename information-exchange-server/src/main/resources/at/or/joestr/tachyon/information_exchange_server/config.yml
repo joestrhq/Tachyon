@@ -1,0 +1,5 @@
+listenuri: 'http://127.0.0.1:59800'
+bungeecordInstanceURL: 'http://127.0.0.1:59801'
+bukkitInstanceURLs:
+  server_a: 'http://127.0.0.1:59802'
+  server_b: 'http://127.0.0.1:59803'

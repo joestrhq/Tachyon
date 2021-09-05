@@ -12,15 +12,15 @@ prefix: '${project.name}'
 #softdepend: [FAWE]
 #loadbefore: [Essentials]
 commands:
-  tbukkit:
-    description: The main command for the Tachyon Bukkit unit.
+  tspigot:
+    description: The main command for the Tachyon Spigot unit.
     #aliases: [tb]
-    permission: tbukkit.commands.tbukkit
-    permission-message: '§7[T] §cYou are lacking the permission §7tbukkit.commands.tbukkit§c.'
+    permission: tspigot.commands.tspigot
+    permission-message: '§7[T] §cYou are lacking the permission §7tspigot.commands.tspigot§c.'
     usage: '§cSyntax error! Use: §7/<command>'
 permissions:
-  tbukkit.commands.*:
-   description: Allows the usage all commands provided by the Tachyon Bukkit plugin.
+  tspigot.commands.*:
+   description: Allows the usage all commands provided by the Tachyon Spigot plugin.
    default: op
    children:
-     tbukkit.commands.tbukkit: true
+     tspigot.commands.tspigot: true

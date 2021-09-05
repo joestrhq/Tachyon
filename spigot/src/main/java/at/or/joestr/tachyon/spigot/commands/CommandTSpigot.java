@@ -19,11 +19,11 @@ import at.or.joestr.tachyon.api.utils.Updater;
  *
  * @author Joel
  */
-public class CommandTBukkit implements TabExecutor {
+public class CommandTSpigot implements TabExecutor {
   Plugin plugin;
   Updater updater;
 
-  public CommandTBukkit(Plugin plugin, Updater updater) {
+  public CommandTSpigot(Plugin plugin, Updater updater) {
     this.plugin = plugin;
     this.updater = updater;
   }
@@ -31,10 +31,7 @@ public class CommandTBukkit implements TabExecutor {
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (args.length != 1) {
-      sender.sendMessage(
-        "&7[T-Bukkit] &cSyntax: &7/" + command.getLabel() + " [reload|update]"
-      );
-      return true; // false, if we want to display the standard usage message
+      return false;
     }
 
     if (args[0].equalsIgnoreCase("reload")) {
@@ -73,10 +70,7 @@ public class CommandTBukkit implements TabExecutor {
       return true;
     }
 
-    sender.sendMessage(
-      "&7[T] &cSyntax: &7/tbukkit [reload|update|info]"
-    );
-    return true; // false, if we want to display the standard usage message
+    return false;
   }
 
   @Override

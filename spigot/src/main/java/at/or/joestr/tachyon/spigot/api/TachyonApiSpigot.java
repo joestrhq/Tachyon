@@ -13,7 +13,7 @@ import at.or.joestr.tachyon.api.classes.ChatFilter;
  *
  * @author Joel
  */
-public class TachyonAPIBukkit extends TachyonApi {
+public class TachyonApiSpigot extends TachyonApi {
 
     @Override
     public void registerChatFilter(ChatFilter chatFilter) {

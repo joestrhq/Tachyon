@@ -2,7 +2,8 @@
 <project
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" >
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
     <modelVersion>4.0.0</modelVersion>
     
     <!-- Parent project -->
@@ -21,7 +22,7 @@
     
     <!-- Project metadata -->
     <name>Tachyon :: Spigot-Plugin</name>
-    <url>https://github.com/joestr-at/Tachyon</url>
+    <url>https://github.com/joestrhq/Tachyon</url>
     <description>The Tachyon unit for servers, which implement the Spigot API.</description>
     <inceptionYear>2019</inceptionYear>
 
@@ -44,10 +45,6 @@
 					<groupId>org.spigotmc</groupId>
 					<artifactId>spigot-api</artifactId>
 				</dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>plugin-annotations</artifactId>
-        </dependency>
         <!-- Dependecies to include -->
         <dependency>
             <groupId>at.or.joestr.tachyon</groupId>
