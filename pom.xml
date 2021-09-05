@@ -8,22 +8,6 @@
   <properties>
     <!-- Tachyon version -->
     <tachyon.version>0.1.8-SNAPSHOT</tachyon.version>
-    <!-- For the Bukkit plugin -->
-    <spigot-api.version>1.17.1-R0.1-SNAPSHOT</spigot-api.version>
-    <plugin-annotations.version>1.2.0-SNAPSHOT</plugin-annotations.version>
-    <!-- For the Bungeecord plugin -->
-    <bungeecord.version>1.17-R0.1-SNAPSHOT</bungeecord.version>
-    <!-- SnakeYAML version -->
-    <snakeyaml.version>1.29</snakeyaml.version>
-    <!-- NuVotifier version -->
-    <nuvotifier.version>2.7.2</nuvotifier.version>
-    <!-- Database drivers versions -->
-    <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
-    <!-- Ebean version -->
-    <ebean.version>12.11.0</ebean.version>
-    <!-- Testing depedencies -->
-    <junit.version>4.12</junit.version>
-    <powermock.version>1.4.9</powermock.version>
     <!-- UTF8 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -46,15 +30,11 @@
 
   <!-- Modules -->
   <modules>
-    <module>API</module>
-    <module>Bukkit-Plugin</module>
-    <module>BungeeCord-Plugin</module>
-    <module>Information-Exchange-Server</module>
-    <!--<module>Console</module>-->
-    <!--
-        The Tachyon-Console project differs too much from the other
-        projects!
-    -->
+    <module>api</module>
+    <module>spigot</module>
+    <module>bungeecord</module>
+    <module>information-exchange-server</module>
+    <module>console</module>
   </modules>
 
   <!-- Organization information -->
@@ -155,88 +135,98 @@
       <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>spigot-api</artifactId>
-        <version>${spigot-api.version}</version>
+        <version>1.17.1-R0.1-SNAPSHOT</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.spigotmc</groupId>
         <artifactId>plugin-annotations</artifactId>
-        <version>${plugin-annotations.version}</version>
+        <version>1.2.0-SNAPSHOT</version>
         <scope>compile</scope>
       </dependency>
       <!-- For Tachyon Bungeecord -->
       <dependency>
         <groupId>net.md-5</groupId>
         <artifactId>bungeecord-api</artifactId>
-        <version>${bungeecord.version}</version>
+        <version>1.17-R0.1-SNAPSHOT</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>net.md-5</groupId>
         <artifactId>bungeecord-chat</artifactId>
-        <version>${bungeecord.version}</version>
+        <version>1.17-R0.1-SNAPSHOT</version>
         <scope>provided</scope>
       </dependency>
       <!-- For Tachyon IES -->
       <dependency>
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
-        <version>${snakeyaml.version}</version>
+        <version>1.29</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>com.github.NuVotifier.NuVotifier</groupId>
         <artifactId>nuvotifier-common</artifactId>
-        <version>${nuvotifier.version}</version>
+        <version>2.7.2</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>com.github.NuVotifier.NuVotifier</groupId>
         <artifactId>nuvotifier-api</artifactId>
-        <version>${nuvotifier.version}</version>
+        <version>2.7.2</version>
         <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>io.ebean</groupId>
         <artifactId>ebean</artifactId>
-        <version>${ebean.version}</version>
+        <version>12.11.0</version>
       </dependency>
       <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
-        <version>${mysql-jdbc.version}</version>
+        <version>8.0.16</version>
         <scope>compile</scope>
       </dependency>
+      <!-- Tachyon Console -->
       <dependency>
-        <groupId>javax.validation</groupId>
-        <artifactId>validation-api</artifactId>
-        <version>2.0.1.Final</version>
-        <scope>compile</scope>
+        <groupId>org.jline</groupId>
+        <artifactId>jline</artifactId>
+        <version>3.9.0</version>
+      </dependency>
+      <dependency>
+        <groupId>net.minecrell</groupId>
+        <artifactId>terminalconsoleappender</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.fusesource.jansi</groupId>
+        <artifactId>jansi</artifactId>
+        <version>1.17.1</version>
       </dependency>
       <!-- Test dependencies -->
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>${junit.version}</version>
+        <version>4.12</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.powermock</groupId>
         <artifactId>powermock-module-junit4</artifactId>
-        <version>${powermock.version}</version>
+        <version>1.4.9</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.powermock</groupId>
         <artifactId>powermock-api-mockito</artifactId>
-        <version>${powermock.version}</version>
+        <version>1.4.9</version>
         <type>jar</type>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>io.ebean</groupId>
         <artifactId>ebean-test</artifactId>
-        <version>${ebean.version}</version>
+        <version>12.11.0</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -270,16 +260,6 @@
 				<enabled>false</enabled>
 			</releases>
 		</repository>
-    <!--<repository>
-      <id>oracle-maven-repo</id>
-      <name>Oracle's Maven repo</name>
-      <url>https://maven.oracle.com</url>
-      <layout>default</layout>
-      <releases>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </releases>
-    </repository>-->
   </repositories>
     
   <!-- Dependencies -->

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" >
+  <modelVersion>4.0.0</modelVersion>
+    
+  <!-- Parent project -->
+  <parent>
+    <groupId>at.or.joestr.tachyon</groupId>
+    <artifactId>tachyon-parent</artifactId>
+    <version>${tachyon.version}</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+    
+  <!-- Project -->
+  <groupId>at.or.joestr.tachyon</groupId>
+  <artifactId>tachyon-bungeecord_plugin</artifactId>
+  <version>${tachyon.version}</version>
+  <packaging>jar</packaging>
+    
+  <!-- Project metadata -->
+  <name>Tachyon :: BungeeCord-Plugin</name>
+  <url>https://github.com/joestr-at/Tachyon</url>
+  <description>The Tachyon unit for servers, which implement the BungeeCord API.</description>
+  <inceptionYear>2019</inceptionYear>
+
+  <!-- Dependency Management -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>at.or.joestr.tachyon</groupId>
+        <artifactId>tachyon-api</artifactId>
+        <version>${tachyon.version}</version>
+        <type>jar</type>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+    
+  <!-- Dependencies -->
+  <dependencies>
+    <!-- Provided dependencies -->
+    <dependency>
+      <groupId>net.md-5</groupId>
+      <artifactId>bungeecord-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.md-5</groupId>
+      <artifactId>bungeecord-chat</artifactId>
+    </dependency>
+    <!-- Dependencies to include -->
+    <dependency>
+      <groupId>at.or.joestr.tachyon</groupId>
+      <artifactId>tachyon-api</artifactId>
+    </dependency>
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-mockito</artifactId>
+    </dependency>
+  </dependencies>
+    
+  <!-- Build process -->
+  <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <minimizeJar>false</minimizeJar>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
